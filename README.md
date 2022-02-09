@@ -86,19 +86,9 @@ Our project is simulated in a 3D [**Gazebo**](http://gazebosim.org/) environment
 </p>
 
 ### Robot model 
-We developed a rough and simple 3D model to simulate a pet robot within Gazebo. The robot is made up of two classic wheels and a spherical one that allow it to move. We added a cylinder to simulate the neck and fixed it to the chassis, while we use a cube to simulate the robot head. The head is connected to the neck through a revolute joint, that can perform a rotation of 180 degrees.  A camera has been applied to the robot's head to make it capable of detecting the ball.
+We developed a rough and simple 3D model to simulate a pet robot within Gazebo. The robot is made up of two classic wheels and a spherical one that allow it to move. We added a cylinder to simulate the neck and fixed it to the chassis, while we use a cube to simulate the robot head. The head is connected to the neck through a revolute joint, that can perform a rotation of 180 degrees.  A camera has been applied to the robot's head to make it capable of detecting the ball. The robot is also equipped with a hokuyo laser scan, whose modelization can be found at thil [link](http://gazebosim.org/tutorials/?tut=add_laser).
 If we want to simulate a robot on Gazebo or any other simulation software, we need to add physical and collision properties, such as the dimension of the geometry to calculate the possible collisions, the weight that will give us the inertia, and so on. To do so we use two files: a URDF and a XACRO (“XML Macros) file.
 URDF is an XML file format used in ROS to describe all elements of a robot. In this file additional simulation-specific tags can be added to work properly with Gazebo as explained in this [link](http://gazebosim.org/tutorials?tut=ros_urdf&cat=connect_ros). URDF files can only specify the kinematic and dynamic properties of a single robot in isolation and not the pose of the robot itself within a world. The XACRO file instead helps in reducing the overall size of URDF files and makes it easier to read and maintain the packages. We can use it to create modules that can be reused in the URDF, in case of repeated structures, such as the wheels of a robot. 
-
-<p align="center">
-<a>
-    <img src="images/gazebo.png" width="400" height="">
-</a>
-</p>
-
-To interact with the simulation environment, we use ROS plugins which can be used to add functionalities for simulation purposes, such as controlling the robot mode or adding sensors like cameras.
-In our project, we use ROS_Control which consists of a set of packages for controller interface, controller manager, transmissions, hardware interfaces and control toolbox. It can be used to control the joint actuators of the robot.
-
 
 ### Components Architecture
 
@@ -107,6 +97,16 @@ In our project, we use ROS_Control which consists of a set of packages for contr
     <img src="images/draft_architecture.png" width="600" height="">
 </a>
 </p>
+**ROS Packages**
+* **move_base package**: 
+  * The move_base ROS node belongs to the [navigations stack ](http://wiki.ros.org/navigation) . It allows ROS to interface with the navigation stack of a robot
+  * This package provides an implementation of an _action_ that, given a goal in the world, will attempt to reach it with a mobile base. It links together a _global_ and _local_ planner accomplish global navigation. 
+  * The navigation stack uses two constmaps to store information about the obstacle in the environment: _global planning_ and _local planning_.
+  * _global planning_ is used to create long-term plans over the entire environment, it configuration parameters are saved in _global_costmap_params.yaml_. They define what coordinate frame the costmap should run in, such as for example the robot frame.
+  *  _local planning_ is used mainly for _obstacle avoidance_. Its parameters are saved in _local_costmap_params.yaml_
+  *  Both costmaps present some common configuration parameters which are saved in _costmap_common_params.yaml_
+  *  The _base_local_planner_ is instead responsible for computing velocity commands to send to the mobile base of the robot. It configuration parameters are saved in base_local_planner_params.yaml_
+  *  Parameters were set following documentation for the navigation stack available at this [link](http://wiki.ros.org/navigation/Tutorials/RobotSetup)
 
 **Components**  
 * **Behavior Command Manager:** this component simulate the Finite State Machine (FSM) and control the switching between the hree robot behaviors described in details in the section **State Machine**: 
