@@ -12,7 +12,7 @@
     <img src="images/logo_orizzontale_COLORE.png" width="400" height="">
   </a>
 
-  <h3 align="center">Assignment 2 - Pet Behavioural Architecture</h3>
+  <h3 align="center">Assignment 3 - Pet Behavioural Architecture</h3>
 </p> 
 
 
@@ -58,12 +58,12 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-This system is built to simulate and environment where a human, a robot and a ball are spawned. The robot should follow three different behaviours: Normal, Sleep and Play. The robot is a wheeled dog having a camera located on top of its head. The human simulated represents the user that controls the movements of the ball within the environment. The human is not actually controlling the motion of the ball, since this last one is defined as a robot with one link capable of moving within the environment using speficic topics. The human can move the ball around, by giving a command position to reach, and make the ball disappear.
+This system is built to simulate an apartment made up of six-room where a human and a per robot can interact. The project made use of a Gazebo simulation which is also visualized in RViz. The robot can follow four different behaviours: _Normal_, _Sleep_, _Play_ and _Find_. The robot is a wheeled dog equipped with a camera and a laser sensor. Its main objective is to build a map of the whole environment. The human simulated can interact with the robot and command it to start playing, giving it a command of which room to reach as well. 
+The Sleep and Normal behaviour are the same implemented in the previous version of this project, which can be found at this [link](https://github.com/SerenaRoncagliolo/Exp_Robotics_Lab_2). However, in the current version of the project, they are developed considering the obstacle within the apartment, so that the robot can autonomously avoid them without colliding with them. 
+When the robot assumes Play behaviour, it moves to the human location and waits for a command which indicates which room it should move to.
+While in Find behaviour instead, the robot starts exploring the environment and start mapping. Each room can be easily recogni.sed, because each of them contains a different coloured ball, which is detected by the robot camera and used to build a precise map.
+In this version, we have also added two sub_state _Normal Track_ and _Find Track_. When the robot sees a coloured ball while in Normal or Find behaviour, he enters these sub-states to get closer to the ball and saves its position within the map it is building.
 The objective of this project was to modify the provided robot model by using additional links and joints, build a suitable ROS architecture to implement the robot’s behaviors and simulate the system behavior on Gazebo.
-In this project, the pet robot can assume three behaviors:
-* NORMAL, when it moves randomly within the environment
-* SLEEP, when it moves to a predefined position and stops there for a given time;
-* PLAY, when it sees the ball and start playing with it.
 
 
 ### Built With
@@ -162,15 +162,26 @@ In particular, we have implemented the followint action servers:ù
 </a>
 </p>
 
-The wheeled dog has three behaviors:
+The wheeled dog has four behaviors:
 
-* NORMAL BEHAVIOR: when the robot assumes this behavior, it starts moving randomly within the environment. The robot goes from the normal behavior to the play behavior when he sees the ball within the environment. Otherwise, when it is moving, the sleep timer is activated and the robot should assume SLEEP behavior;
-* SLEEP BEHAVIOR: the robot moves to a predefined position which indicates "home position" and stops there for a given time interval. After a certain time, it should "wake up" and assume NORMAL behavior; </li>
-* PLAY BEHAVIOR: 
-    * It starts following the ball; </li>
-    * when the ball stops, it moves the head to the left of 45 degrees, it keeps the head in that position for a number of seconds, then it moves the head on the right, it keeps it there for a number of seconds, then again it moves it to the center.
-    *  Once it moved the head, it keeps tracking the ball until it stops again.
-    *  The robot goes back in the normal behavior when it cannot find the ball for a certain amount of time.
+* NORMAL BEHAVIOUR:
+  * The robot moves randomly in different locations of the apartment. 
+  * It can go from Normal behaviour to Play behaviour when he receives a command from the user. Otherwise, when it is moving, the sleep timer is activated and the robot should assume SLEEP behaviour;
+  * While moving in Normal state, the robot can detect the coloured object contained inside the rooms and enter the Normal Track sub-state, in which it moves closer to the object and save its position, in case it wasn't already been detected previously.
+* SLEEP BEHAVIOUR: 
+  *  the robot moves to a predefined position which indicates "home position" and stops there for a given time interval. 
+  *  After a certain time interval, it "wakes up" and return to Normal behaviour; 
+* PLAY BEHAVIOUR: 
+  * The robot enters this behaviour when it is given the command from the user;
+  * once in this state, it moves to the location where the person is;
+  * it waits there to receive the command which tells it which room to go to;
+  * if the location is already known, meaning the coloured ball inside that room was already been detected, it moves to the room;
+  * if the location is unknown it switches to Find behaviour;
+  * when the robot has reached this goal position, it stays there for some time and then moves back to the person where it waits for the next command;
+* FIND BEHAVIOUR:
+  * in this state, the robot explores the environment trying to detect the coloured object inside the rooms;
+  * it can use already known positions or explore independently. 
+  * when an object is detected, as done in Normal state, it enters the Find Track sub-state to move closer to the object and save the position.
 
 ### ROS Topics
 As shown in the UML graph or the system architecture, the system make use of the following topics:
