@@ -79,6 +79,12 @@ The project was build with:
 ### Simulation 
 Our project is simulated in a 3D [**Gazebo**](http://gazebosim.org/) environment. Gazebo is a 3D dynamic simulator that efficiently simulate robots in complex indoor and outdoor environments. It provides physics simulation having a rich library of robot models and environments, a wide variety of sensors, and a user-friendly graphical interface.
 
+<p align="center">
+<a>
+    <img src="images/gazebo_world.png" width="400" height="">
+</a>
+</p>
+
 ### Robot model 
 We developed a rough and simple 3D model to simulate a pet robot within Gazebo. The robot is made up of two classic wheels and a spherical one that allow it to move. We added a cylinder to simulate the neck and fixed it to the chassis, while we use a cube to simulate the robot head. The head is connected to the neck through a revolute joint, that can perform a rotation of 180 degrees.  A camera has been applied to the robot's head to make it capable of detecting the ball.
 If we want to simulate a robot on Gazebo or any other simulation software, we need to add physical and collision properties, such as the dimension of the geometry to calculate the possible collisions, the weight that will give us the inertia, and so on. To do so we use two files: a URDF and a XACRO (“XML Macros) file.
