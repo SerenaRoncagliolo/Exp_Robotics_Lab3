@@ -86,27 +86,55 @@ Our project is simulated in a 3D [**Gazebo**](http://gazebosim.org/) environment
 </p>
 
 ### Robot model 
-We developed a rough and simple 3D model to simulate a pet robot within Gazebo. The robot is made up of two classic wheels and a spherical one that allow it to move. We added a cylinder to simulate the neck and fixed it to the chassis, while we use a cube to simulate the robot head. The head is connected to the neck through a revolute joint, that can perform a rotation of 180 degrees.  A camera has been applied to the robot's head to make it capable of detecting the ball. The robot is also equipped with a hokuyo laser scan, whose modelization can be found at thil [link](http://gazebosim.org/tutorials/?tut=add_laser).
+We developed a rough and simple 3D model to simulate a pet robot within Gazebo. The robot is made up of two classic wheels and a spherical one that allow it to move. The robot model used is the same of the previous assignment but without the neck joint in order to keep the head fixed and thus the camera as well. A camera has been applied to the robot's head to make it capable of detecting the ball. The robot is also equipped with a hokuyo laser scan, whose modelization can be found at thil [link](http://gazebosim.org/tutorials/?tut=add_laser).
 If we want to simulate a robot on Gazebo or any other simulation software, we need to add physical and collision properties, such as the dimension of the geometry to calculate the possible collisions, the weight that will give us the inertia, and so on. To do so we use two files: a URDF and a XACRO (“XML Macros) file.
 URDF is an XML file format used in ROS to describe all elements of a robot. In this file additional simulation-specific tags can be added to work properly with Gazebo as explained in this [link](http://gazebosim.org/tutorials?tut=ros_urdf&cat=connect_ros). URDF files can only specify the kinematic and dynamic properties of a single robot in isolation and not the pose of the robot itself within a world. The XACRO file instead helps in reducing the overall size of URDF files and makes it easier to read and maintain the packages. We can use it to create modules that can be reused in the URDF, in case of repeated structures, such as the wheels of a robot. 
 
-### Components Architecture
-
 <p align="center">
 <a>
-    <img src="images/draft_architecture.png" width="600" height="">
+    <img src="images/gazebo_robot.png" width="600" height="">
 </a>
 </p>
+
+
+### Components Architecture
+
+<p align="center"; style='text-align: center'>
+<a>
+    <figure> 
+      <img src="images/draft_architecture.png" width="600" height="">
+    </figure>
+</a>
+</p>
+ 
+ The architecture is made up of three ROS packages and four custom nodes. The external packages are used to move the robot within the apartment (_move_base package_), to create a map using the scan laser (_gmapping_) and explore the unkown part of the environment (_explore_lite_).
+
 **ROS Packages**
 * **move_base package**: 
   * The move_base ROS node belongs to the [navigations stack ](http://wiki.ros.org/navigation) . It allows ROS to interface with the navigation stack of a robot
   * This package provides an implementation of an _action_ that, given a goal in the world, will attempt to reach it with a mobile base. It links together a _global_ and _local_ planner accomplish global navigation. 
   * The navigation stack uses two constmaps to store information about the obstacle in the environment: _global planning_ and _local planning_.
-  * _global planning_ is used to create long-term plans over the entire environment, it configuration parameters are saved in _global_costmap_params.yaml_. They define what coordinate frame the costmap should run in, such as for example the robot frame.
-  *  _local planning_ is used mainly for _obstacle avoidance_. Its parameters are saved in _local_costmap_params.yaml_
-  *  Both costmaps present some common configuration parameters which are saved in _costmap_common_params.yaml_
-  *  The _base_local_planner_ is instead responsible for computing velocity commands to send to the mobile base of the robot. It configuration parameters are saved in base_local_planner_params.yaml_
+  * _global planning_ is used to create long-term plans over the entire environment, it configuration parameters are saved in _global_costmap_params.yaml_. They define what coordinate frame the costmap should run in, such as for example the robot frame. Here we can set the _update_frequency_ and _publish_frequency_ to make the planner more reactive to changes and faster in correcting mapping errors. 
+  *  _local planning_ is used mainly for _obstacle avoidance_. Its parameters are saved in _local_costmap_params.yaml_. Here we can set the _width_ and _height_ parameters to improve the local mapping and avoid strange trajectory
+  *  Both costmaps present some common configuration parameters which are saved in _costmap_common_params.yaml_. Here we can set the _obstacle_range_ and the _robot_radius_ parameters to define the obstacle avoidance navigation
+  *  The _base_local_planner_ is instead responsible for computing velocity commands to send to the mobile base of the robot. It configuration parameters are saved in base_local_planner_params.yaml_. Here the velocity can be set using _max_vel_x_, _min_vel_x_, _acc_lim_x_ and _acc_lim_theta_. 
   *  Parameters were set following documentation for the navigation stack available at this [link](http://wiki.ros.org/navigation/Tutorials/RobotSetup)
+* **gmapping package**:
+  *  This [package](http://wiki.ros.org/gmapping) provides a ROS wrapper for OpenSlam's Gmapping.  
+  *  The gmapping package provides laser-based SLAM (Simultaneous Localization and Mapping), as a ROS node called slam_gmapping. It can create a 2D occupancy grid map from laser and pose data collected by a mobile robot. 
+  *  To use it we need a mobile robot that provides odometry data and is equipped with a horizontally-mounted and  fixed laser range-finder
+  *  This package transform each incoming scan into the _odom tf frame_
+  *  It takes in a _sensor_msgs/LaserScan_ message  and builds a map than can be retrieve via a ROS topic or service.
+  *  Further information on how to the map is built can be found at this [link](http://wiki.ros.org/pr2_simulator/Tutorials/BuildingAMapInSimulation)
+* **explore_lite**: 
+  * This package provides a greedy frontier-based algorithm for environment exploration. When this node is running, robot will greedily explore its environment until no frontiers could be found. 
+  * Commands to move the robot are then sent to the _move_base_ node, which needs to be configured properly
+  <p align="center">
+<a>
+    <img src="images/explore_lite.png" width="600" height="">
+</a>
+</p>
+
 
 **Components**  
 * **Behavior Command Manager:** this component simulate the Finite State Machine (FSM) and control the switching between the hree robot behaviors described in details in the section **State Machine**: 
