@@ -112,7 +112,7 @@ URDF is an XML file format used in ROS to describe all elements of a robot. In t
 **ROS Packages**
 * **move_base package**: 
   * The move_base ROS node belongs to the [navigations stack ](http://wiki.ros.org/navigation) . It allows ROS to interface with the navigation stack of a robot
-  * This package provides an implementation of an _action_ that, given a goal in the world, will attempt to reach it with a mobile base. It links together a _global_ and _local_ planner accomplish global navigation. 
+  * This package provides an implementation of an _action_ that, given a goal in the world, will attempt to reach it with a mobile base. It links together a _global_ and _local_ planner accomplish global navigation. For more documentation on the client-to-server architecture and the _actionlib_ package- follow this [link](http://wiki.ros.org/actionlib)
   * The navigation stack uses two constmaps to store information about the obstacle in the environment: _global planning_ and _local planning_.
   * _global planning_ is used to create long-term plans over the entire environment, it configuration parameters are saved in _global_costmap_params.yaml_. They define what coordinate frame the costmap should run in, such as for example the robot frame. Here we can set the _update_frequency_ and _publish_frequency_ to make the planner more reactive to changes and faster in correcting mapping errors. 
   *  _local planning_ is used mainly for _obstacle avoidance_. Its parameters are saved in _local_costmap_params.yaml_. Here we can set the _width_ and _height_ parameters to improve the local mapping and avoid strange trajectory
@@ -137,42 +137,13 @@ URDF is an XML file format used in ROS to describe all elements of a robot. In t
 
 
 **Components**  
-* **Behavior Command Manager:** this component simulate the Finite State Machine (FSM) and control the switching between the hree robot behaviors described in details in the section **State Machine**: 
-  * Normal
-  * Sleep
-  * Play
-The component subscribed to two topics:
- * /ball_visible topic: it tells the component if the ball is visible or not in the camera range of the robot, in this case the roboto should switch to Play behavior, in which it starts "playing" with the ball by following it around;
- * /at_home topic: when the robot receives the command to go to sleep, it is supposed to reach first a given position, defined as "home position". If it has reached it, the motion robot publish it on the topic /at_home, which is subscribed by the behavior manager to check if the robot can enter sleep behaviour
-This component publishes the robot behavior as a ROS message on the topic /behavior depending on the subscribed data received.
-* **Motion:** this component moves the robot when it assumes Normal or Sleep behavior. To get information regarding the current behavior of the robot, it subscribes to the /behaviour topic and moves the robot accordingly. The motion component also instantiate a SimpleActionClient that is used to communicate with the _Go To Point Robot_ Action Server. This is done to set the correct goal position. When the robot is in Normal state, the motion component makes it move randomly within the environment, by choosing a random goal position and waits for the Server to report back as feedback information if it has reached the goal or not. in the Sleep state, instead, the motion controller moves the robot to _home position_ and when it's reached, it report it back to the Behavior Controller.
-* **OpenCv Ball Tracking:** it make use of the OpenCv library to detect the ball. [_OpenCV_](https://opencv.org/) is a library used for real-time computer vision. ROS can be interfaced to OpenCV by using [CvBridge](http://wiki.ros.org/cv_bridge) and [convert ROS images](cv_bridge/Tutorials/ConvertingBetweenROSImagesAndOpenCVImagesPython - ROS Wiki) into OpenCv images, or viceversa. This library is used to determine if the ball is contained in robot camera range or not. This component subscribes to the robot camera topic given by _/robot/camera1/image_raw/compressed_. Once the ball is detected, it publishes on the _/ball_visible_ topic: this way the behavior controller can switch the behavior from Normal to Play. When the robot switch to Play behavior, this component also pushlishes the robot velocity on the topic _/robot/cmd_vel_. This velocity is then applied to the model in Gazebo. Furthermore, the robot stops when the ball stops. When this happens, the tracking is stopped as well, the robot moves its head, first toward right and then left and returns the head to the center. It then starts following or tracking the ball again, depending on the ball position.
-* **Human Interface Simulator:** this component is used to simulate a human moving the ball within the gazebo environment. To do so, it sends a goal positions to the ball, using a SimpleActionClient which stops once the goal is reached. Once the command is sends, this components stops sending commannds for a random number of seconds so that the ball can remain still for a certain time to let the robot track it and reach it. This node can send a goal position to the ball or make it disappear by moving it underground.
-
-### Action Servers
-**ROS Actions** have a client-to-server communication relationship with a specified protocol. The actions use ROS topics to send goal messages from a client to the server. They are implemented in ROS using the **actionlib** package, whose documentation can be found at this [link](http://wiki.ros.org/actionlib). This allows a request/reply interaction between two nodes, the action client and the action server, that communicate via a ROS Action Protocol, which is built on top of ROS messages. The client and server then provide a simple API for users to request goals (on the client side) or to execute goals (on the server side) via function calls and callbacks.
-<p align="center">
-<a>
-    <img src="images/expserver.png" width="400" height="">
-</a>
-</p>
-Like ROS services, actions are defined in text files and they contain the following information:
-
-* Goal: request sent by the action client to the action server, like "move the robot joint of 45 degrees";
-* Cancel: used to send cancel request to the server
-* Status: used to notify the client on the current state of every goal in the system
-* Feedback: feedback information used by the action server to the action client while the request is being processed, such as the current value of the joint being moved.
-* Result: final information sent by the action server to the action client once the request has been fulfilled
-
-In particular, we have implemented the followint action servers:ù
-
-* **Go To Point Robot:** it receives a goal position from the motion component and it publish the robot velocity to the /robot/cmd_vel topic to move the robot in Gazebo. When the robot has reached the given goal position, it sends back a feedback message to the Motion component. This action server can performs the following: 
-  * adjust the yaw angle of the robot so hat it can reach the given position correctly
-  * move the robot in a straight direction
-  * stop then robot when it reach the is reached.
-* **Go To Point Ball:**  this action server controls the ball movements instead of the ones of the robot. It controls the the linear velocity of the ball along the three axis and in this case there is no need to fix or compute the yaw. This action server can performs the following:
-  *  movement towards a goal position as if it was given by the user 
-  *  command to stop when the goal is reached.
+* **Behavior Command Manager:** this component simulates the Finite State Machine (FSM) and controls the switching between the four robot behaviours (Normal, Sleep, Play and Find) described in detail in the section _State Machine_. Its connection to the other components is given in the description of their implementation.
+* **Motion:** this component moves the robot when it assumes Normal, Sleep or Play behaviour. To get information regarding the current behaviour of the robot, it subscribes to the /behaviour topic and moves the robot accordingly.
+  * in Normal behaviour: the robot get a random goal position within the map max dimensions and moves to it. The position is sent to the _move_base_ node, which moves the robot accordingly. 
+  * in Sleep behaviour: in this state, the component moves the robot to a predefined _home position_, which is sent again as goal position to the server _move_base_. When the robot has reached home, the Motion component publishes a  message on the topic /at_home. This topic is subscribed by the Behaviour controller to have an update regarding the robot location.
+  * in Play behaviour: if not there already, the robot should first move in from of the human, so that he can receive the next command. Once in front of him, the component publishes on the topic /at_home, which is subscribed by the component Human Simulator. The robot can then receive a command, which tells it which room it should move to. If the location is already known and contained in the known map of the apartment, then the robot can reach it. If not it should notify the Behaviour component by publishing on the topic /room_unkown. Once done so, the robot switches to Find behaviour.
+* **OpenCv Ball Tracking:** as in the previous lab, we implemented a component that makes use of the OpenCV library to detect the ball. [_OpenCV_](https://opencv.org/) is a library used for real-time computer vision. ROS can be interfaced to OpenCV by using [CvBridge](http://wiki.ros.org/cv_bridge) and [convert ROS images](cv_bridge/Tutorials/ConvertingBetweenROSImagesAndOpenCVImagesPython - ROS Wiki) into OpenCV images, or vice versa. This library is used to determine if the ball is contained within the robot camera range. This component subscribes to the robot camera topic given by _/robot/camera1/image_raw/compressed_. If the ball is detected while the robot is in Normal or Find state, it will switch respectively to the sub-state Normal Track or Find Track. Once in these substates, the OpenCV Tracking component publishes a velocity on the /cmd_vel topic. This is done because we want the robot to get as close as possible to the detected ball. Once it gets close, it alerts the Behaviour manager component by publishing on the topic /at_ball. If the robot was in the Normal Track substate it goes back to the Normal state. If instead, it was in the Find Track substate, it should check if the room in which it is currently located corresponds to the one given in the last user command. If so, it means that it has finally reached the desired goal room, it publishes a boolean message on the /at_room topic and it turns back to Play Behaviour. Otherwise it goes back to Find state. As opposed to the implementation in the previous version of the project, the robot should now be capable to distinguish the colour of the ball, which will be used to identify the room.
+* **Human Interface Simulator:** this component is used to simulate a human interacting with the robot. It can publish a message on the topic /start_play, which is subscribed by the Behaviour manager. This command is given at random time instantm and it gives the name of the room where the robot is supposed to move.
 
 ### Differences with previous lab
 <p align="center">
@@ -243,24 +214,21 @@ As shown in the UML graph or the system architecture, the system make use of the
 ## Repository Organization
 The repository contains the following folders:
 
+* **Config**: configuriation file to initialize RViz correctly
 * **Documentation**: it contains the html and latex documentation produced with Doxygen
-* **action**: it contains the definition of the action message used by the two action servers
-* **config**: contains configuration file related to the Ros control plugin
 * **images**: contains .png images used in the README:md file
 * **launch**: contains two launch files:
   *  gazebo_world.launch: it launch the gazebo world contained the simulation model of the robot, human and ball
   *  pet_behavior.launch: it starts the behaviour architecure of the project
-* **scripts**: it contains the python ROS nodes which implement two action server to move the ball and the robot:
-  *  go_to_point_ball.py
-  *  go_to_point_robot.py
-* **src**: contains the relative script of the main components of the architecture:
+*  **param**: it contains the configuration parameters for the _move_base_ package
+*  * **src**: contains the relative script of the main components of the architecture:
   *  behavior_manager.py
   *  human_simulator.py
   *  motion.py
   *  opencv_tracking.py
-* * **urdf**: it contains the description of a robot model, a human and a ball;
+* **urdf**: it contains the files to simulate a robot and a human in Gazebo;
 * **worlds**: it contains the world used for implementing the simulation;
-* 
+ 
 ## Prerequisites
 
 ### Ros
@@ -274,12 +242,6 @@ This project make use of the smach library to use the FSM.
  ```sh
  $ sudo apt-get install ros-kinetic-smach-viewer
  ```
-### Ros Control plugin
-It is necessary to install ros control plugin using the commands:
- ```sh
- $ sudo apt-get install ros-kinetic-ros-control ros-kinetic-ros-controllers
- $ sudo apt-get install ros-kinetic-gazebo-ros-pkgs ros-kinetic-gazebo-ros-control
- ```
  ### OpenCV library
  Install **OpenCV** library using:
   ```sh
@@ -290,6 +252,19 @@ Install **numpy** library using the following:
   ```sh
   $ pip install numpy
   ```
+### Other packages
+Install **OpenSLAM gmapping** package using the following:
+  ```sh
+  $ sudo apt-get install ros-<ros_distro>-openslam-gmapping
+  ```  
+Install the **navigation** package using the following:
+  ```sh
+  $ sudo apt-get install ros-<ros_distro>-navigation
+  ``` 
+Install the **explore_lite** package using the following:
+  ```sh
+  $ sudo apt-get install ros-<ros_distro>-explore-lite
+  ``` 
   
 ## Installation
 This instructions assumes that you have installed **catkin**, if not it is necessary to follow the instruction at [catkin installation](https://wiki.ros.org/catkin#Installing_catkin). After installation source the environment:
