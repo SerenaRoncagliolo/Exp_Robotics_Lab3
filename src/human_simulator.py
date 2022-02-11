@@ -16,85 +16,56 @@ import random
 from geometry_msgs.msg import PoseStamped
 import actionlib
 import actionlib.msg
-from exp_assignment2.msg import PlanningAction, PlanningActionGoal
-
-act_c = None
-goalPos = PlanningActionGoal()
+#from exp_assignment2.msg import PlanningAction, PlanningActionGoal
+from std_msgs import String, Bool
+publisherPlay = None
+publisherCommandRoom = None
+publisherAtHuman = None
 
 ## function get_random_position
 #
 # function to get a random position on the map to move the ball to
-def get_random_position():
-	randX = random.randint(-8, 8)
-	randY = random.randint(-8, 8)
-	randZ = 0.5
-	randPos = [randX, randY, randZ]
+def get_room_position():
+	rooms = ["Room1", "Room2", "Room3", "Room4", "Room5", "Room6"]
+	randPos = rooms[random.randint(0, 5)] # get a random room
 	return randPos
-
-## function move_ball()
+## function check_at_human()
 #
-# function to make the ball moving 
-def move_ball():
-	# random position
-	#randX = random.randint(-7, 7)
-	#randY = random.randint(-7, 7)
-	#randZ = 0.5
-	#randPos = [randX, randY, randZ]
-	randPos = get_random_position()
-
-    	# set ball goal position 
-   	goalPos.goal.target_pose.pose.position.x = randPos[0]
-    	goalPos.goal.target_pose.pose.position.y = randPos[1]
-    	goalPos.goal.target_pose.pose.position.z = randPos[2]
-
-    	# send ball position and wait that the goal is reached within 60 seconds
-    	act_c.send_goal(goalPos.goal)
-    	act_c.wait_for_result(rospy.Duration.from_sec(60.0))
-
-## function make_disappear_ball()
-#
-# function to send command to make the ball disappear
-def make_disappear_ball():	
-	# random position
-    	randPos = get_random_position()
-
-	# move the ball under the map
-	goalPos.goal.target_pose.pose.position.x = 0
-	goalPos.goal.target_pose.pose.position.y = 0
-	goalPos.goal.target_pose.pose.position.z = -1
-
-	# send position and wait that the goal is reached within 60 seconds
-	act_c.send_goal(goalPos.goal)
-	act_c.wait_for_result(rospy.Duration.from_sec(60.0))
-
-
-
+# callback to check if the robot is in front of the human or not
+def check_at_human(human):	
+	global publisherAtHuman
+	publisherAtHuman = human.data
 ## main function
 #
-# initialize the action client and move the ball
+# initialize the node
 def main():
+	global publisherPlay, publisherCommandRoom, publisherAtHuman
 	#init node
 	rospy.init_node("human_simulator")	
 	rate = rospy.Rate(20)
 	
 	# init action client
-	global act_c
-	act_c = actionlib.SimpleActionClient('/ball/reaching_goal', PlanningAction)
+	publisherPlay = rospy.Publisher("/human_command_play", Bool, queue_size=1)
+    publisherCommandRoom = rospy.Publisher("/room_command", String, queue_size=1)
    	
 	# wait for the initialization of the server
    	act_c.wait_for_server(rospy.Duration(5))
 	
-	while not rospy.is_shutdown():
-		# random choice
-		if random.randint(1,4) == 1:
-			# make the ball disappear
-			make_disappear_ball()
-		else:
-			move_ball()
-
-		# wait some random time
-		rospy.sleep(random.randint(7,10))
-
+	while not rospy.is_shutdown():	
+		# random command to enter play
+		if random.randint(1,rospy.get_param("play_freq")) == 1:
+			# publish on topic
+			publisherPlay.publish(True)
+		
+		# if in front of human we can send a message	
+		if at_human:
+			# random time interval
+			rospy.sleep(random.randInt(2,4))
+			pos = get_room_position()
+			rospy.loginfo("NODE HUMAN SIMULATOR: robot should move to %s (%s)", pos, rospy.get_param(pos))
+			# pub command
+			publisherCommandRoom.publish(pos)
+			at_home = False
 		rate.sleep()
 
 

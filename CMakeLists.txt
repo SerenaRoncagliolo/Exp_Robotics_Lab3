@@ -114,21 +114,37 @@ find_package(catkin REQUIRED COMPONENTS
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-#  INCLUDE_DIRS include
-#  LIBRARIES exp_assignment3
-#  CATKIN_DEPENDS actionlib actionlib_msgs costmap_2d eometry_msgs map_msgs move_base_msgs nav_msgs roscpp roscpp rospy std_msgs std_msgs tf visualization_msgs
-#  DEPENDS system_lib
+  CATKIN_DEPENDS
+  actionlib_msgs
+  geometry_msgs
+  map_msgs
+  move_base_msgs
+  nav_msgs
+  std_msgs
+  visualization_msgs
+  DEPENDS OpenCV
 )
 
 ###########
 ## Build ##
 ###########
+#set(CMAKE_CXX_STANDARD 11)
+#set(CMAKE_CXX_STANDARD_REQUIRED ON)
+#set(CMAKE_CXX_EXTENSIONS OFF)
 
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
 # include
   ${catkin_INCLUDE_DIRS}
+)
+
+install(PROGRAMS
+  src/opencv_tracking.py
+  src/behavior_manager.py
+  src/human_simulator.py
+  src/motion.py
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
 ## Declare a C++ library
@@ -174,7 +190,6 @@ include_directories(
 #   scripts/my_python_script
 #   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 # )
-
 ## Mark executables and/or libraries for installation
 # install(TARGETS ${PROJECT_NAME} ${PROJECT_NAME}_node
 #   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}

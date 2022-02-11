@@ -8,14 +8,14 @@
 # The state machine is implemented using the smach library
 # It implements four state, Normal, Sleep, Play and Find, and two sub state Normal Track and Find track
 
-
-# FSM libraries
+import os
 import rospy
 import smach
 import smach_ros
 #import time
 import random
 import roslaunch # to launch node within the code
+import actionlib
 
 from std_msgs.msg import String # needed for subscribing strings
 from std_msgs.msg import Bool # needed for subscribing booleans
@@ -25,7 +25,7 @@ from move_base_msgs.msg import MoveBaseAction # messages from package move_base
 #
 # the node publishes on the behavior topic using a message of type String.
 # the queue_size argument limits the amount of queued messages if any subscriber is not receiving them fast enough.
-pub_behavior = rospy.Publisher('/behavior', String, queue_size=10)
+pub_behavior = rospy.Publisher("/behavior", String, queue_size=1)
 
 
 ## class Normal_behavior
@@ -58,6 +58,9 @@ class Normal_behavior(smach.State):
 		rospy.loginfo("NODE BEHAVIOR_MANAGER: publish normal behavior")
 		pub_behavior.publish("normal") 
 
+		self.human_command_play = False
+		self.ball_visible = False
+		
 		## check if the ball is visible to the robot
 		rospy.Subscriber("/ball_visible", Bool, self.ball_tracking)
 		## check if the robot should switch to Play behaviour
@@ -66,21 +69,19 @@ class Normal_behavior(smach.State):
 		# seconds counter
 		seconds_counter = 0
 		.
-		# get current time to compute a random interval from the istant
-		# in which the robot entered normal state
+		# get current time to compute a random interval from the istant in which the robot entered normal state
 		start_time = rospy.Time.now()
 		
 		while not rospy.is_shutdown():
 			
 			## compute how long the robot stays in Normal state 
 			if seconds_counter == 1: 
-				current_time = rospy.Time.now()
+				start_time = rospy.Time.now()
 			# update counter
-			seconds_counter += 1
+			seconds_counter += 1			
 			current_time = rospy.Time.now()
 			# compute how long it stays in normal time
 			tot_time_given = current_time.secs - start_time.secs
-
 			# if ball detected
 			if(self.ball_visible):
 				## the robot sees the ball it should enter sub-state track
@@ -223,6 +224,7 @@ class Play_behavior(smach.State):
 		rospy.loginfo("NODE BEHAVIOR_MANAGER: publish play behavior")
 		pub_behavior.publish("play") 
 
+		self.room_unknown
 		# if the room was not visited before, it is still unkown to the robot
 		rospy.Subscriber("/unknown_room", Bool, self.read_current_location)
 		
@@ -236,14 +238,14 @@ class Play_behavior(smach.State):
 		while not rospy.is_shutdown():
 			## compute how long the robot stays in Normal state 
 			if seconds_counter == 1: 
-				current_time = rospy.Time.now()
+				start_time = rospy.Time.now()
 			# update counter
 			seconds_counter += 1
 			current_time = rospy.Time.now()
 			# compute how long it stays in normal time
 			tot_time_given = current_time.secs - start_time.secs
 
-			if self.location_unkown:
+			if self.room_unkown:
 				## if the location sent by the human is unknown go to Find state
 				return 'start_find'
 			if(tot_time_given > random.randint(120,360)):
@@ -255,7 +257,7 @@ class Play_behavior(smach.State):
 	#
 	# subscriber callback to find the ball 
 	def read_current_location(self,room):
-			self.location_unkown = room.data
+			self.room_unknown = room.data
 
 
 ## class Find_behavior
@@ -288,7 +290,7 @@ class Find_behavior(smach.State):
 		#package = 'explore_lite'
 		#node_type = 'explore'
 		#node_name = 'explore'
-		node = roslaunch.core.Node(package, 'explore_lite', 'explore', 'explore')
+		node = roslaunch.core.Node('explore_lite', 'explore', 'explore')
 
 		launch = roslaunch.scriptapi.ROSlaunch()
 		launch.start()
@@ -305,7 +307,7 @@ class Find_behavior(smach.State):
 		while not rospy.is_shutdown():
 			## compute how long the robot stays in Normal state 
 			if seconds_counter == 1: 
-				current_time = rospy.Time.now()
+				start_time = rospy.Time.now()
 			# update counter
 			seconds_counter += 1
 			current_time = rospy.Time.now()
@@ -328,6 +330,7 @@ class Find_behavior(smach.State):
 				if not process.is_alive()
 					rospy.loginfo("NODE BEHAVIOUR MANAGER: Stop explore_lite, enter Track sub-state")
 				return 'start_track'
+			
 			# loop
 			self.rate.sleep()
 		## method ball_tracking
