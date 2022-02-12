@@ -90,9 +90,8 @@ class track_ball:
 		}
 		
 		# publish robot velocity
-		#self.vel_pub = rospy.Publisher("/robot/cmd_vel", Twist, queue_size=1)
-	    	self.publisherVel = rospy.Publisher("/cmd_vel", Twist, queue_size=1)
-	    	# publish if ball detected
+		self.publisherVel = rospy.Publisher("/cmd_vel", Twist, queue_size=1)
+	    # publish if ball detected
 		self.publisherBall = rospy.Publisher("/ball_visible", Bool, queue_size=1)
 		self.publisherBallReached = rospy.Publisher("/at_ball", Bool, queue_size=1)
 		# publish if the robot is close to the ball
@@ -106,7 +105,7 @@ class track_ball:
 		# subscribe to get which room it should move to 
 		self.subRoom = rospy.Subscriber('/room_command', String, self.get_room_data)
 		# subscriber to current behaviour
-        	rospy.Subscriber("/behavior", String, self.get_behavior)
+        rospy.Subscriber("/behavior", String, self.get_behavior)
 
 	## method get_behavior
 	#

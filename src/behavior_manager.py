@@ -143,6 +143,51 @@ class Normal_track_behaviour(smach.State):
 	def check_at_ball(self, check):
 		self.at_ball = check.data		
 
+## class Find_track_behaviour
+#
+# substate of the robot from Find behaviour
+class Find_track_behaviour(smach.State):
+	## method inid
+	#
+	# initialization
+	def __init__(self):
+		smach.State.__init__(self, outcomes = ['start_find', 'start_play'])
+		
+		self.rate = rospy.Rate(20) # loop
+	
+	## method execute
+	#
+	# state execution
+	def execute(self, userdata):
+		rospy.loginfo("NODE BEHAVIOR_MANAGER: entering sub-state Find Track")
+		pub_state.publish("find_track")
+		self.at_ball = False
+		self.at_room = False
+		
+		# check if the robot has reached the correct room
+		rospy.Subscriber("/at_ball", Bool, self.check_at_ball)
+		rospy.Subscriber("/at_room", Bool, self.check_at_room)
+
+		while not rospy.is_shutdown():
+			# we check if the robot is in the correct room
+			# if not it should keep searchinng
+			if(self.at_ball and not self.at_room):
+				return 'start_find'
+			elif(self.at_ball and not self.at_room):
+				return 'start_play'
+			self.rate.sleep()
+	## method check_at_ball
+	#
+	# callback to check if the robot is close at the detected ball
+	def check_at_ball(self, ball):
+		self.at_ball = ball.data
+	## method check_at_room
+	#
+	# callback to check if the robot is close at the detected ball
+	def check_at_room(self, room):
+		self.at_room = room.data
+
+
 			
 ## class Sleep_behavior
 #
@@ -160,7 +205,7 @@ class Sleep_behavior(smach.State):
 		smach.State.__init__(self, 
                              outcomes=['stop_sleep']
                             )
-		self.at_home = False # initialize boolean variable to check if at home or not
+		#self.at_home = False # initialize boolean variable to check if at home or not
 		self.rate = rospy.Rate(20)
 		
 	## method execute
@@ -172,6 +217,7 @@ class Sleep_behavior(smach.State):
 		rospy.loginfo("NODE BEHAVIOR_MANAGER: publish sleep behavior")
 		pub_behavior.publish("sleep") 
 		
+		self.at_home = False
 		# when "sleep" is published on the topic behavior, the node motion should 
 		# subscribe to it and send the robot at the home position
 		# it now subscribe to Motion to check if it is at home
@@ -187,7 +233,7 @@ class Sleep_behavior(smach.State):
 				self.at_home = False
 				# exit sleep state
 				return 'stop_sleep'
-		self.rate.sleep
+		self.rate.sleep()
 	## method read_actual_position
 	#
    	# subscriber to actual_position_robot topic callback, it reads the actual position of the robot
@@ -229,8 +275,7 @@ class Play_behavior(smach.State):
 		rospy.Subscriber("/unknown_room", Bool, self.read_current_location)
 		
 		# seconds counter
-		seconds_counter = 0
-		
+		seconds_counter = 0		
 		# get current time to compute a random interval from the istant
 		# in which the robot entered normal state
 		start_time = rospy.Time.now()
@@ -339,49 +384,7 @@ class Find_behavior(smach.State):
 		def ball_tracking(self, ball):
 			self.ball_detected = ball.data
 
-## class Find_track_behaviour
-#
-# substate of the robot from Find behaviour
-class Find_track_behaviour(smach.State):
-	## method inid
-	#
-	# initialization
-	def __init__(self):
-		smach.State.__init__(self, outcomes = ['start_find', 'start_play'])
-		
-		self.rate = rospy.Rate(20) # loop
-	
-	## method execute
-	#
-	# state execution
-	def execute(self, userdata):
-		rospy.loginfo("NODE BEHAVIOR_MANAGER: entering sub-state Find Track")
-		pub_state.publish("find_track")
-		self.at_ball = False
-		self.at_room = False
-		
-		# check if the robot has reached the correct room
-		rospy.Subscriber("/at_ball", Bool, self.check_at_ball)
-		rospy.Subscriber("/at_room", Bool, self.check_at_room)
 
-		while not rospy.is_shutdown():
-			# we check if the robot is in the correct room
-			# if not it should keep searchinng
-			if(self.at_ball and not self.at_room):
-				return 'start_find'
-			elif(self.at_ball and not self.at_room):
-				return 'start_play'
-			self.rate.sleep()
-	## method check_at_ball
-	#
-	# callback to check if the robot is close at the detected ball
-	def check_at_ball(self, ball):
-		self.at_ball = ball.data
-	## method check_at_room
-	#
-	# callback to check if the robot is close at the detected ball
-	def check_at_room(self, room):
-		self.at_room = room.data
 
 
 ## function main

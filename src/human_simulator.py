@@ -37,8 +37,8 @@ def get_room_position():
 #
 # callback to check if the robot is in front of the human or not
 def check_at_human(human):	
-	global publisherAtHuman
-	publisherAtHuman = human.data
+	global at_human
+	at_human = human.data
 
 ## main function
 #
@@ -51,7 +51,7 @@ def main():
 	
 	# init action client
 	publisherPlay = rospy.Publisher("/human_command_play", Bool, queue_size=1)
-    	publisherCommandRoom = rospy.Publisher("/room_command", String, queue_size=1)
+    publisherCommandRoom = rospy.Publisher("/room_command", String, queue_size=1)
    
 	# subscriber to check if at human
 	rospy.Subscriber("/at_human", Bool, check_at_human)

@@ -56,8 +56,8 @@ def get_random_position():
 def get_current_room_position():
 	while(not rospy.is_shutdown()):
 		if (currentRoom != None):
-            		break
-        	rate.sleep()
+        	break
+        rate.sleep()
 
     	colour = rospy.get_param(currentRoom)
     	if rospy.search_param(colour) != None:
@@ -79,7 +79,7 @@ def callback_get_behaviour(data):
 # read the command from human
 def get_room_command(human_command):
 	global currentRoom
-    	currentRoom = human_command.data 
+    currentRoom = human_command.data 
     
 
 ## function feedback_cb
@@ -169,7 +169,7 @@ def play_motion():
 			rospy.loginfo("NODE MOTION: Robot has reached the human position in time")
 		    	at_human = True
 		    	currentRoomPos = None
-		    	pub_human_reached.publish(at_human)
+		    	publisherAtHuman.publish(at_human)
 	else:
         	currentRoomPosition = get_room_pos()
         	# if the room position is unknown, publish to 'no_room' topic (go to Find behaviour)
