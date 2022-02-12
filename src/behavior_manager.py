@@ -147,12 +147,11 @@ class Normal_track_behaviour(smach.State):
 #
 # substate of the robot from Find behaviour
 class Find_track_behaviour(smach.State):
-	## method inid
+	## method init
 	#
 	# initialization
 	def __init__(self):
-		smach.State.__init__(self, outcomes = ['start_find', 'start_play'])
-		
+		smach.State.__init__(self, outcomes = ['start_find', 'start_play'])		
 		self.rate = rospy.Rate(20) # loop
 	
 	## method execute
@@ -264,7 +263,6 @@ class Play_behavior(smach.State):
 	## method execute
 	#
 	# what the robot should do
-
 	def execute(self, userdata):
 		# publish behavior "play" on the topic \behavior
 		rospy.loginfo("NODE BEHAVIOR_MANAGER: publish play behavior")
@@ -302,7 +300,7 @@ class Play_behavior(smach.State):
 	#
 	# subscriber callback to find the ball 
 	def read_current_location(self,room):
-			self.room_unknown = room.data
+		self.room_unknown = room.data
 
 
 ## class Find_behavior
@@ -332,9 +330,9 @@ class Find_behavior(smach.State):
 		rospy.Subscriber("/ball_visible", Bool, self.ball_tracking)
 
 		# use roslaunch to execute the ros explore_lite package
-		#package = 'explore_lite'
-		#node_type = 'explore'
-		#node_name = 'explore'
+		# package = 'explore_lite'
+		# node_type = 'explore'
+		# node_name = 'explore'
 		node = roslaunch.core.Node('explore_lite', 'explore', 'explore')
 
 		launch = roslaunch.scriptapi.ROSlaunch()
@@ -366,7 +364,9 @@ class Find_behavior(smach.State):
 				process.stop()
 				if not process.is_alive():
 					rospy.loginfo("NODE BEHAVIOUR MANAGER: Stop explore_lite, return in Play state")
+				
 				return "start_play"	
+
 			# if the robot detects the ball then it enter the sub-state track
 			if self.ball_detected:
 				# stop package explore-lite
@@ -374,6 +374,7 @@ class Find_behavior(smach.State):
 				process.stop()
 				if not process.is_alive():
 					rospy.loginfo("NODE BEHAVIOUR MANAGER: Stop explore_lite, enter Track sub-state")
+				
 				return 'start_track'
 			
 			# loop
@@ -422,5 +423,5 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+	main()
 

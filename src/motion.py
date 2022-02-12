@@ -25,6 +25,7 @@ VERBOSE = False # flag to make regular expressions more readable
 behaviour = None # it is used to check current behavior
 currentRoom = None
 currentRoomPos = None
+
 # define coordinates home position 
 home_position = [rospy.get_param('home_x'), rospy.get_param('home_y')]
 # define goal
@@ -32,9 +33,9 @@ goalPos = MoveBaseGoal() # goal position to reach
 # action client initializer
 act_c = None
 #publisher to home position
-publisherAtHome= rospy.Publisher("/at_home", Bool, queue_size=1)
-publisherAtHuman= rospy.Publisher("/at_human", Bool, queue_size=1)
-publisherUnknownRoom= rospy.Publisher("/unknown_room", Bool, queue_size=1)
+publisherAtHome = rospy.Publisher("/at_home", Bool, queue_size=1)
+publisherAtHuman = rospy.Publisher("/at_human", Bool, queue_size=1)
+publisherUnknownRoom = rospy.Publisher("/unknown_room", Bool, queue_size=1)
 
 # home_reached publisher
 at_home = False
@@ -56,8 +57,8 @@ def get_random_position():
 def get_current_room_position():
 	while(not rospy.is_shutdown()):
 		if (currentRoom != None):
-        	break
-        rate.sleep()
+        		break
+        	rate.sleep()
 
     	colour = rospy.get_param(currentRoom)
     	if rospy.search_param(colour) != None:
@@ -79,9 +80,8 @@ def callback_get_behaviour(data):
 # read the command from human
 def get_room_command(human_command):
 	global currentRoom
-    currentRoom = human_command.data 
+    	currentRoom = human_command.data 
     
-
 ## function feedback_cb
 #
 # callback to send goal

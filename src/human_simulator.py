@@ -16,7 +16,6 @@ import random
 from geometry_msgs.msg import PoseStamped
 import actionlib
 import actionlib.msg
-
 #from exp_assignment2.msg import PlanningAction, PlanningActionGoal
 from std_msgs.msg import String # needed for subscribing strings
 from std_msgs.msg import Bool # needed for subscribing booleans
@@ -51,7 +50,7 @@ def main():
 	
 	# init action client
 	publisherPlay = rospy.Publisher("/human_command_play", Bool, queue_size=1)
-    publisherCommandRoom = rospy.Publisher("/room_command", String, queue_size=1)
+    	publisherCommandRoom = rospy.Publisher("/room_command", String, queue_size=1)
    
 	# subscriber to check if at human
 	rospy.Subscriber("/at_human", Bool, check_at_human)

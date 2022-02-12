@@ -91,7 +91,7 @@ class track_ball:
 		
 		# publish robot velocity
 		self.publisherVel = rospy.Publisher("/cmd_vel", Twist, queue_size=1)
-	    # publish if ball detected
+	    	# publish if ball detected
 		self.publisherBall = rospy.Publisher("/ball_visible", Bool, queue_size=1)
 		self.publisherBallReached = rospy.Publisher("/at_ball", Bool, queue_size=1)
 		# publish if the robot is close to the ball
@@ -105,7 +105,7 @@ class track_ball:
 		# subscribe to get which room it should move to 
 		self.subRoom = rospy.Subscriber('/room_command', String, self.get_room_data)
 		# subscriber to current behaviour
-        rospy.Subscriber("/behavior", String, self.get_behavior)
+        	rospy.Subscriber("/behavior", String, self.get_behavior)
 
 	## method get_behavior
 	#
@@ -161,21 +161,20 @@ class track_ball:
 			twist_msg = Twist()
 			twist_msg.linear.x = linear_x
 			twist_msg.angular.z = angular_z
-			self.vel_pub.publish(twist_msg)
+			self.publisherVel.publish(twist_msg)
 		elif regions['front'] < d0 and regions['fleft'] > d and regions['fright'] > d:
         		state_description = 'case 2 - front'
-        
             		twist_msg = Twist()
             		twist_msg.linear.x = 0
             		twist_msg.angular.z = 0.3
-            		self.vel_pub.publish(twist_msg)
+            		self.publisherVel.publish(twist_msg)
 		elif regions['front'] > d0 and regions['fleft'] > d and regions['fright'] < d:
     			state_description = 'case 3 - fright'
     			# turn left a little
 			twist_msg = Twist()
 			twist_msg.linear.x = 0
 			twist_msg.angular.z = 0.3
-			self.vel_pub.publish(twist_msg)
+			self.publisherVel.publish(twist_msg)
 
         	elif regions['front'] > d0 and regions['fleft'] < d and regions['fright'] > d:
             		state_description = 'case 4 - fleft'
@@ -183,7 +182,7 @@ class track_ball:
             		twist_msg = Twist()
             		twist_msg.linear.x = 0
             		twist_msg.angular.z = -0.3
-            		self.vel_pub.publish(twist_msg)
+            		self.publisherVel.publish(twist_msg)
             
         	elif regions['front'] < d0 and regions['fleft'] > d and regions['fright'] < d:
             		state_description = 'case 5 - front and fright'
@@ -191,7 +190,7 @@ class track_ball:
             		twist_msg = Twist()
             		twist_msg.linear.x = 0
             		twist_msg.angular.z = 0.3
-            		self.vel_pub.publish(twist_msg)
+            		self.publisherVel.publish(twist_msg)
 
         	elif regions['front'] < d0 and regions['fleft'] < d and regions['fright'] > d:
             		state_description = 'case 6 - front and fleft'
@@ -199,7 +198,7 @@ class track_ball:
             		twist_msg = Twist()
             		twist_msg.linear.x = 0
             		twist_msg.angular.z = -0.3
-            		self.vel_pub.publish(twist_msg)
+            		self.publisherVel.publish(twist_msg)
 
         	elif regions['front'] < d0 and regions['fleft'] < d and regions['fright'] < d:
             		state_description = 'case 7 - front and fleft and fright'
@@ -207,7 +206,7 @@ class track_ball:
             		twist_msg = Twist()
             		twist_msg.angular.z = linear_x
             		twist_msg.linear.x = angular_z
-            		self.vel_pub.publish(twist_msg)
+            		self.publisherVel.publish(twist_msg)
 
         	elif regions['front'] > d0 and regions['fleft'] < d and regions['fright'] < d:
             		state_description = 'case 8 - fleft and fright'
@@ -215,7 +214,7 @@ class track_ball:
             		twist_msg = Twist()
             		twist_msg.angular.z = linear_x
             		twist_msg.linear.x = angular_z
-            		self.vel_pub.publish(twist_msg)
+            		self.publisherVel.publish(twist_msg)
         	else:
            		state_description = 'unknown case'
             
@@ -260,8 +259,7 @@ class track_ball:
 			# if not near enough, it should get closer
 			twist_msg = Twist()
 			twist_msg.linear.x = 0.4
-			self.vel_pub.publish(twist_msg)
-
+			self.publisherVel.publish(twist_msg)
 
 		
 	##  method callback
@@ -356,24 +354,24 @@ class track_ball:
 						room_colour = rospy.get_param(self.room)
 						if self.colour == room_colour:
 		                    			rospy.loginfo("NODE OPENCV TRACKING: The correct room %s (%s) has been found. Switch to play behaviour...", self.room, room_colour)
-                            				self.pub_room_found.publish(True)
+                            				self.publisherRoom.publish(True)
                         			else:
                             				rospy.loginfo("NODE OPENCV TRACKING: The correct room %s (%s) has not been found. Switch to find behaviour", self.room, room_colour)
-                            				self.pub_room_found.publish(False)			
+                            				self.publisherRoom.publish(False)			
 		    	   		
 					# publish info
-					self.pub_reach.publish(self.at_ball)
+					self.publisherBallReached.publish(self.at_ball)
 
 					# reinitialize variable
 					self.at_ball = False
 				else:
 					# follow ball
 					self.follow_ball()
-			# if ball visible
-			if mask_colour[1] != self.colour:
-            			self.pub_ball.publish(self.ball_visible)
-			else:
-            			self.pub_ball.publish(False)
+		# if ball visible
+		if mask_colour[1] != self.colour:
+            		self.publisherBall.publish(self.ball_visible)
+		else:
+            		self.publisherBall.publish(False)
 
 
 	## method save_position
