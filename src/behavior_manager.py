@@ -87,7 +87,7 @@ class Normal_behavior(smach.State):
 				## the robot sees the ball it should enter sub-state track
 				return 'start_track'
 			# if command from human
-			if(self.play_command):
+			if(self.human_command_play):
 				## if the play command is received the robot should switch to play
 				return 'start_play'
 			elif(random.randint(1,rospy.get_param("frequency_sleep")) == 1 and tot_time_given > 10):
@@ -224,7 +224,7 @@ class Play_behavior(smach.State):
 		rospy.loginfo("NODE BEHAVIOR_MANAGER: publish play behavior")
 		pub_behavior.publish("play") 
 
-		self.room_unknown
+		self.room_unknown = False
 		# if the room was not visited before, it is still unkown to the robot
 		rospy.Subscriber("/unknown_room", Bool, self.read_current_location)
 		
@@ -342,7 +342,7 @@ class Find_behavior(smach.State):
 ## class Find_track_behaviour
 #
 # substate of the robot from Find behaviour
-class Find_track_behaviour():
+class Find_track_behaviour(smach.State):
 	## method inid
 	#
 	# initialization

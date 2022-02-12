@@ -5,8 +5,8 @@
   <param name="home_y" value="8" />
 
   <!-- Parameters for sleep and play frequency: increase the parameter for lower frequency -->
-  <param name="sleep_freq" value="2000" />
-  <param name="play_freq" value="1000" />
+  <param name="frequency_sleep" value="2000" />
+  <param name="frequency_play" value="1000" />
 
   <!-- Parameters for rooms-colors correspondence -->
   <rosparam>

@@ -58,7 +58,7 @@ def main():
 	
 	while not rospy.is_shutdown():	
 		# random command to enter play
-		if random.randint(1,rospy.get_param("play_freq")) == 1:
+		if random.randint(1,rospy.get_param("frequency_play")) == 1:
 			# publish on topic
 			publisherPlay.publish(True)
 		
