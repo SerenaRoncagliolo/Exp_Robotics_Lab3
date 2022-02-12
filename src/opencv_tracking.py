@@ -23,7 +23,9 @@ import rospy
 # import ROS Messages
 from sensor_msgs.msg import CompressedImage, LaserScan 
 from geometry_msgs.msg import Twist
-from std_msgs.msg import Bool, String, Float64
+from std_msgs.msg import String # needed for subscribing strings
+from std_msgs.msg import Bool # needed for subscribing booleans
+from std_msgs.msg import Float64
 from nav_msgs.msg import Odometry
 from random import randint
 import math 
@@ -69,11 +71,11 @@ class track_ball:
 		# 	- boolean to check if the robot is close to the ball or not
 		#	- robot behavior
 		self.center = None
-        self.radius = None
+        	self.radius = None
 		self.ball_visible = False
-       	#self.ball_stop = False
-        self.near_ball = False
-        self.behaviour = None
+       		#self.ball_stop = False
+        	self.near_ball = False
+        	self.behaviour = None
 		self.at_ball = False
 		self.colour = None
 		self.current_position = None
@@ -89,8 +91,8 @@ class track_ball:
 		
 		# publish robot velocity
 		#self.vel_pub = rospy.Publisher("/robot/cmd_vel", Twist, queue_size=1)
-	    self.publisherVel = rospy.Publisher("/cmd_vel", Twist, queue_size=1)
-	    # publish if ball detected
+	    	self.publisherVel = rospy.Publisher("/cmd_vel", Twist, queue_size=1)
+	    	# publish if ball detected
 		self.publisherBall = rospy.Publisher("/ball_visible", Bool, queue_size=1)
 		self.publisherBallReached = rospy.Publisher("/at_ball", Bool, queue_size=1)
 		# publish if the robot is close to the ball
@@ -102,9 +104,9 @@ class track_ball:
 		# subscribe laser of the robot
 		self.subLaser = rospy.Subscriber('/scan', LaserScan, self.get_laser_data)
 		# subscribe to get which room it should move to 
-		self.subRoom = rospy.Subscriber('/room_command', LaserScan, self.get_rooom_data)
+		self.subRoom = rospy.Subscriber('/room_command', String, self.get_room_data)
 		# subscriber to current behaviour
-        rospy.Subscriber("/behavior", String, self.get_behavior)
+        	rospy.Subscriber("/behavior", String, self.get_behavior)
 
 	## method get_behavior
 	#
@@ -121,19 +123,19 @@ class track_ball:
 	## method get_odom_data
 	#
 	# subscriber callback to get odometry of the robot
-	def get_odom_data(self,odom):
-		self.current_position = odom.data
+	def get_odom_data(self,msg):
+		self.current_position = msg.pose.pose.position
 
 	## method get_laser_data
 	#
 	# subscriber callback to get laser data
 	def get_laser_data(self,laser):
 		self.regions = {
-			'right':  min(min(msg.ranges[0:143]), 10),
-            		'fright': min(min(msg.ranges[144:287]), 10),
-            		'front':  min(min(msg.ranges[288:431]), 10),
-            		'fleft':  min(min(msg.ranges[432:575]), 10),
-            		'left':   min(min(msg.ranges[576:713]), 10),	
+			'right':  min(min(laser.ranges[0:143]), 10),
+            		'fright': min(min(laser.ranges[144:287]), 10),
+            		'front':  min(min(laser.ranges[288:431]), 10),
+            		'fleft':  min(min(laser.ranges[432:575]), 10),
+            		'left':   min(min(laser.ranges[576:713]), 10),	
 		}
 			
 
@@ -144,77 +146,77 @@ class track_ball:
 		regions = self.regions_
 		msg = Twist()
 		angular_z = -0.003*(self.center[0] - 400)
-        linear_x = -0.01*(self.radius - 100)
-        state_description = ''
+        	linear_x = -0.01*(self.radius - 100)
+        	state_description = ''
 
 		# linear velocity saturation
 		if linear_x > 0.4:
 			linear_x = 0.4		
 		
 		d0 = 0.1
-        d = 0.15
+        	d = 0.15
 
 		if regions['front'] > d0 and regions['fleft'] > d and regions['fright'] > d:
-        	state_description = 'case 1 - nothing'
+        		state_description = 'case 1 - nothing'
 			# # go towards the ball
 			twist_msg = Twist()
 			twist_msg.linear.x = linear_x
 			twist_msg.angular.z = angular_z
 			self.vel_pub.publish(twist_msg)
 		elif regions['front'] < d0 and regions['fleft'] > d and regions['fright'] > d:
-        	state_description = 'case 2 - front'
+        		state_description = 'case 2 - front'
         
-            twist_msg = Twist()
-            twist_msg.linear.x = 0
-            twist_msg.angular.z = 0.3
-            self.vel_pub.publish(twist_msg)
+            		twist_msg = Twist()
+            		twist_msg.linear.x = 0
+            		twist_msg.angular.z = 0.3
+            		self.vel_pub.publish(twist_msg)
 		elif regions['front'] > d0 and regions['fleft'] > d and regions['fright'] < d:
-    		state_description = 'case 3 - fright'
-    		# turn left a little
+    			state_description = 'case 3 - fright'
+    			# turn left a little
 			twist_msg = Twist()
 			twist_msg.linear.x = 0
 			twist_msg.angular.z = 0.3
 			self.vel_pub.publish(twist_msg)
 
         	elif regions['front'] > d0 and regions['fleft'] < d and regions['fright'] > d:
-            	state_description = 'case 4 - fleft'
-            	# turn right a little
-            	twist_msg = Twist()
-            	twist_msg.linear.x = 0
-            	twist_msg.angular.z = -0.3
-            	self.vel_pub.publish(twist_msg)
+            		state_description = 'case 4 - fleft'
+            		# turn right a little
+            		twist_msg = Twist()
+            		twist_msg.linear.x = 0
+            		twist_msg.angular.z = -0.3
+            		self.vel_pub.publish(twist_msg)
             
         	elif regions['front'] < d0 and regions['fleft'] > d and regions['fright'] < d:
-            	state_description = 'case 5 - front and fright'
-            	# turn right a little
-            	twist_msg = Twist()
-            	twist_msg.linear.x = 0
-            	twist_msg.angular.z = 0.3
-            	self.vel_pub.publish(twist_msg)
+            		state_description = 'case 5 - front and fright'
+            		# turn right a little
+            		twist_msg = Twist()
+            		twist_msg.linear.x = 0
+            		twist_msg.angular.z = 0.3
+            		self.vel_pub.publish(twist_msg)
 
         	elif regions['front'] < d0 and regions['fleft'] < d and regions['fright'] > d:
-            	state_description = 'case 6 - front and fleft'
-            	# turn right a little
-            	twist_msg = Twist()
-            	twist_msg.linear.x = 0
-            	twist_msg.angular.z = -0.3
-            	self.vel_pub.publish(twist_msg)
+            		state_description = 'case 6 - front and fleft'
+            		# turn right a little
+            		twist_msg = Twist()
+            		twist_msg.linear.x = 0
+            		twist_msg.angular.z = -0.3
+            		self.vel_pub.publish(twist_msg)
 
         	elif regions['front'] < d0 and regions['fleft'] < d and regions['fright'] < d:
-            	state_description = 'case 7 - front and fleft and fright'
-            	# go towards the ball
-            	twist_msg = Twist()
-            	twist_msg.angular.z = linear_x
-            	twist_msg.linear.x = angular_z
-            	self.vel_pub.publish(twist_msg)
+            		state_description = 'case 7 - front and fleft and fright'
+            		# go towards the ball
+            		twist_msg = Twist()
+            		twist_msg.angular.z = linear_x
+            		twist_msg.linear.x = angular_z
+            		self.vel_pub.publish(twist_msg)
 
         	elif regions['front'] > d0 and regions['fleft'] < d and regions['fright'] < d:
-            	state_description = 'case 8 - fleft and fright'
-            	# go towards the ball
-            	twist_msg = Twist()
-            	twist_msg.angular.z = linear_x
-            	twist_msg.linear.x = angular_z
-            	self.vel_pub.publish(twist_msg)
+            		state_description = 'case 8 - fleft and fright'
+            		# go towards the ball
+            		twist_msg = Twist()
+            		twist_msg.angular.z = linear_x
+            		twist_msg.linear.x = angular_z
+            		self.vel_pub.publish(twist_msg)
         	else:
            		state_description = 'unknown case'
             
@@ -227,9 +229,9 @@ class track_ball:
 		sumRed = np.sum(maskRed)
 		sumYellow = np.sum(maskYellow)
 		sumBlue = np.sum(maskBlue)
-		sumMagent = np.sum(maskMagent)
+		sumMagenta = np.sum(maskMagenta)
 
-		sumArray = np.array([sumGreen, sumBlack, sumRed, sumYellow, sumBlue, sumMagent])
+		sumArray = np.array([sumGreen, sumBlack, sumRed, sumYellow, sumBlue, sumMagenta])
 		max_ind = np.argmax(sumArray)
 	
 		# return mask 
@@ -281,29 +283,29 @@ class track_ball:
 		# Blurs image using a Gaussian filter.
 		blurred = cv2.GaussianBlur(image_np, (11, 11), 0)
 		# convert image from one color space to another.
-        hsv = cv2.cvtColor(blurred, cv2.COLOR_BGR2HSV)
+        	hsv = cv2.cvtColor(blurred, cv2.COLOR_BGR2HSV)
 
-        # create masks for all colours
-        maskGreen = cv2.inRange(hsv, greenLower, greenUpper)
-        maskBlack = cv2.inRange(hsv, blackLower, blackUpper)
-        maskRed = cv2.inRange(hsv, redLower, redUpper)
-        maskYellow = cv2.inRange(hsv, yellowLower, yellowUpper)
-        maskBlue = cv2.inRange(hsv, blueLower, blueUpper)
-        maskMagenta = cv2.inRange(hsv, magentaLower, magentaUpper)
-        # choose the correct mask
-        mask_colour = self.get_mask_colour(maskGreen, maskBlack, maskRed, maskYellow, maskBlue, maskMagenta)
+        	# create masks for all colours
+        	maskGreen = cv2.inRange(hsv, greenLower, greenUpper)
+        	maskBlack = cv2.inRange(hsv, blackLower, blackUpper)
+        	maskRed = cv2.inRange(hsv, redLower, redUpper)
+        	maskYellow = cv2.inRange(hsv, yellowLower, yellowUpper)
+        	maskBlue = cv2.inRange(hsv, blueLower, blueUpper)
+        	maskMagenta = cv2.inRange(hsv, magentaLower, magentaUpper)
+        	# choose the correct mask
+        	mask_colour = self.mask_colour(maskGreen, maskBlack, maskRed, maskYellow, maskBlue, maskMagenta)
 
-        mask = cv2.erode(mask_colour[0], None, iterations=2)
-        mask = cv2.dilate(mask, None, iterations=2)
-        # cv2.imshow('mask', mask)
-        cnts = cv2.findContours(mask.copy(), cv2.RETR_EXTERNAL,
-                                cv2.CHAIN_APPROX_SIMPLE)
-        cnts = imutils.grab_contours(cnts)
-        self.center = None
+        	mask = cv2.erode(mask_colour[0], None, iterations=2)
+        	mask = cv2.dilate(mask, None, iterations=2)
+        	# cv2.imshow('mask', mask)
+        	cnts = cv2.findContours(mask.copy(), cv2.RETR_EXTERNAL,
+                               		cv2.CHAIN_APPROX_SIMPLE)
+        	cnts = imutils.grab_contours(cnts)
+        	self.center = None
 
 		# only proceed if at least one contour was found
 		if len(cnts) > 0:
-	    	# find the largest contour in the mask, then use
+	    		# find the largest contour in the mask, then use
 			# it to compute the minimum enclosing circle and
 			# centroid
 			c = max(cnts, key=cv2.contourArea)
@@ -330,20 +332,20 @@ class track_ball:
 				self.near_ball = False
 
 		else:
-            self.ball_visible = False
+        		self.ball_visible = False
 
 
-        cv2.imshow('window', image_np)
-        cv2.waitKey(2)
+        	cv2.imshow('window', image_np)
+        	cv2.waitKey(2)
 
 		# if behaviour is NORMAL TRACK it should move towards the ball
 		if self.behaviour == "normal_track" or self.behaviour == "find_track":
 			if self.ball_detected or self.near_ball:
-		    	angular_z = -0.003*(self.center[0] - 400)
-		        linear_x = -0.01*(self.radius - 100)
+				angular_z = -0.003*(self.center[0] - 400)
+		        	linear_x = -0.01*(self.radius - 100)
 				# if the robot almost still
 				if abs(angular_z) < 0.02 and abs(linear_x) < 0.02 :
-		    		self.at_ball = True
+		    			self.at_ball = True
 					self.colour = mask_colour[1]
 					# save ball info	
 					self.save_info(self.colour)
@@ -353,12 +355,12 @@ class track_ball:
 					if self.behaviour == "find_track":
 						# get the colour of the room that we want to track
 						room_colour = rospy.get_param(self.room)
-							if self.colour == room_colour:
-		                    	rospy.loginfo("NODE OPENCV TRACKING: The correct room %s (%s) has been found. Switch to play behaviour...", self.room, room_colour)
-                            	self.pub_room_found.publish(True)
-                        	else:
-                            	rospy.loginfo("NODE OPENCV TRACKING: The correct room %s (%s) has not been found. Switch to find behaviour", self.room, room_colour)
-                            	self.pub_room_found.publish(False)			
+						if self.colour == room_colour:
+		                    			rospy.loginfo("NODE OPENCV TRACKING: The correct room %s (%s) has been found. Switch to play behaviour...", self.room, room_colour)
+                            				self.pub_room_found.publish(True)
+                        			else:
+                            				rospy.loginfo("NODE OPENCV TRACKING: The correct room %s (%s) has not been found. Switch to find behaviour", self.room, room_colour)
+                            				self.pub_room_found.publish(False)			
 		    	   		
 					# publish info
 					self.pub_reach.publish(self.at_ball)
@@ -368,40 +370,41 @@ class track_ball:
 				else:
 					# follow ball
 					self.follow_ball()
-		# if ball visible
-		if mask_colour[1] != self.colour:
-            self.pub_ball.publish(self.ball_visible)
-        else:
-            self.pub_ball.publish(False)
+			# if ball visible
+			if mask_colour[1] != self.colour:
+            			self.pub_ball.publish(self.ball_visible)
+			else:
+            			self.pub_ball.publish(False)
 
 
-    ## method save_position
-    #
-    # Saves the position of the tracked ball
-    def save_position(self, colour):
-        rospy.loginfo("NODE OPENCV TRACKING: store position of the %s ball", colour)
+	## method save_position
+	#
+	# Saves the position of the tracked ball
+    	def save_position(self, colour):
+        	rospy.loginfo("NODE OPENCV TRACKING: store position of the %s ball", colour)
        
-        ball_position = [self.current_pos.x, self.current_pos.y]
-        rospy.loginfo("NODE OPENCV TRACKING: the ball position is %s", str(ball_pos))
+        	ball_position = [self.current_pos.x, self.current_pos.y]
+        	rospy.loginfo("NODE OPENCV TRACKING: the ball position is %s", str(ball_pos))
 
-        rospy.set_param(colour, ball_pos)
+        	rospy.set_param(colour, ball_pos)
 
 
 ## function main
 #
 # 
 def main(args):
-    # initialize ball tracking node
-    rospy.init_node('opencv_tracking', anonymous=True)
+	# initialize ball tracking node
+	rospy.init_node('opencv_tracking', anonymous=True)
 
-    # Initializes class
-    ballTracking = track_ball()
+    	# Initializes class
+    	ballTracking = track_ball()
 
-    try:
-        rospy.spin()
-    except KeyboardInterrupt:
-        print("NODE OPENCV TRACKING: Shutting down ROS Image feature detector module")
-    cv2.destroyAllWindows()
+    	try:
+        	rospy.spin()
+    	except KeyboardInterrupt:
+        	print("NODE OPENCV TRACKING: Shutting down ROS Image feature detector module")
+    	cv2.destroyAllWindows()
+
 
 if __name__ == '__main__':	
 	main(sys.argv)

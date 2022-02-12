@@ -68,7 +68,7 @@ class Normal_behavior(smach.State):
 
 		# seconds counter
 		seconds_counter = 0
-		.
+
 		# get current time to compute a random interval from the istant in which the robot entered normal state
 		start_time = rospy.Time.now()
 		
@@ -117,7 +117,7 @@ class Normal_track_behaviour(smach.State):
 	#
 	# state initialization
 	def __init__(self):
-		smach.State.__init__(self, outcomes=['state_normal'])
+		smach.State.__init__(self, outcomes=['start_normal'])
 		self.rate = rospy.Rate(20) # loop
 
 	## method execute
@@ -134,13 +134,13 @@ class Normal_track_behaviour(smach.State):
 		while not rospy.is_shutdown():
 			if(self.at_ball):
 				# if the robot has already reached it -> goes into normal 
-				return "state_normal"
+				return "start_normal"
 			self.rate.sleep()
 
 	# method check_at_ball
 	#
 	# subscriber callback for ball reaching
-	def check_at_ball(self, check)
+	def check_at_ball(self, check):
 		self.at_ball = check.data		
 
 			
@@ -230,7 +230,7 @@ class Play_behavior(smach.State):
 		
 		# seconds counter
 		seconds_counter = 0
-		.
+		
 		# get current time to compute a random interval from the istant
 		# in which the robot entered normal state
 		start_time = rospy.Time.now()
@@ -299,7 +299,7 @@ class Find_behavior(smach.State):
 		
 		# seconds counter
 		seconds_counter = 0
-		.
+		
 		# get current time to compute a random interval from the istant
 		# in which the robot entered normal state
 		start_time = rospy.Time.now()
@@ -327,7 +327,7 @@ class Find_behavior(smach.State):
 				# stop package explore-lite
 				self.movebaseClient.cancell_all_goals()
 				process.stop()
-				if not process.is_alive()
+				if not process.is_alive():
 					rospy.loginfo("NODE BEHAVIOUR MANAGER: Stop explore_lite, enter Track sub-state")
 				return 'start_track'
 			
@@ -342,7 +342,7 @@ class Find_behavior(smach.State):
 ## class Find_track_behaviour
 #
 # substate of the robot from Find behaviour
-class Find_track_behaviour()
+class Find_track_behaviour():
 	## method inid
 	#
 	# initialization
@@ -376,12 +376,12 @@ class Find_track_behaviour()
 	#
 	# callback to check if the robot is close at the detected ball
 	def check_at_ball(self, ball):
-		seld.at_ball = ball.data
+		self.at_ball = ball.data
 	## method check_at_room
 	#
 	# callback to check if the robot is close at the detected ball
 	def check_at_room(self, room):
-		seld.at_room = room.data
+		self.at_room = room.data
 
 
 ## function main
