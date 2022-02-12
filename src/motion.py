@@ -102,8 +102,8 @@ def move_random_normal():
 	# compute random position
 	randPos = get_random_position()
 
-	goal_pos.target_pose.header.frame_id = "map"
-    	goal_pos.target_pose.header.stamp = rospy.Time.now()
+	goalPos.target_pose.header.frame_id = "map"
+    	goalPos.target_pose.header.stamp = rospy.Time.now()
 	# set random position to be reached
 	goalPos.goal.target_pose.pose.position.x = randPos[0]
     	goalPos.goal.target_pose.pose.position.y = randPos[1]
@@ -130,15 +130,15 @@ def move_sleep_position():
 	goalPos.target_pose.header.stamp = rospy.Time.now()
 
 	## set robot goal position
-	goalPos.goal.target_pose.pose.position.x = home[0]
-    	goalPos.goal.target_pose.pose.position.y = home[1]
+	goalPos.goal.target_pose.pose.position.x = home_position[0]
+    	goalPos.goal.target_pose.pose.position.y = home_position[1]
     	goalPos.goal.target_pose.pose.position.z = 0
-	goal_pos.target_pose.pose.orientation.w = 2
+	goalPos.target_pose.pose.orientation.w = 2
 	
 	# send robot position and wait that the goal is reached within 60 seconds
 	act_c.send_goal(goalPos.goal)
-	act_c.send_goal(goal_pos)
-    	rospy.loginfo("Robot returns home...")
+	act_c.send_goal(goalPos)
+    	rospy.loginfo("NODE MOTION: Robot returns home...")
     	rospy.loginfo(goalPos.target_pose.pose.position)
     	act_c.wait_for_result(rospy.Duration.from_sec(240.0))
     	result = act_c.get_result()
@@ -156,12 +156,12 @@ def play_motion():
 		goalPos.target_pose.header.frame_id = "map"
         	goalPos.target_pose.header.stamp = rospy.Time.now()
 		# set robot goal position
-        	goalPos.target_pose.pose.position.x = home[0]
-        	goalPos.target_pose.pose.position.y = home[1]
+        	goalPos.target_pose.pose.position.x = home_position[0]
+        	goalPos.target_pose.pose.position.y = home_position[1]
         	goalPos.target_pose.pose.position.z = 0
         	goalPos.target_pose.pose.orientation.w = 2
 		# send robot position and wait that the goal is reached within 60 seconds
-        	act_c.send_goal(goal_pos)
+        	act_c.send_goal(goalPos)
         	rospy.loginfo("NODE MOTION: Robot goes back to where the human is")
         	act_c.wait_for_result(rospy.Duration.from_sec(240.0))
         	result = act_c.get_result()
@@ -184,20 +184,20 @@ def play_motion():
             		currentRoom = None
         	# in case the room was already mapped, then the robot can reach it
         	elif room_position != None:
-        		goal_pos.target_pose.header.frame_id = "map"
-        		goal_pos.target_pose.header.stamp = rospy.Time.now()
+        		goalPos.target_pose.header.frame_id = "map"
+        		goalPos.target_pose.header.stamp = rospy.Time.now()
         		# set room goal position
-            		goal_pos.target_pose.pose.position.x = room_position[0]
-            		goal_pos.target_pose.pose.position.y = room_position[1]
-            		goal_pos.target_pose.pose.position.z = 0
-            		goal_pos.target_pose.pose.orientation.w = 2
+            		goalPos.target_pose.pose.position.x = room_position[0]
+            		goalPos.target_pose.pose.position.y = room_position[1]
+            		goalPos.target_pose.pose.position.z = 0
+            		goalPos.target_pose.pose.orientation.w = 2
             		# read current position, send it to the robot and wait for him to reach it
-            		act_c.send_goal(goal_pos)
-            		rospy.loginfo("NODE MOTION: the robot going to the %s (%s)", room, rospy.get_param(room))
+            		act_c.send_goal(goalPos)
+            		rospy.loginfo("NODE MOTION: the robot going to the %s (%s)", currentRoom, rospy.get_param(currentRoom))
             		act_c.wait_for_result(rospy.Duration.from_sec(240.0))
             		result = act_c.get_result()
             		if result:
-                		rospy.loginfo("NODE MOTION: the robot has reached the room %s (%s) in time", room, rospy.get_param(room))
+                		rospy.loginfo("NODE MOTION: the robot has reached the room %s (%s) in time", currentRoom, rospy.get_param(currentRoom))
                 		# wait some time before returning to the human
                 		rospy.sleep(random.randint(3,10))
                 		at_human = False
