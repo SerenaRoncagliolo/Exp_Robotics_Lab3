@@ -35,9 +35,9 @@ def get_room_position():
 ## function check_at_human()
 #
 # callback to check if the robot is in front of the human or not
-def check_at_human(human):	
+def check_at_human(home):	
 	global at_human
-	at_human = human.data
+	at_human = home.data
 
 ## main function
 #

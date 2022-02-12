@@ -79,7 +79,7 @@ class track_ball:
 		self.at_ball = False
 		self.colour = None
 		self.current_position = None
-		self.room = None
+		self.currentRoom = None
 
 		self.regions_ = {
 			'right': 0,
@@ -116,8 +116,8 @@ class track_ball:
 	## method get_room_data
 	#
 	# subscriber callback to get current room
-	def get_room_data(self,room):
-		self.room = room.data	
+	def get_room_data(self,currentRoom):
+		self.currentRoom = currentRoom.data	
 
 	## method get_odom_data
 	#
@@ -351,12 +351,12 @@ class track_ball:
 					
 					if self.behaviour == "find_track":
 						# get the colour of the room that we want to track
-						room_colour = rospy.get_param(self.room)
+						room_colour = rospy.get_param(self.currentRoom)
 						if self.colour == room_colour:
-		                    			rospy.loginfo("NODE OPENCV TRACKING: The correct room %s (%s) has been found. Switch to play behaviour...", self.room, room_colour)
+		                    			rospy.loginfo("NODE OPENCV TRACKING: The correct room %s (%s) has been found. Switch to play behaviour...", self.currentRoom, room_colour)
                             				self.publisherRoom.publish(True)
                         			else:
-                            				rospy.loginfo("NODE OPENCV TRACKING: The correct room %s (%s) has not been found. Switch to find behaviour", self.room, room_colour)
+                            				rospy.loginfo("NODE OPENCV TRACKING: The correct room %s (%s) has not been found. Switch to find behaviour", self.currentRoom, room_colour)
                             				self.publisherRoom.publish(False)			
 		    	   		
 					# publish info

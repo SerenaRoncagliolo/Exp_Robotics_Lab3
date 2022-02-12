@@ -172,7 +172,7 @@ class Find_track_behaviour(smach.State):
 			# if not it should keep searchinng
 			if(self.at_ball and not self.at_room):
 				return 'start_find'
-			elif(self.at_ball and not self.at_room):
+			elif(self.at_ball and self.at_room):
 				return 'start_play'
 			self.rate.sleep()
 	## method check_at_ball
@@ -228,7 +228,7 @@ class Sleep_behavior(smach.State):
 			if(self.at_home):
 				# make it sleep for some time, rospy.sleep()
 				rospy.loginfo('NODE BEHAVIOR: Wait some time to wake up')
-				rospy.sleep(random.randint(20,35))
+				rospy.sleep(random.randint(20,40))
 				self.at_home = False
 				# exit sleep state
 				return 'stop_sleep'
@@ -236,8 +236,8 @@ class Sleep_behavior(smach.State):
 	## method read_actual_position
 	#
    	# subscriber to actual_position_robot topic callback, it reads the actual position of the robot
-   	def check_if_home_position(self, at_home):
-		self.at_home = at_home.data
+   	def check_if_home_position(self, home):
+		self.at_home = home.data
 
 ## class Play_behavior
 #
@@ -299,8 +299,8 @@ class Play_behavior(smach.State):
 	## method read_ball_detection
 	#
 	# subscriber callback to find the ball 
-	def read_current_location(self,room):
-		self.room_unknown = room.data
+	def read_current_location(self,currentRoom):
+		self.room_unknown = currentRoom.data
 
 
 ## class Find_behavior
@@ -358,19 +358,19 @@ class Find_behavior(smach.State):
 			tot_time_given = current_time.secs - start_time.secs
 
 			# after some time go back to Play state
-			if(time_passed > random.randint(240,420)):
+			if(tot_time_given > random.randint(240,420)):
 				# stop explore-lite
 				self.movebaseClient.cancel_all_goals()
 				process.stop()
 				if not process.is_alive():
-					rospy.loginfo("NODE BEHAVIOUR MANAGER: Stop explore_lite, return in Play state")
+					rospy.loginfo("NODE BEHAVIOUR MANAGER: Stop explore_lite, enter Play state")
 				
 				return "start_play"	
 
 			# if the robot detects the ball then it enter the sub-state track
-			if self.ball_detected:
+			if self.ball_visible:
 				# stop package explore-lite
-				self.movebaseClient.cancell_all_goals()
+				self.movebaseClient.cancel_all_goals()
 				process.stop()
 				if not process.is_alive():
 					rospy.loginfo("NODE BEHAVIOUR MANAGER: Stop explore_lite, enter Track sub-state")
@@ -383,7 +383,7 @@ class Find_behavior(smach.State):
 		#
 		# subscriber call
 		def ball_tracking(self, ball):
-			self.ball_detected = ball.data
+			self.ball_visible = ball.data
 
 
 

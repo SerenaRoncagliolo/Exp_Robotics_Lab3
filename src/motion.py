@@ -7,15 +7,13 @@
 import rospy
 #import time
 import random
-import math
-import actionlib
-import actionlib.msg
-
 from std_msgs.msg import String # needed for subscribing strings
 from std_msgs.msg import Bool # needed for subscribing booleans
 from geometry_msgs.msg import Twist, Point, Pose
 from sensor_msgs.msg import CompressedImage
-
+import math
+import actionlib
+import actionlib.msg
 from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
 
 VERBOSE = False # flag to make regular expressions more readable
@@ -70,10 +68,10 @@ def get_current_room_position():
 ## function callback_get_behavior
 #
 # subscriber callback to the behaviour topic
-def callback_get_behaviour(data):
+def callback_get_behaviour(state):
 	#rospy.loginfo('NODE MOTION: Executing callback behavior')
-	global behaviour 
-	behaviour = data.data
+    global behaviour
+    behaviour = state.data
 
 ## function get_room_command
 #
@@ -87,7 +85,7 @@ def get_room_command(human_command):
 # callback to send goal
 def feedback_cb(check):
 	# while the robot is reaching the goal position, check if the behaviour changes
-	if behaviour == 'play' or behaviour == 'sleep' or behaviour == 'track_normal':
+	if behaviour == 'play' or behaviour == 'sleep' or behaviour == 'normal_track':
 		rospy.loginfo("NODE MOTION: Warning, changed behavior")
 		# we need to cancel all goals        
 		act_c.cancel_all_goals()  # cancel() 
@@ -136,7 +134,6 @@ def move_sleep_position():
 	goalPos.target_pose.pose.orientation.w = 2
 	
 	# send robot position and wait that the goal is reached within 60 seconds
-	act_c.send_goal(goalPos.goal)
 	act_c.send_goal(goalPos)
     	rospy.loginfo("NODE MOTION: Robot returns home...")
     	rospy.loginfo(goalPos.target_pose.pose.position)
@@ -183,12 +180,12 @@ def play_motion():
             		at_human = False
             		currentRoom = None
         	# in case the room was already mapped, then the robot can reach it
-        	elif room_position != None:
+        	elif currentRoomPosition != None:
         		goalPos.target_pose.header.frame_id = "map"
         		goalPos.target_pose.header.stamp = rospy.Time.now()
         		# set room goal position
-            		goalPos.target_pose.pose.position.x = room_position[0]
-            		goalPos.target_pose.pose.position.y = room_position[1]
+            		goalPos.target_pose.pose.position.x = currentRoomPosition[0]
+            		goalPos.target_pose.pose.position.y = currentRoomPosition[1]
             		goalPos.target_pose.pose.position.z = 0
             		goalPos.target_pose.pose.orientation.w = 2
             		# read current position, send it to the robot and wait for him to reach it
@@ -209,10 +206,11 @@ def play_motion():
 #
 def main():
 	## initialize node
-	rospy.init_node('motion')
+	rospy.init_node("motion")
 	global at_home # boolean to check if robot at home or not
 	global at_human # boolean to check if robot is in front of the human or not
 	global act_c # goal position to reach 
+	global rate
 
     	rate = rospy.Rate(20)
 
@@ -224,7 +222,7 @@ def main():
     	rospy.loginfo("NODE MOTION: subscribed to the behaviour")
 
 	# initialize action client move_base package
-	act_c = actionlib.SimpleActionClient('/move_base', MoveBaseAction)
+	act_c = actionlib.SimpleActionClient('move_base', MoveBaseAction)
 	
 	# wait for the initialization of the server for some seconds
     	act_c.wait_for_server(rospy.Duration(10))
@@ -232,7 +230,7 @@ def main():
 	## move according to the behaviour
 	while not rospy.is_shutdown():			
 		# check robot behavior
-		if(behaviour == "sleep"):
+		if behaviour == "sleep":
 			## the robot moves to predefined location
 			# call function move_sleep_position()
 			if not at_home:
