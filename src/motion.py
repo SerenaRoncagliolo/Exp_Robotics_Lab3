@@ -44,8 +44,8 @@ rate = None
 #
 # get a random position given x and y coordinates
 def get_random_position():
-    randX = random.randint(-6, 6) # x coordinate
-    randY = random.randint(-8, 8) # y coordinate
+    randX = random.randint(-6, 0) # x coordinate
+    randY = random.randint(0, 8) # y coordinate
     randPos = [randX, randY]
     return randPos
 
@@ -103,9 +103,9 @@ def move_random_normal():
 	goalPos.target_pose.header.frame_id = "map"
     	goalPos.target_pose.header.stamp = rospy.Time.now()
 	# set random position to be reached
-	goalPos.goal.target_pose.pose.position.x = randPos[0]
-    	goalPos.goal.target_pose.pose.position.y = randPos[1]
-    	goalPos.goal.target_pose.pose.position.z = 0
+	goalPos.target_pose.pose.position.x = randPos[0]
+    	goalPos.target_pose.pose.position.y = randPos[1]
+    	goalPos.target_pose.pose.position.z = 0
 	goalPos.target_pose.pose.orientation.w = 2
 	# send robot position and wait that the goal is reached within 60 seconds
     	act_c.send_goal(goalPos, feedback_cb=feedback_cb) # send position
@@ -128,9 +128,9 @@ def move_sleep_position():
 	goalPos.target_pose.header.stamp = rospy.Time.now()
 
 	## set robot goal position
-	goalPos.goal.target_pose.pose.position.x = home_position[0]
-    	goalPos.goal.target_pose.pose.position.y = home_position[1]
-    	goalPos.goal.target_pose.pose.position.z = 0
+	goalPos.target_pose.pose.position.x = home_position[0]
+    	goalPos.target_pose.pose.position.y = home_position[1]
+    	goalPos.target_pose.pose.position.z = 0
 	goalPos.target_pose.pose.orientation.w = 2
 	
 	# send robot position and wait that the goal is reached within 60 seconds
@@ -147,7 +147,7 @@ def move_sleep_position():
 #
 # it control the movements of the robot in play behaviour
 def play_motion():
-	global at_home, currentRoom
+	global at_human, currentRoom
 		
 	if not at_human:
 		goalPos.target_pose.header.frame_id = "map"
@@ -168,7 +168,7 @@ def play_motion():
 		    	currentRoomPos = None
 		    	publisherAtHuman.publish(at_human)
 	else:
-        	currentRoomPosition = get_room_pos()
+        	currentRoomPosition = get_current_room_position()
         	# if the room position is unknown, publish to 'no_room' topic (go to Find behaviour)
         	if currentRoomPosition == None:
         		rospy.loginfo("NODE MOTION: the room to reach is unknown!")
@@ -218,7 +218,7 @@ def main():
     	rospy.Subscriber("/room_command", String, get_room_command)
 
     	# subscriber to current behaviour
-    	rospy.Subscriber("/behaviour", String, callback_get_behaviour)
+    	rospy.Subscriber("/behavior", String, callback_get_behaviour)
     	rospy.loginfo("NODE MOTION: subscribed to the behaviour")
 
 	# initialize action client move_base package
@@ -236,17 +236,17 @@ def main():
 			if not at_home:
 				move_sleep_position()
 				if at_home:
-					publisherHome.publish(at_home)
+					publisherAtHome.publish(at_home)
 		else:
 			# not in goal
 			at_home = False
 			
 			if behaviour == "normal":
-                		move_random_normal()()
+                		move_random_normal()
                 		rospy.sleep(1)
             
             		if behaviour == "play":
-                		move_play()
+                		play_motion()
 			
 		rate.sleep()	
 

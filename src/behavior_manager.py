@@ -126,8 +126,8 @@ class Normal_track_behaviour(smach.State):
 	# is really close to the ball or not
 	def execute(self, userdata):
 		rospy.loginfo("NODE BEHAVIOR_MANAGER: publish normal track behavior")
-		pub_state.publish("normal_track")
-		self.ball_reached = False
+		pub_behavior.publish("normal_track")
+		self.at_ball = False
 
 		rospy.Subscriber("/at_ball", Bool, self.check_at_ball)
 
@@ -159,7 +159,7 @@ class Find_track_behaviour(smach.State):
 	# state execution
 	def execute(self, userdata):
 		rospy.loginfo("NODE BEHAVIOR_MANAGER: entering sub-state Find Track")
-		pub_state.publish("find_track")
+		pub_behavior.publish("find_track")
 		self.at_ball = False
 		self.at_room = False
 		
@@ -288,7 +288,7 @@ class Play_behavior(smach.State):
 			# compute how long it stays in normal time
 			tot_time_given = current_time.secs - start_time.secs
 
-			if self.room_unkown:
+			if self.room_unknown:
 				## if the location sent by the human is unknown go to Find state
 				return 'start_find'
 			if(tot_time_given > random.randint(120,360)):
@@ -296,7 +296,7 @@ class Play_behavior(smach.State):
 				return 'stop_play'
 			self.rate.sleep()
 				
-	## method read_ball_detection
+	## method read_current_location
 	#
 	# subscriber callback to find the ball 
 	def read_current_location(self,currentRoom):
@@ -323,19 +323,19 @@ class Find_behavior(smach.State):
 	# state execution
 	def execute(self,userdata):
 		rospy.loginfo("NODE BEHAVIOR_MANAGER: publish find behavior")
-		pub_state.publish("find")
+		pub_behavior.publish("find")
 			
-		self.ball_detected = False
+		self.ball_visible = False
 		# subscriber for ball detection
 		rospy.Subscriber("/ball_visible", Bool, self.ball_tracking)
 
 		# use roslaunch to execute the ros explore_lite package
-		# package = 'explore_lite'
-		# node_type = 'explore'
-		# node_name = 'explore'
-		node = roslaunch.core.Node('explore_lite', 'explore', 'explore')
+		package = 'explore_lite'
+		node_type = 'explore'
+		node_name = 'explore'
+		node = roslaunch.core.Node(package, node_type, node_name)
 
-		launch = roslaunch.scriptapi.ROSlaunch()
+		launch = roslaunch.scriptapi.ROSLaunch()
 		launch.start()
 
 		process = launch.launch(node)
@@ -379,11 +379,11 @@ class Find_behavior(smach.State):
 			
 			# loop
 			self.rate.sleep()
-		## method ball_tracking
-		#
-		# subscriber call
-		def ball_tracking(self, ball):
-			self.ball_visible = ball.data
+	## method ball_tracking
+	#
+	# subscriber call
+	def ball_tracking(self, ball):
+		self.ball_visible = ball.data
 
 
 
