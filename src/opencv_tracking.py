@@ -70,14 +70,14 @@ class track_ball:
 		#	- boolean to check if the ball is moving or not
 		# 	- boolean to check if the robot is close to the ball or not
 		#	- robot behavior
+		self.ball_visible = False
+		self.near_ball = False
 		self.center = None
         	self.radius = None
-		self.ball_visible = False
-       		#self.ball_stop = False
-        	self.near_ball = False
-        	self.behaviour = None
+		self.behaviour = None
 		self.at_ball = False
-		self.colour = None
+       		#self.ball_stop = False
+        self.colour = None			
 		self.current_position = None
 		self.currentRoom = None
 
@@ -221,7 +221,7 @@ class track_ball:
 	## method mask_colour
 	#
 	#  method to decide which colour
-	def mask_colour(self, maskGreen, maskBlack, maskRed, maskYellow, maskBlue, maskMagenta):
+	def mask_colour_function(self, maskGreen, maskBlack, maskRed, maskYellow, maskBlue, maskMagenta):
 		sumGreen = np.sum(maskGreen)
 		sumBlack = np.sum(maskBlack)
 		sumRed = np.sum(maskRed)
@@ -229,24 +229,26 @@ class track_ball:
 		sumBlue = np.sum(maskBlue)
 		sumMagenta = np.sum(maskMagenta)
 
-		sumArray = np.array([sumGreen, sumBlack, sumRed, sumYellow, sumBlue, sumMagenta])
-		max_ind = np.argmax(sumArray)
+        # rospy.loginfo([sumGreen, sumBlack, sumRed, sumYellow, sumBlue, sumMagenta])
+        sumArray = np.array([sumGreen, sumBlack, sumRed,
+                            sumYellow, sumBlue, sumMagenta])
+        max_ind = np.argmax(sumArray)
 	
 		# return mask 
-		if max_ind == 0:
-			return [maskGreen, 'Green']
-		elif max_ind == 1:
-			return [maskBlack, 'Black']
-		elif max_ind == 2:
-			return [maskRed, 'Red']
-		elif max_ind == 3:
-			return [maskYellow, 'Yellow']
-		elif max_ind == 4:
-			return [maskBlue, 'Blue']
-		elif max_ind == 5:
-			return [maskMagenta, 'Magenta']
-		else:
-			return [maskGreen, 'None']
+        if max_ind == 0:
+            return [maskGreen, 'Green']
+        elif max_ind == 1:
+            return [maskBlack, 'Black']
+        elif max_ind == 2:
+            return [maskRed, 'Red']
+        elif max_ind == 3:
+            return [maskYellow, 'Yellow']
+        elif max_ind == 4:
+            return [maskBlue, 'Blue']
+        elif max_ind == 5:
+            return [maskMagenta, 'Magenta']
+        else:
+            return [maskGreen, 'None']    # default (the masks are all zeroes)
 		
 	## method follow_ball
 	#
@@ -290,7 +292,7 @@ class track_ball:
         	maskBlue = cv2.inRange(hsv, blueLower, blueUpper)
         	maskMagenta = cv2.inRange(hsv, magentaLower, magentaUpper)
         	# choose the correct mask
-        	mask_colour = self.mask_colour(maskGreen, maskBlack, maskRed, maskYellow, maskBlue, maskMagenta)
+        	mask_colour = self.mask_colour_function(maskGreen, maskBlack, maskRed, maskYellow, maskBlue, maskMagenta)
 
         	mask = cv2.erode(mask_colour[0], None, iterations=2)
         	mask = cv2.dilate(mask, None, iterations=2)

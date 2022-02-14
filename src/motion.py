@@ -44,8 +44,8 @@ rate = None
 #
 # get a random position given x and y coordinates
 def get_random_position():
-    randX = random.randint(-6, 0) # x coordinate
-    randY = random.randint(0, 8) # y coordinate
+    randX = random.randint(-6, 6) # x coordinate
+    randY = random.randint(-8, 8) # y coordinate
     randPos = [randX, randY]
     return randPos
 

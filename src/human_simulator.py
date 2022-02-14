@@ -64,7 +64,7 @@ def main():
 		# if in front of human we can send a message	
 		if at_human:
 			# random time interval
-			rospy.sleep(random.randint(2,4))
+			rospy.sleep(random.randint(2,5))
 			pos = get_room_position()
 			rospy.loginfo("NODE HUMAN SIMULATOR: robot should move to %s (%s)", pos, rospy.get_param(pos))
 			# pub command
