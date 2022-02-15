@@ -138,11 +138,11 @@ URDF is an XML file format used in ROS to describe all elements of a robot. In t
 
 **Components**  
 * **Behavior Command Manager:** this component simulates the Finite State Machine (FSM) and controls the switching between the four robot behaviours (Normal, Sleep, Play and Find) described in detail in the section _State Machine_. Its connection to the other components is given in the description of their implementation.
-* **Motion:** this component moves the robot when it assumes Normal, Sleep or Play behaviour. To get information regarding the current behaviour of the robot, it subscribes to the /behaviour topic and moves the robot accordingly.
-  * in Normal behaviour: the robot get a random goal position within the map max dimensions and moves to it. The position is sent to the _move_base_ node, which moves the robot accordingly. 
-  * in Sleep behaviour: in this state, the component moves the robot to a predefined _home position_, which is sent again as goal position to the server _move_base_. When the robot has reached home, the Motion component publishes a  message on the topic /at_home. This topic is subscribed by the Behaviour controller to have an update regarding the robot location.
-  * in Play behaviour: if not there already, the robot should first move in from of the human, so that he can receive the next command. Once in front of him, the component publishes on the topic /at_home, which is subscribed by the component Human Simulator. The robot can then receive a command, which tells it which room it should move to. If the location is already known and contained in the known map of the apartment, then the robot can reach it. If not it should notify the Behaviour component by publishing on the topic /room_unkown. Once done so, the robot switches to Find behaviour.
-* **OpenCv Ball Tracking:** as in the previous lab, we implemented a component that makes use of the OpenCV library to detect the ball. [_OpenCV_](https://opencv.org/) is a library used for real-time computer vision. ROS can be interfaced to OpenCV by using [CvBridge](http://wiki.ros.org/cv_bridge) and [convert ROS images](cv_bridge/Tutorials/ConvertingBetweenROSImagesAndOpenCVImagesPython - ROS Wiki) into OpenCV images, or vice versa. This library is used to determine if the ball is contained within the robot camera range. This component subscribes to the robot camera topic given by _/robot/camera1/image_raw/compressed_. If the ball is detected while the robot is in Normal or Find state, it will switch respectively to the sub-state Normal Track or Find Track. Once in these substates, the OpenCV Tracking component publishes a velocity on the /cmd_vel topic. This is done because we want the robot to get as close as possible to the detected ball. Once it gets close, it alerts the Behaviour manager component by publishing on the topic /at_ball. If the robot was in the Normal Track substate it goes back to the Normal state. If instead, it was in the Find Track substate, it should check if the room in which it is currently located corresponds to the one given in the last user command. If so, it means that it has finally reached the desired goal room, it publishes a boolean message on the /at_room topic and it turns back to Play Behaviour. Otherwise it goes back to Find state. As opposed to the implementation in the previous version of the project, the robot should now be capable to distinguish the colour of the ball, which will be used to identify the room.
+* **Motion:** this component moves the robot is in Normal, Sleep or Play state. To get information regarding the current behaviour of the robot, it subscribes to the /behaviour topic and moves the robot accordingly.
+  * in Normal behaviour: the robot get a random goal position within the map. This goal position is sent to the _move_base_ action server which moves the robot accordingly and waits until the position is reached. 
+  * in Sleep behaviour: in this state, the component moves the robot to a predefined _home position_, which is sent again as goal position to the server _move_base_. When the robot has reached it, the Motion component publishes a  message on the topic /at_home. This topic is subscribed by the Behaviour controller to have an update regarding the robot location.
+  * in Play behaviour: if not there already, the robot should first move in from of the human, so that he can receive the next command. Once in front of him, the component publishes on the topic /at_human, which is subscribed by the component Human Simulator. The robot can then receive a command, which tells it which room it should move to. If the location is already known and contained in the known map of the apartment, then the robot can reach it. If not it should notify the Behaviour component by publishing on the topic /room_unkown. Once done so, the robot switches to Find behaviour.
+* **OpenCv Ball Tracking:** as in the previous lab, we implemented a component that makes use of the OpenCV library to detect the ball. [_OpenCV_](https://opencv.org/) is a library used for real-time computer vision. ROS can be interfaced to OpenCV by using [CvBridge](http://wiki.ros.org/cv_bridge) and [convert ROS images](cv_bridge/Tutorials/ConvertingBetweenROSImagesAndOpenCVImagesPython - ROS Wiki) into OpenCV images, or vice versa. This library is used to determine if the ball is contained within the robot camera range. This component subscribes to the robot camera topic given by _/robot/camera1/image_raw/compressed_. If the ball is detected while the robot is in Normal or Find state, it will switch respectively to the sub-state Normal Track or Find Track. Once in these substates, the OpenCV Tracking component publishes a velocity on the /cmd_vel topic. This is done because we want the robot to get as close as possible to the detected ball. Once it gets close, it alerts the Behaviour manager component by publishing on the topic /at_ball. If the robot was in the Normal Track substate it goes back to the Normal state. If instead, it was in the Find Track substate, it should check if the room in which it is currently located corresponds to the one given in the last user command. If so, it means that it has finally reached the desired goal room, it publishes a boolean message on the /at_room topic and it turns back to Play Behaviour. Otherwise it goes back to Find state. As opposed to the implementation in the previous version of the project, the robot should now be capable to distinguish the colour of the ball, which will be used to identify the room. Also
 * **Human Interface Simulator:** this component is used to simulate a human interacting with the robot. It can publish a message on the topic /start_play, which is subscribed by the Behaviour manager. This command is given at random time instantm and it gives the name of the room where the robot is supposed to move.
 
 ### Differences with previous lab
@@ -182,26 +182,29 @@ The wheeled dog has four behaviors:
   * it can use already known positions or explore independently. 
   * when an object is detected, as done in Normal state, it enters the Find Track sub-state to move closer to the object and save the position.
 
+### ROS Parameters
+* home_x: x coordinate of the robot home position
+* home_y: y coordinate of the robot home position
+* frequency_sleep: frequency of the Sleep behaviour
+* frequency_play: frequency of the Play command sent by the human
+
 ### ROS Topics
 As shown in the UML graph or the system architecture, the system make use of the following topics:
-* /behavior: this topic is subscribed by the OpenCV Tracking and Motion components to read the current behavior of the robot. It is used by the Behavior Manager component to publish the state of the robot as a String
-* /at_home: this topic is subscribed by the behavior manager to check if the robot has reached or not home position, so that it can switch to sleep behavior. It is used by motion to publish this condition as a boolean
-* /ball_visible: topic subscribed by Behavior manager to check if the ball is inside the visual range of the robot or not. It is pusblish by the OpenCV tracking component using a boolean
-* /robot/camera: topic subscribed by the OpenCV tracking component to get the ROS image and convert it in OpenCv image. 
-* /robot/cmd_vel: topic published by the OpenCV tracking component to set the robot velocity in Gazebo. This topic is also published by the Go To Point Robot Action server 
-* /robot/odom: topic used to get by the robot odometry from Gazebo simulator. It is subscribed by the Go to Point Robot Action server
-* /robot/reaching_goal: set of topics used by the action server Go to Point Robot and defined by:
-  * /result
-  * /status
-  * /feedback
-  * /goal  
-* /ball/cmd_vel: topic published by the OpenCV tracking component to set the robot velocity in Gazebo. This topic is also published by the Go To Point Robot Action server 
-* /ball/odom: topic used to get by the robot odometry from Gazebo simulator. It is subscribed by the Go to Point Robot Action server
-* /ball/reaching_goal: set of topics used by the action server Go to Point Robot and defined by:
-  * /result
-  * /status
-  * /feedback
-  * /goal  
+* /behavior: this topic is subscribed by the _OpenCV Tracking_ and _Motion_ components to read the current behavior of the robot. It is used by the _Behavior Manager_ component to publish the state of the robot as a String
+* /at_home: this topic is subscribed by the _Behavior Manager_ to check if the robot has reached or not home position, so that it can switch to sleep behavior. It is used by _Motion_ to publish this condition as a boolean
+* /at_human: this topic is subscribed by the _Human Simulator_ to check if the robot is in front of the human or not, so that it can wait there for a command. It is used by _Motion_ to publish this condition as a boolean
+* /at_room: this topic is subscribed by the _Behavior Manager_ to check if the robot has reached or not the given room. It is used by _OpenCV Tracking_ to publish this condition as a boolean
+* /ball_visible: topic subscribed by _Behavior Manager_ to check if the ball is inside the visual range of the robot or not. It is pusblish by the _OpenCV tracking_ component using a boolean
+* /at_ball: this topic is subscribed by the _Behavior Manager_ to check if the robot has reached the detected ball. It is used by _OpenCV Tracking_ to publish this condition as a boolean
+* /human_command_play: topic subscribed by _Behaviour Manager_ to make the robot switch to Play state. It is published by _Human Simulator_ as a Bool
+* /room_command: topic subscribed by _Motion_ to read which room the robot should move to. It is published by _Human Simulator_ as a String
+* /camera1/image_raw/compressed: topic subscribed by the OpenCV tracking component to get the ROS image and convert it in OpenCv image. 
+* /cmd_vel: topic published by the _OpenCV tracking_ component and by _move_base_ to set the robot velocity in Gazebo.  
+* /odom: topic used to get by the robot odometry from Gazebo simulator
+* /scan: topic for the LaserScan output, used by _OpenCV tracking_ and _move_base_ to avoid obstacles 
+* /map: topic on which _gmapping_ publishes the created map
+* /goal: goal for the _move_base_ action server
+* /result: result of the _move_base_ action server
 
 ### Rqt_graphs 
 
