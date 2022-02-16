@@ -44,8 +44,8 @@ rate = None
 #
 # get a random position given x and y coordinates
 def get_random_position():
-    randX = random.randint(-6, 6) # x coordinate
-    randY = random.randint(-8, 8) # y coordinate
+    randX = random.randint(0, 3) # x coordinate
+    randY = random.randint(0, 3) # y coordinate
     randPos = [randX, randY]
     return randPos
 
@@ -86,7 +86,7 @@ def get_room_command(human_command):
 def feedback_cb(check):
 	# while the robot is reaching the goal position, check if the behaviour changes
 	if behaviour == 'play' or behaviour == 'sleep' or behaviour == 'normal_track':
-		rospy.loginfo("NODE MOTION: Warning, changed behavior")
+		rospy.loginfo("NODE MOTION: Warning, changed behavior in %s", behaviour)
 		# we need to cancel all goals        
 		act_c.cancel_all_goals()  # cancel() 
 
@@ -153,8 +153,8 @@ def play_motion():
 		goalPos.target_pose.header.frame_id = "map"
         	goalPos.target_pose.header.stamp = rospy.Time.now()
 		# set robot goal position
-        	goalPos.target_pose.pose.position.x = home_position[0]
-        	goalPos.target_pose.pose.position.y = home_position[1]
+        	goalPos.target_pose.pose.position.x = -5
+        	goalPos.target_pose.pose.position.y = 8
         	goalPos.target_pose.pose.position.z = 0
         	goalPos.target_pose.pose.orientation.w = 2
 		# send robot position and wait that the goal is reached within 60 seconds

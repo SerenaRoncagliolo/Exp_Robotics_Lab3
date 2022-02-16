@@ -41,7 +41,7 @@ class Normal_behavior(smach.State):
 	# 	- initializes the state class
 	def __init__(self):
 		smach.State.__init__(self, 
-		                     outcomes=['start_sleep','start_play','start_track']
+		                     outcomes=['start_sleep','start_play','start_track_normal']
 		                    )	
 		 # Loop 100Hz
 		self.rate = rospy.Rate(20) # loop at freq 20 Hz
@@ -85,7 +85,7 @@ class Normal_behavior(smach.State):
 			# if ball detected
 			if(self.ball_visible):
 				## the robot sees the ball it should enter sub-state track
-				return 'start_track'
+				return 'start_track_normal'
 			# if command from human
 			if(self.human_command_play):
 				## if the play command is received the robot should switch to play
@@ -312,7 +312,7 @@ class Find_behavior(smach.State):
 	#
 	# initialization
 	def __init__(self):
-		smach.State.__init__(self, outcomes=['start_play', 'start_track'])
+		smach.State.__init__(self, outcomes=['start_play', 'start_track_find'])
 		self.rate = rospy.Rate(20)
 
 		# create action client to move_base and wait for the server answer
@@ -375,7 +375,7 @@ class Find_behavior(smach.State):
 				if not process.is_alive():
 					rospy.loginfo("NODE BEHAVIOUR MANAGER: Stop explore_lite, enter Track sub-state")
 				
-				return 'start_track'
+				return 'start_track_find'
 			
 			# loop
 			self.rate.sleep()
@@ -403,10 +403,10 @@ def main():
 	## machine container
 	with sm:
 		## add states to the container,
-		smach.StateMachine.add('NORMAL', Normal_behavior(), transitions={'start_sleep':'SLEEP','start_play':'PLAY', 'start_track':'NORMALTRACK'})
+		smach.StateMachine.add('NORMAL', Normal_behavior(), transitions={'start_sleep':'SLEEP','start_play':'PLAY', 'start_track_normal':'NORMALTRACK'})
 		smach.StateMachine.add('SLEEP', Sleep_behavior(), transitions={'stop_sleep':'NORMAL'})	
  		smach.StateMachine.add('PLAY', Play_behavior(), transitions={'stop_play':'NORMAL','start_find':'FIND'})	
-		smach.StateMachine.add('FIND', Find_behavior(), transitions={'start_play':'PLAY', 'start_track':'FINDTRACK'})	
+		smach.StateMachine.add('FIND', Find_behavior(), transitions={'start_play':'PLAY', 'start_track_find':'FINDTRACK'})	
 		smach.StateMachine.add('NORMALTRACK', Normal_track_behaviour(), transitions={'start_normal':'NORMAL'})	
 		smach.StateMachine.add('FINDTRACK', Find_track_behaviour(), transitions={'start_find':'FIND', 'start_play':'PLAY'})	
 	

@@ -77,7 +77,7 @@ class track_ball:
 		self.behaviour = None
 		self.at_ball = False
        		#self.ball_stop = False
-        self.colour = None			
+        	self.colour = None			
 		self.current_position = None
 		self.currentRoom = None
 
@@ -175,7 +175,6 @@ class track_ball:
 			twist_msg.linear.x = 0
 			twist_msg.angular.z = 0.3
 			self.publisherVel.publish(twist_msg)
-
         	elif regions['front'] > d0 and regions['fleft'] < d and regions['fright'] > d:
             		state_description = 'case 4 - fleft'
             		# turn right a little
@@ -183,7 +182,6 @@ class track_ball:
             		twist_msg.linear.x = 0
             		twist_msg.angular.z = -0.3
             		self.publisherVel.publish(twist_msg)
-            
         	elif regions['front'] < d0 and regions['fleft'] > d and regions['fright'] < d:
             		state_description = 'case 5 - front and fright'
             		# turn right a little
@@ -191,7 +189,6 @@ class track_ball:
             		twist_msg.linear.x = 0
             		twist_msg.angular.z = 0.3
             		self.publisherVel.publish(twist_msg)
-
         	elif regions['front'] < d0 and regions['fleft'] < d and regions['fright'] > d:
             		state_description = 'case 6 - front and fleft'
             		# turn right a little
@@ -199,7 +196,6 @@ class track_ball:
             		twist_msg.linear.x = 0
             		twist_msg.angular.z = -0.3
             		self.publisherVel.publish(twist_msg)
-
         	elif regions['front'] < d0 and regions['fleft'] < d and regions['fright'] < d:
             		state_description = 'case 7 - front and fleft and fright'
             		# go towards the ball
@@ -207,7 +203,6 @@ class track_ball:
             		twist_msg.angular.z = linear_x
             		twist_msg.linear.x = angular_z
             		self.publisherVel.publish(twist_msg)
-
         	elif regions['front'] > d0 and regions['fleft'] < d and regions['fright'] < d:
             		state_description = 'case 8 - fleft and fright'
             		# go towards the ball
@@ -229,26 +224,26 @@ class track_ball:
 		sumBlue = np.sum(maskBlue)
 		sumMagenta = np.sum(maskMagenta)
 
-        # rospy.loginfo([sumGreen, sumBlack, sumRed, sumYellow, sumBlue, sumMagenta])
-        sumArray = np.array([sumGreen, sumBlack, sumRed,
+        	# rospy.loginfo([sumGreen, sumBlack, sumRed, sumYellow, sumBlue, sumMagenta])
+        	sumArray = np.array([sumGreen, sumBlack, sumRed,
                             sumYellow, sumBlue, sumMagenta])
-        max_ind = np.argmax(sumArray)
+        	max_ind = np.argmax(sumArray)
 	
 		# return mask 
-        if max_ind == 0:
-            return [maskGreen, 'Green']
-        elif max_ind == 1:
-            return [maskBlack, 'Black']
-        elif max_ind == 2:
-            return [maskRed, 'Red']
-        elif max_ind == 3:
-            return [maskYellow, 'Yellow']
-        elif max_ind == 4:
-            return [maskBlue, 'Blue']
-        elif max_ind == 5:
-            return [maskMagenta, 'Magenta']
-        else:
-            return [maskGreen, 'None']    # default (the masks are all zeroes)
+        	if max_ind == 0:
+            		return [maskGreen, 'Green']
+        	elif max_ind == 1:
+            		return [maskBlack, 'Black']
+        	elif max_ind == 2:
+            		return [maskRed, 'Red']
+        	elif max_ind == 3:
+            		return [maskYellow, 'Yellow']
+        	elif max_ind == 4:
+            		return [maskBlue, 'Blue']
+        	elif max_ind == 5:
+            		return [maskMagenta, 'Magenta']
+        	else:
+            		return [maskGreen, 'None']    # default (the masks are all zeroes)
 		
 	## method follow_ball
 	#
@@ -339,7 +334,7 @@ class track_ball:
 
 		# if behaviour is NORMAL TRACK it should move towards the ball
 		if self.behaviour == "normal_track" or self.behaviour == "find_track":
-			if self.ball_detected or self.near_ball:
+			if self.ball_visible or self.near_ball:
 				angular_z = -0.003*(self.center[0] - 400)
 		        	linear_x = -0.01*(self.radius - 100)
 				# if the robot almost still
