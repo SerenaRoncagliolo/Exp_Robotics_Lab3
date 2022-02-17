@@ -92,17 +92,45 @@ URDF is an XML file format used in ROS to describe all elements of a robot. In t
 
 <p align="center">
 <a>
-    <img src="images/gazebo_robot.png" width="600" height="">
+    <img src="images/gazebo_robot.png" width="400" height="">
 </a>
 </p>
 
+### State Machine
+
+<p align="center">
+<a>
+    <img src="images/State_Machine.png" width="400" height="">
+</a>
+</p>
+
+The wheeled dog has four behaviors:
+
+* NORMAL BEHAVIOUR:
+  * The robot moves randomly in different locations of the apartment. 
+  * It can go from Normal behaviour to Play behaviour when he receives a command from the user. Otherwise, when it is moving, the sleep timer is activated and the robot should assume SLEEP behaviour;
+  * While moving in Normal state, the robot can detect the coloured object contained inside the rooms and enter the Normal Track sub-state, in which it moves closer to the object and save its position, in case it wasn't already been detected previously.
+* SLEEP BEHAVIOUR: 
+  *  the robot moves to a predefined position which indicates "home position" and stops there for a given time interval. 
+  *  After a certain time interval, it "wakes up" and return to Normal behaviour; 
+* PLAY BEHAVIOUR: 
+  * The robot enters this behaviour when it is given the command from the user;
+  * once in this state, it moves to the location where the person is;
+  * it waits there to receive the command which tells it which room to go to;
+  * if the location is already known, meaning the coloured ball inside that room was already been detected, it moves to the room;
+  * if the location is unknown it switches to Find behaviour;
+  * when the robot has reached this goal position, it stays there for some time and then moves back to the person where it waits for the next command;
+* FIND BEHAVIOUR:
+  * in this state, the robot explores the environment trying to detect the coloured object inside the rooms;
+  * it can use already known positions or explore independently. 
+  * when an object is detected, as done in Normal state, it enters the Find Track sub-state to move closer to the object and save the position.
 
 ### Components Architecture
 
 <p align="center"; style='text-align: center'>
 <a>
     <figure> 
-      <img src="images/draft_architecture.png" width="600" height="">
+      <img src="images/final_architecture.png" width="600" height="">
     </figure>
 </a>
 </p>
@@ -145,6 +173,51 @@ URDF is an XML file format used in ROS to describe all elements of a robot. In t
 * **OpenCv Ball Tracking:** as in the previous lab, we implemented a component that makes use of the OpenCV library to detect the ball. [_OpenCV_](https://opencv.org/) is a library used for real-time computer vision. ROS can be interfaced to OpenCV by using [CvBridge](http://wiki.ros.org/cv_bridge) and [convert ROS images](cv_bridge/Tutorials/ConvertingBetweenROSImagesAndOpenCVImagesPython - ROS Wiki) into OpenCV images, or vice versa. This library is used to determine if the ball is contained within the robot camera range. This component subscribes to the robot camera topic given by _/robot/camera1/image_raw/compressed_. If the ball is detected while the robot is in Normal or Find state, it will switch respectively to the sub-state Normal Track or Find Track. Once in these substates, the OpenCV Tracking component publishes a velocity on the /cmd_vel topic. This is done because we want the robot to get as close as possible to the detected ball. Once it gets close, it alerts the Behaviour manager component by publishing on the topic /at_ball. If the robot was in the Normal Track substate it goes back to the Normal state. If instead, it was in the Find Track substate, it should check if the room in which it is currently located corresponds to the one given in the last user command. If so, it means that it has finally reached the desired goal room, it publishes a boolean message on the /at_room topic and it turns back to Play Behaviour. Otherwise it goes back to Find state. As opposed to the implementation in the previous version of the project, the robot should now be capable to distinguish the colour of the ball, which will be used to identify the room. Also
 * **Human Interface Simulator:** this component is used to simulate a human interacting with the robot. It can publish a message on the topic /start_play, which is subscribed by the Behaviour manager. This command is given at random time instantm and it gives the name of the room where the robot is supposed to move.
 
+
+### Overall Functioning
+
+* **The robot is in NORMAL state.**
+  * The BEHAVIOUR MANAGER publish the string "normal" on the _topic /behavior_ which is subscribed by MOTION
+  * To move the robot in randomly, the MOTION behavior instantiates an Action Client with the _move_base_ package (Action Server)
+  * At the same time _move_base_ received odometry information from gazebo (_/odom_)
+  * MOTION send a random goal position to _move_base_ (_/goal_) which moves the robot in gazebo (_/cmd_vel_) 
+* **The robot enters PLAY state**
+  * The HUMAN SIMULATOR publishes "True" on the _topic /human_command_play_ which is subscribed by BEHAVIOR MANAGER
+  * BEHAVIOUR MANAGER publishes the string "play" on _/behavior_ which is subscribed by MOTION
+  * To move the robot to where the human is located, MOTION  instantiates an Action Client with the _move_base_ package (Action Server)
+  * At the same time _move_base_ received odometry information from gazebo (_/odom_)
+  * MOTION send a specific goal position to _move_base_ (_/goal_) which moves the robot in gazebo (_/cmd_vel_) 
+  * _move_base_ gives a feedback to MOTION regarding the robot position (_/result_)
+  * When the robot is in front of the human, MOTION publishes "True" on the topic _at_human_ which is subscribed by HUMAN SIMULATOR
+  * HUMAN SIMULATOR publishes the room to be reached on the topic _room_command_ subscribed by MOTION
+  * We now have two possibilities
+    * **Room is unknonw**: MOTION publishes "True" on _/room_unknown_ subscribed by BEHAVIOR MANAGER. 
+    * BEHAVIOR MANAGER publishes "find" on topic _/behavior_ which is subscribed by OPENCV TRACKING (Find behavior is explained later)
+    * **Room is known**: MOTION publishes "False" on _/room_unknown_ subscribed by BEHAVIOR MANAGER.
+    * as before the robot is moved to the desired room through move_base package
+    * OPENCV TRACKING subcribes to _/camera1/image/compressed_ to check the color of the ball in the room
+    * if the room is correct it publishes "True" on _/at_room_ which is subscribed by BEHAVIOR MANAGER
+    * if not in the correct room, it publishes "False" on _/at_room_ and the robot keeps searching for the room
+ * **The robot enters SLEEP state**
+  * The BEHAVIOR MANAGER publishes "sleep" on _behavior manager_ which is subscribed by MOTION
+  * The robot should move to home position, MOTION instantiates an Action Client with the _move_base_ package (Action Server)ù
+  * At the same time _move_base_ received odometry information from gazebo (_/odom_)
+  * MOTION send a specific goal position to _move_base_ (_/goal_) which moves the robot in gazebo (_/cmd_vel_)
+  * _move_base_ gives a feedback to MOTION regarding the robot position (_/result_)
+  * When the robot has reached the position, MOTION publishes "True" on _at_home_ topic which is subscribed by BEHAVIOR MANAGER
+  * Once at home the robot stops for a while.
+ * **The robot enters FIND state**
+  * As explained before, from play state it can enter FIND when the room is not known
+  * MOTION launch the _explore_lite_ package, which istantiates an Action Client with _move_base_.
+  * In this state, the robot uses _gmapping_ packages to build a map in RViz
+ * **The robot enters TRACK state**
+  * OPENCV TRACKING get information subscribing to _/camera1/image/compressed_ to check if the ball is visibile
+  * Once visible, OPENCV TRACKING publishes "True" on _/ball_visible_ which is subscribed by BEHAVIOR MANAGER
+  * BEHAVIOR MANAGER publishes "normal_track" or "find_track" on topic _/behavior_ which is subscribed by OPENCV TRACKING 
+  * OPENCV TRACKING subscribes to _/odom_ and _/scan_ and publishes the velocity to get closer to the ball on "_/cmd_vel_
+  * Once the robot is close to the ball, OPENCV TRACKING publishes "True" on the topic _/at_ball_ 
+  * The robot goes back to Normal or Find state
+
 ### Differences with previous lab
 <p align="center">
 <a>
@@ -153,34 +226,6 @@ URDF is an XML file format used in ROS to describe all elements of a robot. In t
 </p>
 
 
-### State Machine
-
-<p align="center">
-<a>
-    <img src="images/State_Machine.png" width="400" height="">
-</a>
-</p>
-
-The wheeled dog has four behaviors:
-
-* NORMAL BEHAVIOUR:
-  * The robot moves randomly in different locations of the apartment. 
-  * It can go from Normal behaviour to Play behaviour when he receives a command from the user. Otherwise, when it is moving, the sleep timer is activated and the robot should assume SLEEP behaviour;
-  * While moving in Normal state, the robot can detect the coloured object contained inside the rooms and enter the Normal Track sub-state, in which it moves closer to the object and save its position, in case it wasn't already been detected previously.
-* SLEEP BEHAVIOUR: 
-  *  the robot moves to a predefined position which indicates "home position" and stops there for a given time interval. 
-  *  After a certain time interval, it "wakes up" and return to Normal behaviour; 
-* PLAY BEHAVIOUR: 
-  * The robot enters this behaviour when it is given the command from the user;
-  * once in this state, it moves to the location where the person is;
-  * it waits there to receive the command which tells it which room to go to;
-  * if the location is already known, meaning the coloured ball inside that room was already been detected, it moves to the room;
-  * if the location is unknown it switches to Find behaviour;
-  * when the robot has reached this goal position, it stays there for some time and then moves back to the person where it waits for the next command;
-* FIND BEHAVIOUR:
-  * in this state, the robot explores the environment trying to detect the coloured object inside the rooms;
-  * it can use already known positions or explore independently. 
-  * when an object is detected, as done in Normal state, it enters the Find Track sub-state to move closer to the object and save the position.
 
 ### ROS Parameters
 * home_x: x coordinate of the robot home position
