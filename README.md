@@ -303,15 +303,15 @@ Install **numpy** library using the following:
 ### Other packages
 Install **OpenSLAM gmapping** package using the following:
   ```sh
-  $ sudo apt-get install ros-<ros_distro>-openslam-gmapping
+  $ sudo apt-get install ros-kinetic-openslam-gmapping
   ```  
 Install the **navigation** package using the following:
   ```sh
-  $ sudo apt-get install ros-<ros_distro>-navigation
+  $ sudo apt-get install ros-kinetic-navigation
   ``` 
 Install the **explore_lite** package using the following:
   ```sh
-  $ sudo apt-get install ros-<ros_distro>-explore-lite
+  $ sudo apt-get install ros-kinetic-explore-lite
   ``` 
   
 ## Installation
@@ -324,7 +324,7 @@ This instructions assumes that you have installed **catkin**, if not it is neces
    ```sh
    git clone https://github.com/SerenaRoncagliolo/Exp_Robotics_Lab_2.git
    ```
-  2. Rename it the repository exp_assignment2
+  2. Rename it the repository exp_assignment3
   3. Enter the repository at the top level and run
    ```sh
     $ catkin_make
@@ -332,8 +332,8 @@ This instructions assumes that you have installed **catkin**, if not it is neces
    ```
    4. Enter the following to start the program:
    ```sh
-    $ roslaunch exp_assignment2 gazebo_world.launch
-    $ roslaunch exp_assignment2 pet_beaviour.launch
+    $ roslaunch exp_assignment3 simulation.launch
+    $ roslaunch exp_assignment2 scripts.launch
    ``` 
 
 ## Working hypothesis and environment
