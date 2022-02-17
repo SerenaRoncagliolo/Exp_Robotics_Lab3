@@ -198,7 +198,7 @@ The wheeled dog has four behaviors:
     * OPENCV TRACKING subcribes to _/camera1/image/compressed_ to check the color of the ball in the room
     * if the room is correct it publishes "True" on _/at_room_ which is subscribed by BEHAVIOR MANAGER
     * if not in the correct room, it publishes "False" on _/at_room_ and the robot keeps searching for the room
- * **The robot enters SLEEP state**
+* **The robot enters SLEEP state**
   * The BEHAVIOR MANAGER publishes "sleep" on _behavior manager_ which is subscribed by MOTION
   * The robot should move to home position, MOTION instantiates an Action Client with the _move_base_ package (Action Server)ù
   * At the same time _move_base_ received odometry information from gazebo (_/odom_)
@@ -206,11 +206,11 @@ The wheeled dog has four behaviors:
   * _move_base_ gives a feedback to MOTION regarding the robot position (_/result_)
   * When the robot has reached the position, MOTION publishes "True" on _at_home_ topic which is subscribed by BEHAVIOR MANAGER
   * Once at home the robot stops for a while.
- * **The robot enters FIND state**
+* **The robot enters FIND state**
   * As explained before, from play state it can enter FIND when the room is not known
   * MOTION launch the _explore_lite_ package, which istantiates an Action Client with _move_base_.
   * In this state, the robot uses _gmapping_ packages to build a map in RViz
- * **The robot enters TRACK state**
+* **The robot enters TRACK state**
   * OPENCV TRACKING get information subscribing to _/camera1/image/compressed_ to check if the ball is visibile
   * Once visible, OPENCV TRACKING publishes "True" on _/ball_visible_ which is subscribed by BEHAVIOR MANAGER
   * BEHAVIOR MANAGER publishes "normal_track" or "find_track" on topic _/behavior_ which is subscribed by OPENCV TRACKING 
