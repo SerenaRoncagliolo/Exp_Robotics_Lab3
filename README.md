@@ -9,7 +9,7 @@
 <br />
 <p align="center">
   <a href="https://github.com/SerenaRoncagliolo/Exp_Robotics_Lab1">
-    <img src="images/logo_orizzontale_COLORE.png" width="400" height="">
+    <img src="exp_assignment/images/logo_orizzontale_COLORE.png" width="400" height="">
   </a>
 
   <h3 align="center">Assignment 3 - Pet Behavioural Architecture</h3>
@@ -81,7 +81,7 @@ Our project is simulated in a 3D [**Gazebo**](http://gazebosim.org/) environment
 
 <p align="center">
 <a>
-    <img src="src/exp_assignment3/images/gazebo_world.png" width="400" height="">
+    <img src="exp_assignment3/images/gazebo_world.png" width="400" height="">
 </a>
 </p>
 
@@ -92,7 +92,7 @@ URDF is an XML file format used in ROS to describe all elements of a robot. In t
 
 <p align="center">
 <a>
-    <img src="src/exp_assignment3/images/gazebo_robot.png" width="400" height="">
+    <img src="exp_assignment3/images/gazebo_robot.png" width="400" height="">
 </a>
 </p>
 
@@ -100,7 +100,7 @@ URDF is an XML file format used in ROS to describe all elements of a robot. In t
 
 <p align="center">
 <a>
-    <img src="src/exp_assignment3/images/State_Machine.png" width="400" height="">
+    <img src="exp_assignment3/images/State_Machine.png" width="400" height="">
 </a>
 </p>
 
@@ -130,7 +130,7 @@ The wheeled dog has four behaviors:
 <p align="center"; style='text-align: center'>
 <a>
     <figure> 
-      <img src="src/exp_assignment3/images/final_architecture.png" width="600" height="">
+      <img src="exp_assignment3/images/final_architecture.png" width="600" height="">
     </figure>
 </a>
 </p>
@@ -159,7 +159,7 @@ The wheeled dog has four behaviors:
   * Commands to move the robot are then sent to the _move_base_ node, which needs to be configured properly
   <p align="center">
 <a>
-    <img src="src/exp_assignment3/images/explore_lite.png" width="600" height="">
+    <img src="exp_assignment3/images/explore_lite.png" width="600" height="">
 </a>
 </p>
 
@@ -221,7 +221,7 @@ The wheeled dog has four behaviors:
 ### Differences with previous lab
 <p align="center">
 <a>
-    <img src="src/exp_assignment3/images/exp12.png" width="800" height="">
+    <img src="exp_assignment3/images/exp12.png" width="800" height="">
 </a>
 </p>
 
