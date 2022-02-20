@@ -1,0 +1,141 @@
+\hypertarget{classbehavior__manager_1_1Normal__behavior}{}\section{behavior\+\_\+manager.\+Normal\+\_\+behavior Class Reference}
+\label{classbehavior__manager_1_1Normal__behavior}\index{behavior\+\_\+manager.\+Normal\+\_\+behavior@{behavior\+\_\+manager.\+Normal\+\_\+behavior}}
+
+
+class \hyperlink{classbehavior__manager_1_1Normal__behavior}{Normal\+\_\+behavior}  
+
+
+
+
+Inheritance diagram for behavior\+\_\+manager.\+Normal\+\_\+behavior\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=225pt]{classbehavior__manager_1_1Normal__behavior__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for behavior\+\_\+manager.\+Normal\+\_\+behavior\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=225pt]{classbehavior__manager_1_1Normal__behavior__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{classbehavior__manager_1_1Normal__behavior_a7ab22900e936fc3921a269389b51e6ab}{\+\_\+\+\_\+init\+\_\+\+\_\+} (self)
+\begin{DoxyCompactList}\small\item\em method init \end{DoxyCompactList}\item 
+def \hyperlink{classbehavior__manager_1_1Normal__behavior_a15faab6a43a39510355baad4faaa808a}{execute} (self, userdata)
+\begin{DoxyCompactList}\small\item\em method execute \end{DoxyCompactList}\item 
+def \hyperlink{classbehavior__manager_1_1Normal__behavior_a19d07d077327e725321bc7d13aa3726e}{ball\+\_\+tracking} (self, ball)
+\begin{DoxyCompactList}\small\item\em method ball\+\_\+tracking \end{DoxyCompactList}\item 
+def \hyperlink{classbehavior__manager_1_1Normal__behavior_a5a152cc5837f1573c5101f18e86d7070}{read\+\_\+command} (self, human\+\_\+command)
+\begin{DoxyCompactList}\small\item\em method read\+\_\+command \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classbehavior__manager_1_1Normal__behavior_a8c0881c34370caec4f5298f0ebe35489}{rate}
+\item 
+\hyperlink{classbehavior__manager_1_1Normal__behavior_ad3ddfca519e8fa6513d6356aa0fa2962}{human\+\_\+command\+\_\+play}
+\item 
+\hyperlink{classbehavior__manager_1_1Normal__behavior_a9231755f61898994c43ae8e5652ef1c9}{ball\+\_\+visible}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+class \hyperlink{classbehavior__manager_1_1Normal__behavior}{Normal\+\_\+behavior} 
+
+This class implement the N\+O\+R\+M\+AL behaviour of the robot pet The robot moves randomly within the Gazebo arena
+\begin{DoxyItemize}
+\item If it receives a \char`\"{}play\char`\"{} command the F\+SM should go into P\+L\+AY state (start\+\_\+play)
+\item If the sleep timer is triggered the F\+SM should go into S\+L\+E\+EP state (start\+\_\+sleep) 
+\end{DoxyItemize}
+
+\subsection{Constructor \& Destructor Documentation}
+\index{behavior\+\_\+manager\+::\+Normal\+\_\+behavior@{behavior\+\_\+manager\+::\+Normal\+\_\+behavior}!\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}}
+\index{\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}!behavior\+\_\+manager\+::\+Normal\+\_\+behavior@{behavior\+\_\+manager\+::\+Normal\+\_\+behavior}}
+\subsubsection[{\texorpdfstring{\+\_\+\+\_\+init\+\_\+\+\_\+(self)}{__init__(self)}}]{\setlength{\rightskip}{0pt plus 5cm}def behavior\+\_\+manager.\+Normal\+\_\+behavior.\+\_\+\+\_\+init\+\_\+\+\_\+ (
+\begin{DoxyParamCaption}
+\item[{}]{self}
+\end{DoxyParamCaption}
+)}\hypertarget{classbehavior__manager_1_1Normal__behavior_a7ab22900e936fc3921a269389b51e6ab}{}\label{classbehavior__manager_1_1Normal__behavior_a7ab22900e936fc3921a269389b51e6ab}
+
+
+method init 
+
+This method should\+:
+\begin{DoxyItemize}
+\item initializes the state class 
+\end{DoxyItemize}
+
+\subsection{Member Function Documentation}
+\index{behavior\+\_\+manager\+::\+Normal\+\_\+behavior@{behavior\+\_\+manager\+::\+Normal\+\_\+behavior}!ball\+\_\+tracking@{ball\+\_\+tracking}}
+\index{ball\+\_\+tracking@{ball\+\_\+tracking}!behavior\+\_\+manager\+::\+Normal\+\_\+behavior@{behavior\+\_\+manager\+::\+Normal\+\_\+behavior}}
+\subsubsection[{\texorpdfstring{ball\+\_\+tracking(self, ball)}{ball_tracking(self, ball)}}]{\setlength{\rightskip}{0pt plus 5cm}def behavior\+\_\+manager.\+Normal\+\_\+behavior.\+ball\+\_\+tracking (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{ball}
+\end{DoxyParamCaption}
+)}\hypertarget{classbehavior__manager_1_1Normal__behavior_a19d07d077327e725321bc7d13aa3726e}{}\label{classbehavior__manager_1_1Normal__behavior_a19d07d077327e725321bc7d13aa3726e}
+
+
+method ball\+\_\+tracking 
+
+method to check if the ball is visible to the robot or not \index{behavior\+\_\+manager\+::\+Normal\+\_\+behavior@{behavior\+\_\+manager\+::\+Normal\+\_\+behavior}!execute@{execute}}
+\index{execute@{execute}!behavior\+\_\+manager\+::\+Normal\+\_\+behavior@{behavior\+\_\+manager\+::\+Normal\+\_\+behavior}}
+\subsubsection[{\texorpdfstring{execute(self, userdata)}{execute(self, userdata)}}]{\setlength{\rightskip}{0pt plus 5cm}def behavior\+\_\+manager.\+Normal\+\_\+behavior.\+execute (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{userdata}
+\end{DoxyParamCaption}
+)}\hypertarget{classbehavior__manager_1_1Normal__behavior_a15faab6a43a39510355baad4faaa808a}{}\label{classbehavior__manager_1_1Normal__behavior_a15faab6a43a39510355baad4faaa808a}
+
+
+method execute 
+
+
+\begin{DoxyItemize}
+\item publish \char`\"{}normal\char`\"{} (String) on the topic behavior
+\item moves the robot randomly
+\item if a command from the human is received
+\begin{DoxyItemize}
+\item the robot switches to Play state
+\end{DoxyItemize}
+\item if the ball is visible\+:
+\begin{DoxyItemize}
+\item the robot switches to Normal Track sub state 
+\end{DoxyItemize}
+\end{DoxyItemize}\index{behavior\+\_\+manager\+::\+Normal\+\_\+behavior@{behavior\+\_\+manager\+::\+Normal\+\_\+behavior}!read\+\_\+command@{read\+\_\+command}}
+\index{read\+\_\+command@{read\+\_\+command}!behavior\+\_\+manager\+::\+Normal\+\_\+behavior@{behavior\+\_\+manager\+::\+Normal\+\_\+behavior}}
+\subsubsection[{\texorpdfstring{read\+\_\+command(self, human\+\_\+command)}{read_command(self, human_command)}}]{\setlength{\rightskip}{0pt plus 5cm}def behavior\+\_\+manager.\+Normal\+\_\+behavior.\+read\+\_\+command (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{human\+\_\+command}
+\end{DoxyParamCaption}
+)}\hypertarget{classbehavior__manager_1_1Normal__behavior_a5a152cc5837f1573c5101f18e86d7070}{}\label{classbehavior__manager_1_1Normal__behavior_a5a152cc5837f1573c5101f18e86d7070}
+
+
+method read\+\_\+command 
+
+method to check if if received a command or not 
+
+\subsection{Member Data Documentation}
+\index{behavior\+\_\+manager\+::\+Normal\+\_\+behavior@{behavior\+\_\+manager\+::\+Normal\+\_\+behavior}!ball\+\_\+visible@{ball\+\_\+visible}}
+\index{ball\+\_\+visible@{ball\+\_\+visible}!behavior\+\_\+manager\+::\+Normal\+\_\+behavior@{behavior\+\_\+manager\+::\+Normal\+\_\+behavior}}
+\subsubsection[{\texorpdfstring{ball\+\_\+visible}{ball_visible}}]{\setlength{\rightskip}{0pt plus 5cm}behavior\+\_\+manager.\+Normal\+\_\+behavior.\+ball\+\_\+visible}\hypertarget{classbehavior__manager_1_1Normal__behavior_a9231755f61898994c43ae8e5652ef1c9}{}\label{classbehavior__manager_1_1Normal__behavior_a9231755f61898994c43ae8e5652ef1c9}
+\index{behavior\+\_\+manager\+::\+Normal\+\_\+behavior@{behavior\+\_\+manager\+::\+Normal\+\_\+behavior}!human\+\_\+command\+\_\+play@{human\+\_\+command\+\_\+play}}
+\index{human\+\_\+command\+\_\+play@{human\+\_\+command\+\_\+play}!behavior\+\_\+manager\+::\+Normal\+\_\+behavior@{behavior\+\_\+manager\+::\+Normal\+\_\+behavior}}
+\subsubsection[{\texorpdfstring{human\+\_\+command\+\_\+play}{human_command_play}}]{\setlength{\rightskip}{0pt plus 5cm}behavior\+\_\+manager.\+Normal\+\_\+behavior.\+human\+\_\+command\+\_\+play}\hypertarget{classbehavior__manager_1_1Normal__behavior_ad3ddfca519e8fa6513d6356aa0fa2962}{}\label{classbehavior__manager_1_1Normal__behavior_ad3ddfca519e8fa6513d6356aa0fa2962}
+\index{behavior\+\_\+manager\+::\+Normal\+\_\+behavior@{behavior\+\_\+manager\+::\+Normal\+\_\+behavior}!rate@{rate}}
+\index{rate@{rate}!behavior\+\_\+manager\+::\+Normal\+\_\+behavior@{behavior\+\_\+manager\+::\+Normal\+\_\+behavior}}
+\subsubsection[{\texorpdfstring{rate}{rate}}]{\setlength{\rightskip}{0pt plus 5cm}behavior\+\_\+manager.\+Normal\+\_\+behavior.\+rate}\hypertarget{classbehavior__manager_1_1Normal__behavior_a8c0881c34370caec4f5298f0ebe35489}{}\label{classbehavior__manager_1_1Normal__behavior_a8c0881c34370caec4f5298f0ebe35489}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/\+Experimental\+Robotics\+Lab\+Serena/src/exp\+\_\+assignment3/src/\hyperlink{behavior__manager_8py}{behavior\+\_\+manager.\+py}\end{DoxyCompactItemize}

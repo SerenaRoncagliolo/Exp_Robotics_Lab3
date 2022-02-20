@@ -1,0 +1,10 @@
+
+RoomBlue: [-0.169, 8.21, 'F', blue_ball]
+RoomRed: [-5.41, 2.48, 'F', red_ball]
+RoomGreen: [-4.9, -0.533, 'F', green_ball]
+RoomBlack: [5.48, 2.43, 'F', black_ball]
+RoomMagenta: [5.48, 2.43, 'F', magenta_ball]
+RoomYellow: [5.41, -6.47, 'F', yellow_ball]
+rooms: ['RoomBlue', 'RoomRed', 'RoomGreen', 'RoomBlack', 'RoomMagenta', 'RoomYellow']
+humanPose: [-5, 8]
+homePose: [-2.86, -2.95]

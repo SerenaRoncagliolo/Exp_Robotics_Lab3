@@ -1,0 +1,114 @@
+\hypertarget{classstate__machine_1_1Sleep}{}\section{state\+\_\+machine.\+Sleep Class Reference}
+\label{classstate__machine_1_1Sleep}\index{state\+\_\+machine.\+Sleep@{state\+\_\+machine.\+Sleep}}
+
+
+class Sleep\+\_\+behavior  
+
+
+
+
+Inheritance diagram for state\+\_\+machine.\+Sleep\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=198pt]{classstate__machine_1_1Sleep__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for state\+\_\+machine.\+Sleep\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=198pt]{classstate__machine_1_1Sleep__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{classstate__machine_1_1Sleep_a473b93a1ddf11f9e664d1fb694ce1a3c}{\+\_\+\+\_\+init\+\_\+\+\_\+} (self)
+\begin{DoxyCompactList}\small\item\em method init \end{DoxyCompactList}\item 
+def \hyperlink{classstate__machine_1_1Sleep_a89527836f1edcefb6467fa9c041fbbfe}{execute} (self, userdata)
+\item 
+def \hyperlink{classstate__machine_1_1Sleep_af89f7f7e1247670de2e6280e3fd1c226}{robot\+\_\+vel} (self, msg)
+\begin{DoxyCompactList}\small\item\em method robot\+\_\+vel \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classstate__machine_1_1Sleep_a00b879885a7e1f565d91faba0403513d}{stop\+Flag}
+\item 
+\hyperlink{classstate__machine_1_1Sleep_aaaa470bd53002152ac5b2d3d4ad20c9d}{pub\+Goal} = rospy.\+Publisher(\textquotesingle{}goal\+Pos\textquotesingle{}, Num,queue\+\_\+size=10)
+\item 
+\hyperlink{classstate__machine_1_1Sleep_a6bd959627ed45867516c94e3eafc05bb}{home} = rospy.\+get\+\_\+param(\textquotesingle{}/home\+Pose\textquotesingle{})
+\item 
+list \hyperlink{classstate__machine_1_1Sleep_aec191ea286c33d86b339cb95a854ab42}{lista} = \mbox{[}$\,$\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+class Sleep\+\_\+behavior 
+
+This class implement the S\+L\+E\+EP behaviour of the robot pet The robot sleeps (S\+L\+E\+EP state)for a random period of time, then it moves to N\+O\+R\+M\+AL state The robot should\+:
+\begin{DoxyItemize}
+\item reach a predefined location within the arena in Gazebo
+\item stays there for some times
+\item go back in N\+O\+R\+M\+AL state 
+\end{DoxyItemize}
+
+\subsection{Constructor \& Destructor Documentation}
+\index{state\+\_\+machine\+::\+Sleep@{state\+\_\+machine\+::\+Sleep}!\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}}
+\index{\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}!state\+\_\+machine\+::\+Sleep@{state\+\_\+machine\+::\+Sleep}}
+\subsubsection[{\texorpdfstring{\+\_\+\+\_\+init\+\_\+\+\_\+(self)}{__init__(self)}}]{\setlength{\rightskip}{0pt plus 5cm}def state\+\_\+machine.\+Sleep.\+\_\+\+\_\+init\+\_\+\+\_\+ (
+\begin{DoxyParamCaption}
+\item[{}]{self}
+\end{DoxyParamCaption}
+)}\hypertarget{classstate__machine_1_1Sleep_a473b93a1ddf11f9e664d1fb694ce1a3c}{}\label{classstate__machine_1_1Sleep_a473b93a1ddf11f9e664d1fb694ce1a3c}
+
+
+method init 
+
+initialization 
+
+\subsection{Member Function Documentation}
+\index{state\+\_\+machine\+::\+Sleep@{state\+\_\+machine\+::\+Sleep}!execute@{execute}}
+\index{execute@{execute}!state\+\_\+machine\+::\+Sleep@{state\+\_\+machine\+::\+Sleep}}
+\subsubsection[{\texorpdfstring{execute(self, userdata)}{execute(self, userdata)}}]{\setlength{\rightskip}{0pt plus 5cm}def state\+\_\+machine.\+Sleep.\+execute (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{userdata}
+\end{DoxyParamCaption}
+)}\hypertarget{classstate__machine_1_1Sleep_a89527836f1edcefb6467fa9c041fbbfe}{}\label{classstate__machine_1_1Sleep_a89527836f1edcefb6467fa9c041fbbfe}
+\index{state\+\_\+machine\+::\+Sleep@{state\+\_\+machine\+::\+Sleep}!robot\+\_\+vel@{robot\+\_\+vel}}
+\index{robot\+\_\+vel@{robot\+\_\+vel}!state\+\_\+machine\+::\+Sleep@{state\+\_\+machine\+::\+Sleep}}
+\subsubsection[{\texorpdfstring{robot\+\_\+vel(self, msg)}{robot_vel(self, msg)}}]{\setlength{\rightskip}{0pt plus 5cm}def state\+\_\+machine.\+Sleep.\+robot\+\_\+vel (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{msg}
+\end{DoxyParamCaption}
+)}\hypertarget{classstate__machine_1_1Sleep_af89f7f7e1247670de2e6280e3fd1c226}{}\label{classstate__machine_1_1Sleep_af89f7f7e1247670de2e6280e3fd1c226}
+
+
+method robot\+\_\+vel 
+
+callback to check if the robot is moving or not A flag is set to 1 if the robot is not moving, to 0 otherwise 
+
+\subsection{Member Data Documentation}
+\index{state\+\_\+machine\+::\+Sleep@{state\+\_\+machine\+::\+Sleep}!home@{home}}
+\index{home@{home}!state\+\_\+machine\+::\+Sleep@{state\+\_\+machine\+::\+Sleep}}
+\subsubsection[{\texorpdfstring{home}{home}}]{\setlength{\rightskip}{0pt plus 5cm}state\+\_\+machine.\+Sleep.\+home = rospy.\+get\+\_\+param(\textquotesingle{}/home\+Pose\textquotesingle{})\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classstate__machine_1_1Sleep_a6bd959627ed45867516c94e3eafc05bb}{}\label{classstate__machine_1_1Sleep_a6bd959627ed45867516c94e3eafc05bb}
+\index{state\+\_\+machine\+::\+Sleep@{state\+\_\+machine\+::\+Sleep}!lista@{lista}}
+\index{lista@{lista}!state\+\_\+machine\+::\+Sleep@{state\+\_\+machine\+::\+Sleep}}
+\subsubsection[{\texorpdfstring{lista}{lista}}]{\setlength{\rightskip}{0pt plus 5cm}list state\+\_\+machine.\+Sleep.\+lista = \mbox{[}$\,$\mbox{]}\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classstate__machine_1_1Sleep_aec191ea286c33d86b339cb95a854ab42}{}\label{classstate__machine_1_1Sleep_aec191ea286c33d86b339cb95a854ab42}
+\index{state\+\_\+machine\+::\+Sleep@{state\+\_\+machine\+::\+Sleep}!pub\+Goal@{pub\+Goal}}
+\index{pub\+Goal@{pub\+Goal}!state\+\_\+machine\+::\+Sleep@{state\+\_\+machine\+::\+Sleep}}
+\subsubsection[{\texorpdfstring{pub\+Goal}{pubGoal}}]{\setlength{\rightskip}{0pt plus 5cm}state\+\_\+machine.\+Sleep.\+pub\+Goal = rospy.\+Publisher(\textquotesingle{}goal\+Pos\textquotesingle{}, Num,queue\+\_\+size=10)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classstate__machine_1_1Sleep_aaaa470bd53002152ac5b2d3d4ad20c9d}{}\label{classstate__machine_1_1Sleep_aaaa470bd53002152ac5b2d3d4ad20c9d}
+\index{state\+\_\+machine\+::\+Sleep@{state\+\_\+machine\+::\+Sleep}!stop\+Flag@{stop\+Flag}}
+\index{stop\+Flag@{stop\+Flag}!state\+\_\+machine\+::\+Sleep@{state\+\_\+machine\+::\+Sleep}}
+\subsubsection[{\texorpdfstring{stop\+Flag}{stopFlag}}]{\setlength{\rightskip}{0pt plus 5cm}state\+\_\+machine.\+Sleep.\+stop\+Flag\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classstate__machine_1_1Sleep_a00b879885a7e1f565d91faba0403513d}{}\label{classstate__machine_1_1Sleep_a00b879885a7e1f565d91faba0403513d}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/\+Experimental\+Robotics\+Lab\+Serena/src/final\+\_\+assignment/scripts/\hyperlink{state__machine_8py}{state\+\_\+machine.\+py}\end{DoxyCompactItemize}

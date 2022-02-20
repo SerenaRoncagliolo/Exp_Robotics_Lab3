@@ -1,0 +1,204 @@
+\hypertarget{classstate__machine_1_1Find}{}\section{state\+\_\+machine.\+Find Class Reference}
+\label{classstate__machine_1_1Find}\index{state\+\_\+machine.\+Find@{state\+\_\+machine.\+Find}}
+
+
+class Find\+\_\+behavior  
+
+
+
+
+Inheritance diagram for state\+\_\+machine.\+Find\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=190pt]{classstate__machine_1_1Find__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for state\+\_\+machine.\+Find\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=190pt]{classstate__machine_1_1Find__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{classstate__machine_1_1Find_aa7bd4d07590561e39233a3759ee25f49}{\+\_\+\+\_\+init\+\_\+\+\_\+} (self)
+\begin{DoxyCompactList}\small\item\em method init \end{DoxyCompactList}\item 
+def \hyperlink{classstate__machine_1_1Find_aa79a6408d288a202d766d86a34d26c22}{execute} (self, userdata)
+\item 
+def \hyperlink{classstate__machine_1_1Find_a41dd475617a4acb8b239b404257eacb1}{callback} (self, ros\+\_\+data)
+\begin{DoxyCompactList}\small\item\em method callback \end{DoxyCompactList}\item 
+def \hyperlink{classstate__machine_1_1Find_a1734b9a46e8cfcd5e5e34f992fcdd06e}{countour\+\_\+opencv} (self, lower, upper, hsv, image\+\_\+np)
+\begin{DoxyCompactList}\small\item\em method countour\+\_\+opencv \end{DoxyCompactList}\item 
+def \hyperlink{classstate__machine_1_1Find_ae571e4ebd97af2bfcabfc7b674cf53d8}{sub\+\_\+track} (self, cnts, image\+\_\+np, \hyperlink{classstate__machine_1_1Find_abf765d9904bb38e118449b2ebacd140a}{ball\+\_\+visible})
+\begin{DoxyCompactList}\small\item\em method sub\+\_\+track \end{DoxyCompactList}\item 
+def \hyperlink{classstate__machine_1_1Find_a8a35ffb44cefa8b89c7609d10040de76}{save\+\_\+param} (self, \hyperlink{classstate__machine_1_1Find_abf765d9904bb38e118449b2ebacd140a}{ball\+\_\+visible})
+\begin{DoxyCompactList}\small\item\em method save\+\_\+param \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classstate__machine_1_1Find_abf765d9904bb38e118449b2ebacd140a}{ball\+\_\+visible}
+\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classstate__machine_1_1Find_a03b9653ba644781fbeae01fea8227931}{counter}
+\item 
+\hyperlink{classstate__machine_1_1Find_a147a928dffe82913a947d06b1da343e4}{param}
+\item 
+\hyperlink{classstate__machine_1_1Find_a56c334f3d8214ea21e7caf8849e9bb63}{stop\+Flag}
+\item 
+\hyperlink{classstate__machine_1_1Find_a4c1e9b99c291eea6d2d77e0220cc695c}{play\+\_\+state}
+\item 
+\hyperlink{classstate__machine_1_1Find_a996c2a2fe2c3ff25e2aad4b87073e7c9}{child}
+\item 
+\hyperlink{classstate__machine_1_1Find_a39a3aa87baef536803bd7812e37ce24f}{pub\+Vel}
+\item 
+\hyperlink{classstate__machine_1_1Find_ad0300ceff8872223de0bc6ebf8484070}{Twist}
+\item 
+\hyperlink{classstate__machine_1_1Find_a264fa9455d4286aa26b670ac87d712ab}{queue\+\_\+size}
+\item 
+\hyperlink{classstate__machine_1_1Find_ab9bfce719b158c4f931736443eac806d}{subscriber}
+\item 
+\hyperlink{classstate__machine_1_1Find_ac31d8f1d8f7bee55c09c21d42ca37562}{requested\+\_\+room}
+\item 
+\hyperlink{classstate__machine_1_1Find_ad284228602a30b744143e35e03e938ce}{t\+\_\+final}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+class Find\+\_\+behavior 
+
+when entering \hyperlink{classstate__machine_1_1Find}{Find} behaviour, the robot moves randomly within the environment once it detect a coloured ball, it enters the substate \hyperlink{classstate__machine_1_1Find}{Find} Track 
+
+\subsection{Constructor \& Destructor Documentation}
+\index{state\+\_\+machine\+::\+Find@{state\+\_\+machine\+::\+Find}!\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}}
+\index{\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}!state\+\_\+machine\+::\+Find@{state\+\_\+machine\+::\+Find}}
+\subsubsection[{\texorpdfstring{\+\_\+\+\_\+init\+\_\+\+\_\+(self)}{__init__(self)}}]{\setlength{\rightskip}{0pt plus 5cm}def state\+\_\+machine.\+Find.\+\_\+\+\_\+init\+\_\+\+\_\+ (
+\begin{DoxyParamCaption}
+\item[{}]{self}
+\end{DoxyParamCaption}
+)}\hypertarget{classstate__machine_1_1Find_aa7bd4d07590561e39233a3759ee25f49}{}\label{classstate__machine_1_1Find_aa7bd4d07590561e39233a3759ee25f49}
+
+
+method init 
+
+initialization 
+
+\subsection{Member Function Documentation}
+\index{state\+\_\+machine\+::\+Find@{state\+\_\+machine\+::\+Find}!callback@{callback}}
+\index{callback@{callback}!state\+\_\+machine\+::\+Find@{state\+\_\+machine\+::\+Find}}
+\subsubsection[{\texorpdfstring{callback(self, ros\+\_\+data)}{callback(self, ros_data)}}]{\setlength{\rightskip}{0pt plus 5cm}def state\+\_\+machine.\+Find.\+callback (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{ros\+\_\+data}
+\end{DoxyParamCaption}
+)}\hypertarget{classstate__machine_1_1Find_a41dd475617a4acb8b239b404257eacb1}{}\label{classstate__machine_1_1Find_a41dd475617a4acb8b239b404257eacb1}
+
+
+method callback 
+
+Execute callback everytime e new image is available from the camera. it make uses of open\+CV libraries to track the ball within rooms and save the room position \index{state\+\_\+machine\+::\+Find@{state\+\_\+machine\+::\+Find}!countour\+\_\+opencv@{countour\+\_\+opencv}}
+\index{countour\+\_\+opencv@{countour\+\_\+opencv}!state\+\_\+machine\+::\+Find@{state\+\_\+machine\+::\+Find}}
+\subsubsection[{\texorpdfstring{countour\+\_\+opencv(self, lower, upper, hsv, image\+\_\+np)}{countour_opencv(self, lower, upper, hsv, image_np)}}]{\setlength{\rightskip}{0pt plus 5cm}def state\+\_\+machine.\+Find.\+countour\+\_\+opencv (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{lower, }
+\item[{}]{upper, }
+\item[{}]{hsv, }
+\item[{}]{image\+\_\+np}
+\end{DoxyParamCaption}
+)}\hypertarget{classstate__machine_1_1Find_a1734b9a46e8cfcd5e5e34f992fcdd06e}{}\label{classstate__machine_1_1Find_a1734b9a46e8cfcd5e5e34f992fcdd06e}
+
+
+method countour\+\_\+opencv 
+
+used to create masks for colours, and their countours \index{state\+\_\+machine\+::\+Find@{state\+\_\+machine\+::\+Find}!execute@{execute}}
+\index{execute@{execute}!state\+\_\+machine\+::\+Find@{state\+\_\+machine\+::\+Find}}
+\subsubsection[{\texorpdfstring{execute(self, userdata)}{execute(self, userdata)}}]{\setlength{\rightskip}{0pt plus 5cm}def state\+\_\+machine.\+Find.\+execute (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{userdata}
+\end{DoxyParamCaption}
+)}\hypertarget{classstate__machine_1_1Find_aa79a6408d288a202d766d86a34d26c22}{}\label{classstate__machine_1_1Find_aa79a6408d288a202d766d86a34d26c22}
+\index{state\+\_\+machine\+::\+Find@{state\+\_\+machine\+::\+Find}!save\+\_\+param@{save\+\_\+param}}
+\index{save\+\_\+param@{save\+\_\+param}!state\+\_\+machine\+::\+Find@{state\+\_\+machine\+::\+Find}}
+\subsubsection[{\texorpdfstring{save\+\_\+param(self, ball\+\_\+visible)}{save_param(self, ball_visible)}}]{\setlength{\rightskip}{0pt plus 5cm}def state\+\_\+machine.\+Find.\+save\+\_\+param (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{ball\+\_\+visible}
+\end{DoxyParamCaption}
+)}\hypertarget{classstate__machine_1_1Find_a8a35ffb44cefa8b89c7609d10040de76}{}\label{classstate__machine_1_1Find_a8a35ffb44cefa8b89c7609d10040de76}
+
+
+method save\+\_\+param 
+
+function to store position of the room \index{state\+\_\+machine\+::\+Find@{state\+\_\+machine\+::\+Find}!sub\+\_\+track@{sub\+\_\+track}}
+\index{sub\+\_\+track@{sub\+\_\+track}!state\+\_\+machine\+::\+Find@{state\+\_\+machine\+::\+Find}}
+\subsubsection[{\texorpdfstring{sub\+\_\+track(self, cnts, image\+\_\+np, ball\+\_\+visible)}{sub_track(self, cnts, image_np, ball_visible)}}]{\setlength{\rightskip}{0pt plus 5cm}def state\+\_\+machine.\+Find.\+sub\+\_\+track (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{cnts, }
+\item[{}]{image\+\_\+np, }
+\item[{}]{ball\+\_\+visible}
+\end{DoxyParamCaption}
+)}\hypertarget{classstate__machine_1_1Find_ae571e4ebd97af2bfcabfc7b674cf53d8}{}\label{classstate__machine_1_1Find_ae571e4ebd97af2bfcabfc7b674cf53d8}
+
+
+method sub\+\_\+track 
+
+This function is executed everytime the robot detects a color object which was not previously detected. The robot moves closer to the detected object. Once done, the reference position of the room is marked as reached and stored as \char`\"{}visited\char`\"{} in the parameter server. 
+
+\subsection{Member Data Documentation}
+\index{state\+\_\+machine\+::\+Find@{state\+\_\+machine\+::\+Find}!ball\+\_\+visible@{ball\+\_\+visible}}
+\index{ball\+\_\+visible@{ball\+\_\+visible}!state\+\_\+machine\+::\+Find@{state\+\_\+machine\+::\+Find}}
+\subsubsection[{\texorpdfstring{ball\+\_\+visible}{ball_visible}}]{\setlength{\rightskip}{0pt plus 5cm}state\+\_\+machine.\+Find.\+ball\+\_\+visible}\hypertarget{classstate__machine_1_1Find_abf765d9904bb38e118449b2ebacd140a}{}\label{classstate__machine_1_1Find_abf765d9904bb38e118449b2ebacd140a}
+\index{state\+\_\+machine\+::\+Find@{state\+\_\+machine\+::\+Find}!child@{child}}
+\index{child@{child}!state\+\_\+machine\+::\+Find@{state\+\_\+machine\+::\+Find}}
+\subsubsection[{\texorpdfstring{child}{child}}]{\setlength{\rightskip}{0pt plus 5cm}state\+\_\+machine.\+Find.\+child\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classstate__machine_1_1Find_a996c2a2fe2c3ff25e2aad4b87073e7c9}{}\label{classstate__machine_1_1Find_a996c2a2fe2c3ff25e2aad4b87073e7c9}
+\index{state\+\_\+machine\+::\+Find@{state\+\_\+machine\+::\+Find}!counter@{counter}}
+\index{counter@{counter}!state\+\_\+machine\+::\+Find@{state\+\_\+machine\+::\+Find}}
+\subsubsection[{\texorpdfstring{counter}{counter}}]{\setlength{\rightskip}{0pt plus 5cm}state\+\_\+machine.\+Find.\+counter\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classstate__machine_1_1Find_a03b9653ba644781fbeae01fea8227931}{}\label{classstate__machine_1_1Find_a03b9653ba644781fbeae01fea8227931}
+\index{state\+\_\+machine\+::\+Find@{state\+\_\+machine\+::\+Find}!param@{param}}
+\index{param@{param}!state\+\_\+machine\+::\+Find@{state\+\_\+machine\+::\+Find}}
+\subsubsection[{\texorpdfstring{param}{param}}]{\setlength{\rightskip}{0pt plus 5cm}state\+\_\+machine.\+Find.\+param\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classstate__machine_1_1Find_a147a928dffe82913a947d06b1da343e4}{}\label{classstate__machine_1_1Find_a147a928dffe82913a947d06b1da343e4}
+\index{state\+\_\+machine\+::\+Find@{state\+\_\+machine\+::\+Find}!play\+\_\+state@{play\+\_\+state}}
+\index{play\+\_\+state@{play\+\_\+state}!state\+\_\+machine\+::\+Find@{state\+\_\+machine\+::\+Find}}
+\subsubsection[{\texorpdfstring{play\+\_\+state}{play_state}}]{\setlength{\rightskip}{0pt plus 5cm}state\+\_\+machine.\+Find.\+play\+\_\+state\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classstate__machine_1_1Find_a4c1e9b99c291eea6d2d77e0220cc695c}{}\label{classstate__machine_1_1Find_a4c1e9b99c291eea6d2d77e0220cc695c}
+\index{state\+\_\+machine\+::\+Find@{state\+\_\+machine\+::\+Find}!pub\+Vel@{pub\+Vel}}
+\index{pub\+Vel@{pub\+Vel}!state\+\_\+machine\+::\+Find@{state\+\_\+machine\+::\+Find}}
+\subsubsection[{\texorpdfstring{pub\+Vel}{pubVel}}]{\setlength{\rightskip}{0pt plus 5cm}state\+\_\+machine.\+Find.\+pub\+Vel\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classstate__machine_1_1Find_a39a3aa87baef536803bd7812e37ce24f}{}\label{classstate__machine_1_1Find_a39a3aa87baef536803bd7812e37ce24f}
+\index{state\+\_\+machine\+::\+Find@{state\+\_\+machine\+::\+Find}!queue\+\_\+size@{queue\+\_\+size}}
+\index{queue\+\_\+size@{queue\+\_\+size}!state\+\_\+machine\+::\+Find@{state\+\_\+machine\+::\+Find}}
+\subsubsection[{\texorpdfstring{queue\+\_\+size}{queue_size}}]{\setlength{\rightskip}{0pt plus 5cm}state\+\_\+machine.\+Find.\+queue\+\_\+size\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classstate__machine_1_1Find_a264fa9455d4286aa26b670ac87d712ab}{}\label{classstate__machine_1_1Find_a264fa9455d4286aa26b670ac87d712ab}
+\index{state\+\_\+machine\+::\+Find@{state\+\_\+machine\+::\+Find}!requested\+\_\+room@{requested\+\_\+room}}
+\index{requested\+\_\+room@{requested\+\_\+room}!state\+\_\+machine\+::\+Find@{state\+\_\+machine\+::\+Find}}
+\subsubsection[{\texorpdfstring{requested\+\_\+room}{requested_room}}]{\setlength{\rightskip}{0pt plus 5cm}state\+\_\+machine.\+Find.\+requested\+\_\+room\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classstate__machine_1_1Find_ac31d8f1d8f7bee55c09c21d42ca37562}{}\label{classstate__machine_1_1Find_ac31d8f1d8f7bee55c09c21d42ca37562}
+\index{state\+\_\+machine\+::\+Find@{state\+\_\+machine\+::\+Find}!stop\+Flag@{stop\+Flag}}
+\index{stop\+Flag@{stop\+Flag}!state\+\_\+machine\+::\+Find@{state\+\_\+machine\+::\+Find}}
+\subsubsection[{\texorpdfstring{stop\+Flag}{stopFlag}}]{\setlength{\rightskip}{0pt plus 5cm}state\+\_\+machine.\+Find.\+stop\+Flag\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classstate__machine_1_1Find_a56c334f3d8214ea21e7caf8849e9bb63}{}\label{classstate__machine_1_1Find_a56c334f3d8214ea21e7caf8849e9bb63}
+\index{state\+\_\+machine\+::\+Find@{state\+\_\+machine\+::\+Find}!subscriber@{subscriber}}
+\index{subscriber@{subscriber}!state\+\_\+machine\+::\+Find@{state\+\_\+machine\+::\+Find}}
+\subsubsection[{\texorpdfstring{subscriber}{subscriber}}]{\setlength{\rightskip}{0pt plus 5cm}state\+\_\+machine.\+Find.\+subscriber\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classstate__machine_1_1Find_ab9bfce719b158c4f931736443eac806d}{}\label{classstate__machine_1_1Find_ab9bfce719b158c4f931736443eac806d}
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+1 = rospy.Subscriber(\textcolor{stringliteral}{"camera1/image\_raw/compressed"},
+2                                               CompressedImage, self.callback,  queue\_size=1)
+\end{DoxyCode}
+\index{state\+\_\+machine\+::\+Find@{state\+\_\+machine\+::\+Find}!t\+\_\+final@{t\+\_\+final}}
+\index{t\+\_\+final@{t\+\_\+final}!state\+\_\+machine\+::\+Find@{state\+\_\+machine\+::\+Find}}
+\subsubsection[{\texorpdfstring{t\+\_\+final}{t_final}}]{\setlength{\rightskip}{0pt plus 5cm}state\+\_\+machine.\+Find.\+t\+\_\+final\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classstate__machine_1_1Find_ad284228602a30b744143e35e03e938ce}{}\label{classstate__machine_1_1Find_ad284228602a30b744143e35e03e938ce}
+\index{state\+\_\+machine\+::\+Find@{state\+\_\+machine\+::\+Find}!Twist@{Twist}}
+\index{Twist@{Twist}!state\+\_\+machine\+::\+Find@{state\+\_\+machine\+::\+Find}}
+\subsubsection[{\texorpdfstring{Twist}{Twist}}]{\setlength{\rightskip}{0pt plus 5cm}state\+\_\+machine.\+Find.\+Twist\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classstate__machine_1_1Find_ad0300ceff8872223de0bc6ebf8484070}{}\label{classstate__machine_1_1Find_ad0300ceff8872223de0bc6ebf8484070}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/\+Experimental\+Robotics\+Lab\+Serena/src/final\+\_\+assignment/scripts/\hyperlink{state__machine_8py}{state\+\_\+machine.\+py}\end{DoxyCompactItemize}

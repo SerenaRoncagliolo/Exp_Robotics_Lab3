@@ -1,0 +1,121 @@
+\hypertarget{classstate__machine_1_1Play}{}\section{state\+\_\+machine.\+Play Class Reference}
+\label{classstate__machine_1_1Play}\index{state\+\_\+machine.\+Play@{state\+\_\+machine.\+Play}}
+
+
+class Play\+\_\+behavior  
+
+
+
+
+Inheritance diagram for state\+\_\+machine.\+Play\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=190pt]{classstate__machine_1_1Play__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for state\+\_\+machine.\+Play\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=190pt]{classstate__machine_1_1Play__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{classstate__machine_1_1Play_a5993a23d8be7f7b2647f71ede0334957}{\+\_\+\+\_\+init\+\_\+\+\_\+} (self)
+\begin{DoxyCompactList}\small\item\em method init \end{DoxyCompactList}\item 
+def \hyperlink{classstate__machine_1_1Play_abf792c51f9931e669b0ed46ba0801986}{robot\+\_\+vel} (self, msg)
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classstate__machine_1_1Play_a276faca960b7836501ec5e2f0da038a3}{count}
+\begin{DoxyCompactList}\small\item\em publishers / subscribers publisher to goal position \end{DoxyCompactList}\item 
+\hyperlink{classstate__machine_1_1Play_a1fae7e215371b18cf947e8cd1babb346}{rooms}
+\begin{DoxyCompactList}\small\item\em move to command get array containing the list of all Rooms rooms\+: \mbox{[}\textquotesingle{}Room\+Blue\textquotesingle{}, \textquotesingle{}Room\+Red\textquotesingle{}, \textquotesingle{}Room\+Green\textquotesingle{}, \textquotesingle{}Room\+Black\textquotesingle{}, \textquotesingle{}Room\+Magenta\textquotesingle{}, \textquotesingle{}Room\+Yellow\textquotesingle{}\mbox{]} \end{DoxyCompactList}\item 
+\hyperlink{classstate__machine_1_1Play_a41a074c4bf967a31676ee879b4522e85}{param}
+\begin{DoxyCompactList}\small\item\em switch color \end{DoxyCompactList}\item 
+\hyperlink{classstate__machine_1_1Play_a9ffb340aab6992abdb021d3a3aa59099}{go\+To}
+\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classstate__machine_1_1Play_a60431dacf2811b3dc7e954473c281985}{stop\+Flag}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+class Play\+\_\+behavior 
+
+This class implement the P\+L\+AY behavior of the robot pet It moves the robot to the predefined (X, Y) location within the map and moves it back to the user. The Robot should\+:
+\begin{DoxyItemize}
+\item start following the ball
+\item when the ball stops (it means when the robot stops) it moves the head on the left of 45 degrees, and keep it there for some seconds
+\item then it moves the head to the right, stays there for some seconds
+\item once moved the head keeps tracking the ball 
+\end{DoxyItemize}
+
+\subsection{Constructor \& Destructor Documentation}
+\index{state\+\_\+machine\+::\+Play@{state\+\_\+machine\+::\+Play}!\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}}
+\index{\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}!state\+\_\+machine\+::\+Play@{state\+\_\+machine\+::\+Play}}
+\subsubsection[{\texorpdfstring{\+\_\+\+\_\+init\+\_\+\+\_\+(self)}{__init__(self)}}]{\setlength{\rightskip}{0pt plus 5cm}def state\+\_\+machine.\+Play.\+\_\+\+\_\+init\+\_\+\+\_\+ (
+\begin{DoxyParamCaption}
+\item[{}]{self}
+\end{DoxyParamCaption}
+)}\hypertarget{classstate__machine_1_1Play_a5993a23d8be7f7b2647f71ede0334957}{}\label{classstate__machine_1_1Play_a5993a23d8be7f7b2647f71ede0334957}
+
+
+method init 
+
+initialization 
+
+\subsection{Member Function Documentation}
+\index{state\+\_\+machine\+::\+Play@{state\+\_\+machine\+::\+Play}!robot\+\_\+vel@{robot\+\_\+vel}}
+\index{robot\+\_\+vel@{robot\+\_\+vel}!state\+\_\+machine\+::\+Play@{state\+\_\+machine\+::\+Play}}
+\subsubsection[{\texorpdfstring{robot\+\_\+vel(self, msg)}{robot_vel(self, msg)}}]{\setlength{\rightskip}{0pt plus 5cm}def state\+\_\+machine.\+Play.\+robot\+\_\+vel (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{msg}
+\end{DoxyParamCaption}
+)}\hypertarget{classstate__machine_1_1Play_abf792c51f9931e669b0ed46ba0801986}{}\label{classstate__machine_1_1Play_abf792c51f9931e669b0ed46ba0801986}
+
+
+\subsection{Member Data Documentation}
+\index{state\+\_\+machine\+::\+Play@{state\+\_\+machine\+::\+Play}!count@{count}}
+\index{count@{count}!state\+\_\+machine\+::\+Play@{state\+\_\+machine\+::\+Play}}
+\subsubsection[{\texorpdfstring{count}{count}}]{\setlength{\rightskip}{0pt plus 5cm}state\+\_\+machine.\+Play.\+count}\hypertarget{classstate__machine_1_1Play_a276faca960b7836501ec5e2f0da038a3}{}\label{classstate__machine_1_1Play_a276faca960b7836501ec5e2f0da038a3}
+
+
+publishers / subscribers publisher to goal position 
+
+\index{state\+\_\+machine\+::\+Play@{state\+\_\+machine\+::\+Play}!go\+To@{go\+To}}
+\index{go\+To@{go\+To}!state\+\_\+machine\+::\+Play@{state\+\_\+machine\+::\+Play}}
+\subsubsection[{\texorpdfstring{go\+To}{goTo}}]{\setlength{\rightskip}{0pt plus 5cm}state\+\_\+machine.\+Play.\+go\+To}\hypertarget{classstate__machine_1_1Play_a9ffb340aab6992abdb021d3a3aa59099}{}\label{classstate__machine_1_1Play_a9ffb340aab6992abdb021d3a3aa59099}
+\index{state\+\_\+machine\+::\+Play@{state\+\_\+machine\+::\+Play}!param@{param}}
+\index{param@{param}!state\+\_\+machine\+::\+Play@{state\+\_\+machine\+::\+Play}}
+\subsubsection[{\texorpdfstring{param}{param}}]{\setlength{\rightskip}{0pt plus 5cm}state\+\_\+machine.\+Play.\+param}\hypertarget{classstate__machine_1_1Play_a41a074c4bf967a31676ee879b4522e85}{}\label{classstate__machine_1_1Play_a41a074c4bf967a31676ee879b4522e85}
+
+
+switch color 
+
+\index{state\+\_\+machine\+::\+Play@{state\+\_\+machine\+::\+Play}!rooms@{rooms}}
+\index{rooms@{rooms}!state\+\_\+machine\+::\+Play@{state\+\_\+machine\+::\+Play}}
+\subsubsection[{\texorpdfstring{rooms}{rooms}}]{\setlength{\rightskip}{0pt plus 5cm}state\+\_\+machine.\+Play.\+rooms}\hypertarget{classstate__machine_1_1Play_a1fae7e215371b18cf947e8cd1babb346}{}\label{classstate__machine_1_1Play_a1fae7e215371b18cf947e8cd1babb346}
+
+
+move to command get array containing the list of all Rooms rooms\+: \mbox{[}\textquotesingle{}Room\+Blue\textquotesingle{}, \textquotesingle{}Room\+Red\textquotesingle{}, \textquotesingle{}Room\+Green\textquotesingle{}, \textquotesingle{}Room\+Black\textquotesingle{}, \textquotesingle{}Room\+Magenta\textquotesingle{}, \textquotesingle{}Room\+Yellow\textquotesingle{}\mbox{]} 
+
+\index{state\+\_\+machine\+::\+Play@{state\+\_\+machine\+::\+Play}!stop\+Flag@{stop\+Flag}}
+\index{stop\+Flag@{stop\+Flag}!state\+\_\+machine\+::\+Play@{state\+\_\+machine\+::\+Play}}
+\subsubsection[{\texorpdfstring{stop\+Flag}{stopFlag}}]{\setlength{\rightskip}{0pt plus 5cm}state\+\_\+machine.\+Play.\+stop\+Flag\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classstate__machine_1_1Play_a60431dacf2811b3dc7e954473c281985}{}\label{classstate__machine_1_1Play_a60431dacf2811b3dc7e954473c281985}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/\+Experimental\+Robotics\+Lab\+Serena/src/final\+\_\+assignment/scripts/\hyperlink{state__machine_8py}{state\+\_\+machine.\+py}\end{DoxyCompactItemize}

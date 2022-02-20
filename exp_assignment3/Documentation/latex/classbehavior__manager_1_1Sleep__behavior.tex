@@ -1,0 +1,112 @@
+\hypertarget{classbehavior__manager_1_1Sleep__behavior}{}\section{behavior\+\_\+manager.\+Sleep\+\_\+behavior Class Reference}
+\label{classbehavior__manager_1_1Sleep__behavior}\index{behavior\+\_\+manager.\+Sleep\+\_\+behavior@{behavior\+\_\+manager.\+Sleep\+\_\+behavior}}
+
+
+class \hyperlink{classbehavior__manager_1_1Sleep__behavior}{Sleep\+\_\+behavior}  
+
+
+
+
+Inheritance diagram for behavior\+\_\+manager.\+Sleep\+\_\+behavior\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=217pt]{classbehavior__manager_1_1Sleep__behavior__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for behavior\+\_\+manager.\+Sleep\+\_\+behavior\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=217pt]{classbehavior__manager_1_1Sleep__behavior__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{classbehavior__manager_1_1Sleep__behavior_a778df3c5a36999ef4792e6ac444bd7f3}{\+\_\+\+\_\+init\+\_\+\+\_\+} (self)
+\begin{DoxyCompactList}\small\item\em method init \end{DoxyCompactList}\item 
+def \hyperlink{classbehavior__manager_1_1Sleep__behavior_a02d87859cb76d2dbdf78d9d6e2452782}{execute} (self, userdata)
+\begin{DoxyCompactList}\small\item\em method execute \end{DoxyCompactList}\item 
+def \hyperlink{classbehavior__manager_1_1Sleep__behavior_a06e3c381a9966e030eb82461405d75cf}{check\+\_\+if\+\_\+home\+\_\+position} (self, home)
+\begin{DoxyCompactList}\small\item\em method read\+\_\+actual\+\_\+position \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classbehavior__manager_1_1Sleep__behavior_a75cca73975838d3ee66cc687726685de}{rate}
+\item 
+\hyperlink{classbehavior__manager_1_1Sleep__behavior_ac8a99e565ddf742e5d3d25121bcc99bc}{at\+\_\+home}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+class \hyperlink{classbehavior__manager_1_1Sleep__behavior}{Sleep\+\_\+behavior} 
+
+This class implement the S\+L\+E\+EP behaviour of the robot pet The robot sleeps (S\+L\+E\+EP state)for a random period of time, then it moves to N\+O\+R\+M\+AL state The robot should\+:
+\begin{DoxyItemize}
+\item reach a predefined location within the arena in Gazebo
+\item stays there for some times
+\item go back in N\+O\+R\+M\+AL state 
+\end{DoxyItemize}
+
+\subsection{Constructor \& Destructor Documentation}
+\index{behavior\+\_\+manager\+::\+Sleep\+\_\+behavior@{behavior\+\_\+manager\+::\+Sleep\+\_\+behavior}!\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}}
+\index{\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}!behavior\+\_\+manager\+::\+Sleep\+\_\+behavior@{behavior\+\_\+manager\+::\+Sleep\+\_\+behavior}}
+\subsubsection[{\texorpdfstring{\+\_\+\+\_\+init\+\_\+\+\_\+(self)}{__init__(self)}}]{\setlength{\rightskip}{0pt plus 5cm}def behavior\+\_\+manager.\+Sleep\+\_\+behavior.\+\_\+\+\_\+init\+\_\+\+\_\+ (
+\begin{DoxyParamCaption}
+\item[{}]{self}
+\end{DoxyParamCaption}
+)}\hypertarget{classbehavior__manager_1_1Sleep__behavior_a778df3c5a36999ef4792e6ac444bd7f3}{}\label{classbehavior__manager_1_1Sleep__behavior_a778df3c5a36999ef4792e6ac444bd7f3}
+
+
+method init 
+
+it initializes the state class 
+
+\subsection{Member Function Documentation}
+\index{behavior\+\_\+manager\+::\+Sleep\+\_\+behavior@{behavior\+\_\+manager\+::\+Sleep\+\_\+behavior}!check\+\_\+if\+\_\+home\+\_\+position@{check\+\_\+if\+\_\+home\+\_\+position}}
+\index{check\+\_\+if\+\_\+home\+\_\+position@{check\+\_\+if\+\_\+home\+\_\+position}!behavior\+\_\+manager\+::\+Sleep\+\_\+behavior@{behavior\+\_\+manager\+::\+Sleep\+\_\+behavior}}
+\subsubsection[{\texorpdfstring{check\+\_\+if\+\_\+home\+\_\+position(self, home)}{check_if_home_position(self, home)}}]{\setlength{\rightskip}{0pt plus 5cm}def behavior\+\_\+manager.\+Sleep\+\_\+behavior.\+check\+\_\+if\+\_\+home\+\_\+position (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{home}
+\end{DoxyParamCaption}
+)}\hypertarget{classbehavior__manager_1_1Sleep__behavior_a06e3c381a9966e030eb82461405d75cf}{}\label{classbehavior__manager_1_1Sleep__behavior_a06e3c381a9966e030eb82461405d75cf}
+
+
+method read\+\_\+actual\+\_\+position 
+
+subscriber to actual\+\_\+position\+\_\+robot topic callback, it reads the actual position of the robot \index{behavior\+\_\+manager\+::\+Sleep\+\_\+behavior@{behavior\+\_\+manager\+::\+Sleep\+\_\+behavior}!execute@{execute}}
+\index{execute@{execute}!behavior\+\_\+manager\+::\+Sleep\+\_\+behavior@{behavior\+\_\+manager\+::\+Sleep\+\_\+behavior}}
+\subsubsection[{\texorpdfstring{execute(self, userdata)}{execute(self, userdata)}}]{\setlength{\rightskip}{0pt plus 5cm}def behavior\+\_\+manager.\+Sleep\+\_\+behavior.\+execute (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{userdata}
+\end{DoxyParamCaption}
+)}\hypertarget{classbehavior__manager_1_1Sleep__behavior_a02d87859cb76d2dbdf78d9d6e2452782}{}\label{classbehavior__manager_1_1Sleep__behavior_a02d87859cb76d2dbdf78d9d6e2452782}
+
+
+method execute 
+
+This method should
+\begin{DoxyItemize}
+\item publish \char`\"{}sleep\char`\"{} (String) on the topic behavior
+\item check if the robot is already at home position or not 
+\end{DoxyItemize}
+
+\subsection{Member Data Documentation}
+\index{behavior\+\_\+manager\+::\+Sleep\+\_\+behavior@{behavior\+\_\+manager\+::\+Sleep\+\_\+behavior}!at\+\_\+home@{at\+\_\+home}}
+\index{at\+\_\+home@{at\+\_\+home}!behavior\+\_\+manager\+::\+Sleep\+\_\+behavior@{behavior\+\_\+manager\+::\+Sleep\+\_\+behavior}}
+\subsubsection[{\texorpdfstring{at\+\_\+home}{at_home}}]{\setlength{\rightskip}{0pt plus 5cm}behavior\+\_\+manager.\+Sleep\+\_\+behavior.\+at\+\_\+home}\hypertarget{classbehavior__manager_1_1Sleep__behavior_ac8a99e565ddf742e5d3d25121bcc99bc}{}\label{classbehavior__manager_1_1Sleep__behavior_ac8a99e565ddf742e5d3d25121bcc99bc}
+\index{behavior\+\_\+manager\+::\+Sleep\+\_\+behavior@{behavior\+\_\+manager\+::\+Sleep\+\_\+behavior}!rate@{rate}}
+\index{rate@{rate}!behavior\+\_\+manager\+::\+Sleep\+\_\+behavior@{behavior\+\_\+manager\+::\+Sleep\+\_\+behavior}}
+\subsubsection[{\texorpdfstring{rate}{rate}}]{\setlength{\rightskip}{0pt plus 5cm}behavior\+\_\+manager.\+Sleep\+\_\+behavior.\+rate}\hypertarget{classbehavior__manager_1_1Sleep__behavior_a75cca73975838d3ee66cc687726685de}{}\label{classbehavior__manager_1_1Sleep__behavior_a75cca73975838d3ee66cc687726685de}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/\+Experimental\+Robotics\+Lab\+Serena/src/exp\+\_\+assignment3/src/\hyperlink{behavior__manager_8py}{behavior\+\_\+manager.\+py}\end{DoxyCompactItemize}

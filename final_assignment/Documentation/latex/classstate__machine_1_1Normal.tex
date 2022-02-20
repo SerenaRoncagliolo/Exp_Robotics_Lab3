@@ -1,0 +1,299 @@
+\hypertarget{classstate__machine_1_1Normal}{}\section{state\+\_\+machine.\+Normal Class Reference}
+\label{classstate__machine_1_1Normal}\index{state\+\_\+machine.\+Normal@{state\+\_\+machine.\+Normal}}
+
+
+class Normal\+\_\+behavior  
+
+
+
+
+Inheritance diagram for state\+\_\+machine.\+Normal\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=206pt]{classstate__machine_1_1Normal__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for state\+\_\+machine.\+Normal\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=206pt]{classstate__machine_1_1Normal__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{classstate__machine_1_1Normal_acdbc35a37d0350d7805a628048bc3bed}{\+\_\+\+\_\+init\+\_\+\+\_\+} (self)
+\begin{DoxyCompactList}\small\item\em method init \end{DoxyCompactList}\item 
+def \hyperlink{classstate__machine_1_1Normal_a2930df5f4890ec4b47b2a8e18f9bff08}{execute} (self, userdata)
+\begin{DoxyCompactList}\small\item\em method execute \end{DoxyCompactList}\item 
+def \hyperlink{classstate__machine_1_1Normal_a9e1b8d69a0e55eff3518dae91a81626a}{robot\+\_\+vel} (self, msg)
+\begin{DoxyCompactList}\small\item\em function robot\+\_\+vel \end{DoxyCompactList}\item 
+def \hyperlink{classstate__machine_1_1Normal_ab8bc608e9dab104a02f5ef47b4420aa3}{callback} (self, ros\+\_\+data)
+\begin{DoxyCompactList}\small\item\em method callback \end{DoxyCompactList}\item 
+def \hyperlink{classstate__machine_1_1Normal_ae850fe2a131b73c9b558780700411e98}{countour\+\_\+opencv} (self, lower, upper, hsv, image\+\_\+np)
+\begin{DoxyCompactList}\small\item\em method countour\+\_\+opencv \end{DoxyCompactList}\item 
+def \hyperlink{classstate__machine_1_1Normal_a2bcff58a537d46bdb548c4fa3eb1f2c8}{sub\+\_\+track} (self, cnts, image\+\_\+np, \hyperlink{classstate__machine_1_1Normal_aa7f6732a154ed8e53353598c2278cd49}{ball\+\_\+visible})
+\begin{DoxyCompactList}\small\item\em method sub\+\_\+track \end{DoxyCompactList}\item 
+def \hyperlink{classstate__machine_1_1Normal_a00b62ef4a75771f3a13cbc8c0a3e0387}{save\+\_\+param} (self, \hyperlink{classstate__machine_1_1Normal_aa7f6732a154ed8e53353598c2278cd49}{ball\+\_\+visible})
+\begin{DoxyCompactList}\small\item\em method save\+\_\+param \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classstate__machine_1_1Normal_a4b32c1a56ad043f9913b9b3068aafaa1}{counter\+Sleep}
+\item 
+\hyperlink{classstate__machine_1_1Normal_ad9306b3db821d9634339a20308e48a25}{counter\+Play}
+\begin{DoxyCompactList}\small\item\em counters to switch behavior \end{DoxyCompactList}\item 
+\hyperlink{classstate__machine_1_1Normal_ad631fe332b431c0001682701dde8dbed}{counter}
+\item 
+\hyperlink{classstate__machine_1_1Normal_a27eca8cdd2bee790ad3eecd42c23e3b5}{stop\+Flag}
+\item 
+\hyperlink{classstate__machine_1_1Normal_ad676a7bddfcb08e695d05338b57989f9}{param}
+\item 
+\hyperlink{classstate__machine_1_1Normal_aa7f6732a154ed8e53353598c2278cd49}{ball\+\_\+visible}
+\item 
+\hyperlink{classstate__machine_1_1Normal_ab6d144a3dda6248e1d2f30f9abe9d609}{outcomes}
+\item 
+\hyperlink{classstate__machine_1_1Normal_abf3086095a488112b289e23941a57809}{pub\+Goal} = rospy.\+Publisher(\textquotesingle{}goal\+Pos\textquotesingle{}, Num, \hyperlink{classstate__machine_1_1Normal_ae4b7ade70a0e23f0dd8738aaca0b4e4d}{queue\+\_\+size} = 10)
+\begin{DoxyCompactList}\small\item\em publishers / subscribers publisher to topic /goal\+Pos \end{DoxyCompactList}\item 
+\hyperlink{classstate__machine_1_1Normal_a12658175f11bf60d621652d845da5d31}{sub\+Vel} = rospy.\+Subscriber(\char`\"{}cmd\+\_\+vel\char`\"{}, Twist, self.\+robot\+\_\+vel)
+\item 
+\hyperlink{classstate__machine_1_1Normal_a8f98c449693c58319157bc51e2621157}{pub\+Vel}
+\item 
+\hyperlink{classstate__machine_1_1Normal_a6f6f347ff2c917d80cdb28f42e7cfd47}{Twist}
+\item 
+\hyperlink{classstate__machine_1_1Normal_ae4b7ade70a0e23f0dd8738aaca0b4e4d}{queue\+\_\+size}
+\item 
+\hyperlink{classstate__machine_1_1Normal_a813c3112edc54d4146e8c07ef6f7e040}{sub\+Cam}
+\item 
+\hyperlink{classstate__machine_1_1Normal_a9696c713d102313a01209dce8e05aea3}{var}
+\item 
+\hyperlink{classstate__machine_1_1Normal_ac4a9f6b5f01a6edbde7d181dea3bd92a}{randomlist} = \hyperlink{namespacestate__machine_ad624b5f98b8358f20b7cecc4b88c9f52}{random\+\_\+position}()
+\begin{DoxyCompactList}\small\item\em send the robot to a random goal positions compute random position with function \hyperlink{namespacestate__machine_ad624b5f98b8358f20b7cecc4b88c9f52}{random\+\_\+position()} \end{DoxyCompactList}\item 
+\hyperlink{classstate__machine_1_1Normal_a9e0c7641755e2614e74b3228fbef0a82}{c} = max(cnts, key = cv2.\+contour\+Area)
+\item 
+\hyperlink{classstate__machine_1_1Normal_afa87ced0c5fa2d65c957a16bd517fc39}{radius}
+\item 
+\hyperlink{classstate__machine_1_1Normal_a8b720e4cdaf1aff877cc16eb72887ca4}{M} = cv2.\+moments(\hyperlink{classstate__machine_1_1Normal_a9e0c7641755e2614e74b3228fbef0a82}{c})
+\item 
+tuple \hyperlink{classstate__machine_1_1Normal_a91a5741f842196647b0f7267ce568aeb}{center} = (int(\hyperlink{classstate__machine_1_1Normal_a8b720e4cdaf1aff877cc16eb72887ca4}{M}\mbox{[}\char`\"{}m10\char`\"{}\mbox{]} / M\mbox{[}\char`\"{}m00\char`\"{}\mbox{]}), int(\hyperlink{classstate__machine_1_1Normal_a8b720e4cdaf1aff877cc16eb72887ca4}{M}\mbox{[}\char`\"{}m01\char`\"{}\mbox{]} / M\mbox{[}\char`\"{}m00\char`\"{}\mbox{]}))
+\item 
+\hyperlink{classstate__machine_1_1Normal_aa1d4a50c677406423e29048758a79596}{vel} = \hyperlink{classstate__machine_1_1Normal_a6f6f347ff2c917d80cdb28f42e7cfd47}{Twist}()
+\item 
+\hyperlink{classstate__machine_1_1Normal_a6261e388441dd73175646b4eb06453f7}{z}
+\item 
+\hyperlink{classstate__machine_1_1Normal_a474c7681d4377c15bf89a5062887bd49}{x}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+class Normal\+\_\+behavior 
+
+This class implement the N\+O\+R\+M\+AL behaviour of the robot pet The robot moves randomly within the Gazebo arena
+\begin{DoxyItemize}
+\item If it receives a \char`\"{}play\char`\"{} command the F\+SM should go into P\+L\+AY state (start\+\_\+play)
+\item If the sleep timer is triggered the F\+SM should go into S\+L\+E\+EP state (start\+\_\+sleep) 
+\end{DoxyItemize}
+
+\subsection{Constructor \& Destructor Documentation}
+\index{state\+\_\+machine\+::\+Normal@{state\+\_\+machine\+::\+Normal}!\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}}
+\index{\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}!state\+\_\+machine\+::\+Normal@{state\+\_\+machine\+::\+Normal}}
+\subsubsection[{\texorpdfstring{\+\_\+\+\_\+init\+\_\+\+\_\+(self)}{__init__(self)}}]{\setlength{\rightskip}{0pt plus 5cm}def state\+\_\+machine.\+Normal.\+\_\+\+\_\+init\+\_\+\+\_\+ (
+\begin{DoxyParamCaption}
+\item[{}]{self}
+\end{DoxyParamCaption}
+)}\hypertarget{classstate__machine_1_1Normal_acdbc35a37d0350d7805a628048bc3bed}{}\label{classstate__machine_1_1Normal_acdbc35a37d0350d7805a628048bc3bed}
+
+
+method init 
+
+This method should\+:
+\begin{DoxyItemize}
+\item initializes the state class 
+\end{DoxyItemize}
+
+\subsection{Member Function Documentation}
+\index{state\+\_\+machine\+::\+Normal@{state\+\_\+machine\+::\+Normal}!callback@{callback}}
+\index{callback@{callback}!state\+\_\+machine\+::\+Normal@{state\+\_\+machine\+::\+Normal}}
+\subsubsection[{\texorpdfstring{callback(self, ros\+\_\+data)}{callback(self, ros_data)}}]{\setlength{\rightskip}{0pt plus 5cm}def state\+\_\+machine.\+Normal.\+callback (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{ros\+\_\+data}
+\end{DoxyParamCaption}
+)}\hypertarget{classstate__machine_1_1Normal_ab8bc608e9dab104a02f5ef47b4420aa3}{}\label{classstate__machine_1_1Normal_ab8bc608e9dab104a02f5ef47b4420aa3}
+
+
+method callback 
+
+Execute callback everytime e new image is available from the camera. it make uses of open\+CV libraries to track the ball within rooms and save the room position it calls methods\+:
+\begin{DoxyItemize}
+\item countour\+\_\+opencv
+\item sub\+\_\+track 
+\end{DoxyItemize}\index{state\+\_\+machine\+::\+Normal@{state\+\_\+machine\+::\+Normal}!countour\+\_\+opencv@{countour\+\_\+opencv}}
+\index{countour\+\_\+opencv@{countour\+\_\+opencv}!state\+\_\+machine\+::\+Normal@{state\+\_\+machine\+::\+Normal}}
+\subsubsection[{\texorpdfstring{countour\+\_\+opencv(self, lower, upper, hsv, image\+\_\+np)}{countour_opencv(self, lower, upper, hsv, image_np)}}]{\setlength{\rightskip}{0pt plus 5cm}def state\+\_\+machine.\+Normal.\+countour\+\_\+opencv (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{lower, }
+\item[{}]{upper, }
+\item[{}]{hsv, }
+\item[{}]{image\+\_\+np}
+\end{DoxyParamCaption}
+)}\hypertarget{classstate__machine_1_1Normal_ae850fe2a131b73c9b558780700411e98}{}\label{classstate__machine_1_1Normal_ae850fe2a131b73c9b558780700411e98}
+
+
+method countour\+\_\+opencv 
+
+used to create masks for colours, and their countours \index{state\+\_\+machine\+::\+Normal@{state\+\_\+machine\+::\+Normal}!execute@{execute}}
+\index{execute@{execute}!state\+\_\+machine\+::\+Normal@{state\+\_\+machine\+::\+Normal}}
+\subsubsection[{\texorpdfstring{execute(self, userdata)}{execute(self, userdata)}}]{\setlength{\rightskip}{0pt plus 5cm}def state\+\_\+machine.\+Normal.\+execute (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{userdata}
+\end{DoxyParamCaption}
+)}\hypertarget{classstate__machine_1_1Normal_a2930df5f4890ec4b47b2a8e18f9bff08}{}\label{classstate__machine_1_1Normal_a2930df5f4890ec4b47b2a8e18f9bff08}
+
+
+method execute 
+
+This method\+:
+\begin{DoxyItemize}
+\item robot moves randomly within the map
+\item to do so, we sent random goal positions he has to reach
+\item when it detects a coloured object within the camera range it runs the callback method
+\item this callback implements a opencv algorithm to detect objects
+\item once detected it enters T\+R\+A\+CK substate to get closer to the ball and save the room position 
+\end{DoxyItemize}\index{state\+\_\+machine\+::\+Normal@{state\+\_\+machine\+::\+Normal}!robot\+\_\+vel@{robot\+\_\+vel}}
+\index{robot\+\_\+vel@{robot\+\_\+vel}!state\+\_\+machine\+::\+Normal@{state\+\_\+machine\+::\+Normal}}
+\subsubsection[{\texorpdfstring{robot\+\_\+vel(self, msg)}{robot_vel(self, msg)}}]{\setlength{\rightskip}{0pt plus 5cm}def state\+\_\+machine.\+Normal.\+robot\+\_\+vel (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{msg}
+\end{DoxyParamCaption}
+)}\hypertarget{classstate__machine_1_1Normal_a9e1b8d69a0e55eff3518dae91a81626a}{}\label{classstate__machine_1_1Normal_a9e1b8d69a0e55eff3518dae91a81626a}
+
+
+function robot\+\_\+vel 
+
+callback to check if the robot is moving or not A flag is set to 1 if the robot is not moving, to 0 otherwise \index{state\+\_\+machine\+::\+Normal@{state\+\_\+machine\+::\+Normal}!save\+\_\+param@{save\+\_\+param}}
+\index{save\+\_\+param@{save\+\_\+param}!state\+\_\+machine\+::\+Normal@{state\+\_\+machine\+::\+Normal}}
+\subsubsection[{\texorpdfstring{save\+\_\+param(self, ball\+\_\+visible)}{save_param(self, ball_visible)}}]{\setlength{\rightskip}{0pt plus 5cm}def state\+\_\+machine.\+Normal.\+save\+\_\+param (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{ball\+\_\+visible}
+\end{DoxyParamCaption}
+)}\hypertarget{classstate__machine_1_1Normal_a00b62ef4a75771f3a13cbc8c0a3e0387}{}\label{classstate__machine_1_1Normal_a00b62ef4a75771f3a13cbc8c0a3e0387}
+
+
+method save\+\_\+param 
+
+function to store position of the room \index{state\+\_\+machine\+::\+Normal@{state\+\_\+machine\+::\+Normal}!sub\+\_\+track@{sub\+\_\+track}}
+\index{sub\+\_\+track@{sub\+\_\+track}!state\+\_\+machine\+::\+Normal@{state\+\_\+machine\+::\+Normal}}
+\subsubsection[{\texorpdfstring{sub\+\_\+track(self, cnts, image\+\_\+np, ball\+\_\+visible)}{sub_track(self, cnts, image_np, ball_visible)}}]{\setlength{\rightskip}{0pt plus 5cm}def state\+\_\+machine.\+Normal.\+sub\+\_\+track (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{cnts, }
+\item[{}]{image\+\_\+np, }
+\item[{}]{ball\+\_\+visible}
+\end{DoxyParamCaption}
+)}\hypertarget{classstate__machine_1_1Normal_a2bcff58a537d46bdb548c4fa3eb1f2c8}{}\label{classstate__machine_1_1Normal_a2bcff58a537d46bdb548c4fa3eb1f2c8}
+
+
+method sub\+\_\+track 
+
+This function is executed everytime the robot detects a color object which was not previously detected. The robot moves closer to the detected object. Once done, the reference position of the room is marked as reached and stored as \char`\"{}visited\char`\"{} in the parameter server. 
+
+\subsection{Member Data Documentation}
+\index{state\+\_\+machine\+::\+Normal@{state\+\_\+machine\+::\+Normal}!ball\+\_\+visible@{ball\+\_\+visible}}
+\index{ball\+\_\+visible@{ball\+\_\+visible}!state\+\_\+machine\+::\+Normal@{state\+\_\+machine\+::\+Normal}}
+\subsubsection[{\texorpdfstring{ball\+\_\+visible}{ball_visible}}]{\setlength{\rightskip}{0pt plus 5cm}state\+\_\+machine.\+Normal.\+ball\+\_\+visible\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classstate__machine_1_1Normal_aa7f6732a154ed8e53353598c2278cd49}{}\label{classstate__machine_1_1Normal_aa7f6732a154ed8e53353598c2278cd49}
+\index{state\+\_\+machine\+::\+Normal@{state\+\_\+machine\+::\+Normal}!c@{c}}
+\index{c@{c}!state\+\_\+machine\+::\+Normal@{state\+\_\+machine\+::\+Normal}}
+\subsubsection[{\texorpdfstring{c}{c}}]{\setlength{\rightskip}{0pt plus 5cm}state\+\_\+machine.\+Normal.\+c = max(cnts, key = cv2.\+contour\+Area)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classstate__machine_1_1Normal_a9e0c7641755e2614e74b3228fbef0a82}{}\label{classstate__machine_1_1Normal_a9e0c7641755e2614e74b3228fbef0a82}
+\index{state\+\_\+machine\+::\+Normal@{state\+\_\+machine\+::\+Normal}!center@{center}}
+\index{center@{center}!state\+\_\+machine\+::\+Normal@{state\+\_\+machine\+::\+Normal}}
+\subsubsection[{\texorpdfstring{center}{center}}]{\setlength{\rightskip}{0pt plus 5cm}tuple state\+\_\+machine.\+Normal.\+center = (int({\bf M}\mbox{[}\char`\"{}m10\char`\"{}\mbox{]} / M\mbox{[}\char`\"{}m00\char`\"{}\mbox{]}), int({\bf M}\mbox{[}\char`\"{}m01\char`\"{}\mbox{]} / M\mbox{[}\char`\"{}m00\char`\"{}\mbox{]}))\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classstate__machine_1_1Normal_a91a5741f842196647b0f7267ce568aeb}{}\label{classstate__machine_1_1Normal_a91a5741f842196647b0f7267ce568aeb}
+\index{state\+\_\+machine\+::\+Normal@{state\+\_\+machine\+::\+Normal}!counter@{counter}}
+\index{counter@{counter}!state\+\_\+machine\+::\+Normal@{state\+\_\+machine\+::\+Normal}}
+\subsubsection[{\texorpdfstring{counter}{counter}}]{\setlength{\rightskip}{0pt plus 5cm}state\+\_\+machine.\+Normal.\+counter\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classstate__machine_1_1Normal_ad631fe332b431c0001682701dde8dbed}{}\label{classstate__machine_1_1Normal_ad631fe332b431c0001682701dde8dbed}
+\index{state\+\_\+machine\+::\+Normal@{state\+\_\+machine\+::\+Normal}!counter\+Play@{counter\+Play}}
+\index{counter\+Play@{counter\+Play}!state\+\_\+machine\+::\+Normal@{state\+\_\+machine\+::\+Normal}}
+\subsubsection[{\texorpdfstring{counter\+Play}{counterPlay}}]{\setlength{\rightskip}{0pt plus 5cm}state\+\_\+machine.\+Normal.\+counter\+Play\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classstate__machine_1_1Normal_ad9306b3db821d9634339a20308e48a25}{}\label{classstate__machine_1_1Normal_ad9306b3db821d9634339a20308e48a25}
+
+
+counters to switch behavior 
+
+\index{state\+\_\+machine\+::\+Normal@{state\+\_\+machine\+::\+Normal}!counter\+Sleep@{counter\+Sleep}}
+\index{counter\+Sleep@{counter\+Sleep}!state\+\_\+machine\+::\+Normal@{state\+\_\+machine\+::\+Normal}}
+\subsubsection[{\texorpdfstring{counter\+Sleep}{counterSleep}}]{\setlength{\rightskip}{0pt plus 5cm}state\+\_\+machine.\+Normal.\+counter\+Sleep\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classstate__machine_1_1Normal_a4b32c1a56ad043f9913b9b3068aafaa1}{}\label{classstate__machine_1_1Normal_a4b32c1a56ad043f9913b9b3068aafaa1}
+\index{state\+\_\+machine\+::\+Normal@{state\+\_\+machine\+::\+Normal}!M@{M}}
+\index{M@{M}!state\+\_\+machine\+::\+Normal@{state\+\_\+machine\+::\+Normal}}
+\subsubsection[{\texorpdfstring{M}{M}}]{\setlength{\rightskip}{0pt plus 5cm}state\+\_\+machine.\+Normal.\+M = cv2.\+moments({\bf c})\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classstate__machine_1_1Normal_a8b720e4cdaf1aff877cc16eb72887ca4}{}\label{classstate__machine_1_1Normal_a8b720e4cdaf1aff877cc16eb72887ca4}
+\index{state\+\_\+machine\+::\+Normal@{state\+\_\+machine\+::\+Normal}!outcomes@{outcomes}}
+\index{outcomes@{outcomes}!state\+\_\+machine\+::\+Normal@{state\+\_\+machine\+::\+Normal}}
+\subsubsection[{\texorpdfstring{outcomes}{outcomes}}]{\setlength{\rightskip}{0pt plus 5cm}state\+\_\+machine.\+Normal.\+outcomes\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classstate__machine_1_1Normal_ab6d144a3dda6248e1d2f30f9abe9d609}{}\label{classstate__machine_1_1Normal_ab6d144a3dda6248e1d2f30f9abe9d609}
+\index{state\+\_\+machine\+::\+Normal@{state\+\_\+machine\+::\+Normal}!param@{param}}
+\index{param@{param}!state\+\_\+machine\+::\+Normal@{state\+\_\+machine\+::\+Normal}}
+\subsubsection[{\texorpdfstring{param}{param}}]{\setlength{\rightskip}{0pt plus 5cm}state\+\_\+machine.\+Normal.\+param\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classstate__machine_1_1Normal_ad676a7bddfcb08e695d05338b57989f9}{}\label{classstate__machine_1_1Normal_ad676a7bddfcb08e695d05338b57989f9}
+\index{state\+\_\+machine\+::\+Normal@{state\+\_\+machine\+::\+Normal}!pub\+Goal@{pub\+Goal}}
+\index{pub\+Goal@{pub\+Goal}!state\+\_\+machine\+::\+Normal@{state\+\_\+machine\+::\+Normal}}
+\subsubsection[{\texorpdfstring{pub\+Goal}{pubGoal}}]{\setlength{\rightskip}{0pt plus 5cm}state\+\_\+machine.\+Normal.\+pub\+Goal = rospy.\+Publisher(\textquotesingle{}goal\+Pos\textquotesingle{}, Num, {\bf queue\+\_\+size} = 10)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classstate__machine_1_1Normal_abf3086095a488112b289e23941a57809}{}\label{classstate__machine_1_1Normal_abf3086095a488112b289e23941a57809}
+
+
+publishers / subscribers publisher to topic /goal\+Pos 
+
+\index{state\+\_\+machine\+::\+Normal@{state\+\_\+machine\+::\+Normal}!pub\+Vel@{pub\+Vel}}
+\index{pub\+Vel@{pub\+Vel}!state\+\_\+machine\+::\+Normal@{state\+\_\+machine\+::\+Normal}}
+\subsubsection[{\texorpdfstring{pub\+Vel}{pubVel}}]{\setlength{\rightskip}{0pt plus 5cm}state\+\_\+machine.\+Normal.\+pub\+Vel\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classstate__machine_1_1Normal_a8f98c449693c58319157bc51e2621157}{}\label{classstate__machine_1_1Normal_a8f98c449693c58319157bc51e2621157}
+\index{state\+\_\+machine\+::\+Normal@{state\+\_\+machine\+::\+Normal}!queue\+\_\+size@{queue\+\_\+size}}
+\index{queue\+\_\+size@{queue\+\_\+size}!state\+\_\+machine\+::\+Normal@{state\+\_\+machine\+::\+Normal}}
+\subsubsection[{\texorpdfstring{queue\+\_\+size}{queue_size}}]{\setlength{\rightskip}{0pt plus 5cm}state\+\_\+machine.\+Normal.\+queue\+\_\+size\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classstate__machine_1_1Normal_ae4b7ade70a0e23f0dd8738aaca0b4e4d}{}\label{classstate__machine_1_1Normal_ae4b7ade70a0e23f0dd8738aaca0b4e4d}
+\index{state\+\_\+machine\+::\+Normal@{state\+\_\+machine\+::\+Normal}!radius@{radius}}
+\index{radius@{radius}!state\+\_\+machine\+::\+Normal@{state\+\_\+machine\+::\+Normal}}
+\subsubsection[{\texorpdfstring{radius}{radius}}]{\setlength{\rightskip}{0pt plus 5cm}state\+\_\+machine.\+Normal.\+radius\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classstate__machine_1_1Normal_afa87ced0c5fa2d65c957a16bd517fc39}{}\label{classstate__machine_1_1Normal_afa87ced0c5fa2d65c957a16bd517fc39}
+\index{state\+\_\+machine\+::\+Normal@{state\+\_\+machine\+::\+Normal}!randomlist@{randomlist}}
+\index{randomlist@{randomlist}!state\+\_\+machine\+::\+Normal@{state\+\_\+machine\+::\+Normal}}
+\subsubsection[{\texorpdfstring{randomlist}{randomlist}}]{\setlength{\rightskip}{0pt plus 5cm}state\+\_\+machine.\+Normal.\+randomlist = {\bf random\+\_\+position}()\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classstate__machine_1_1Normal_ac4a9f6b5f01a6edbde7d181dea3bd92a}{}\label{classstate__machine_1_1Normal_ac4a9f6b5f01a6edbde7d181dea3bd92a}
+
+
+send the robot to a random goal positions compute random position with function \hyperlink{namespacestate__machine_ad624b5f98b8358f20b7cecc4b88c9f52}{random\+\_\+position()} 
+
+\index{state\+\_\+machine\+::\+Normal@{state\+\_\+machine\+::\+Normal}!stop\+Flag@{stop\+Flag}}
+\index{stop\+Flag@{stop\+Flag}!state\+\_\+machine\+::\+Normal@{state\+\_\+machine\+::\+Normal}}
+\subsubsection[{\texorpdfstring{stop\+Flag}{stopFlag}}]{\setlength{\rightskip}{0pt plus 5cm}state\+\_\+machine.\+Normal.\+stop\+Flag\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classstate__machine_1_1Normal_a27eca8cdd2bee790ad3eecd42c23e3b5}{}\label{classstate__machine_1_1Normal_a27eca8cdd2bee790ad3eecd42c23e3b5}
+\index{state\+\_\+machine\+::\+Normal@{state\+\_\+machine\+::\+Normal}!sub\+Cam@{sub\+Cam}}
+\index{sub\+Cam@{sub\+Cam}!state\+\_\+machine\+::\+Normal@{state\+\_\+machine\+::\+Normal}}
+\subsubsection[{\texorpdfstring{sub\+Cam}{subCam}}]{\setlength{\rightskip}{0pt plus 5cm}state\+\_\+machine.\+Normal.\+sub\+Cam\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classstate__machine_1_1Normal_a813c3112edc54d4146e8c07ef6f7e040}{}\label{classstate__machine_1_1Normal_a813c3112edc54d4146e8c07ef6f7e040}
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+1 = rospy.Subscriber(\textcolor{stringliteral}{"camera1/image\_raw/compressed"},
+2                                            CompressedImage, self.callback,  queue\_size=1)
+\end{DoxyCode}
+\index{state\+\_\+machine\+::\+Normal@{state\+\_\+machine\+::\+Normal}!sub\+Vel@{sub\+Vel}}
+\index{sub\+Vel@{sub\+Vel}!state\+\_\+machine\+::\+Normal@{state\+\_\+machine\+::\+Normal}}
+\subsubsection[{\texorpdfstring{sub\+Vel}{subVel}}]{\setlength{\rightskip}{0pt plus 5cm}state\+\_\+machine.\+Normal.\+sub\+Vel = rospy.\+Subscriber(\char`\"{}cmd\+\_\+vel\char`\"{}, Twist, self.\+robot\+\_\+vel)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classstate__machine_1_1Normal_a12658175f11bf60d621652d845da5d31}{}\label{classstate__machine_1_1Normal_a12658175f11bf60d621652d845da5d31}
+\index{state\+\_\+machine\+::\+Normal@{state\+\_\+machine\+::\+Normal}!Twist@{Twist}}
+\index{Twist@{Twist}!state\+\_\+machine\+::\+Normal@{state\+\_\+machine\+::\+Normal}}
+\subsubsection[{\texorpdfstring{Twist}{Twist}}]{\setlength{\rightskip}{0pt plus 5cm}state\+\_\+machine.\+Normal.\+Twist\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classstate__machine_1_1Normal_a6f6f347ff2c917d80cdb28f42e7cfd47}{}\label{classstate__machine_1_1Normal_a6f6f347ff2c917d80cdb28f42e7cfd47}
+\index{state\+\_\+machine\+::\+Normal@{state\+\_\+machine\+::\+Normal}!var@{var}}
+\index{var@{var}!state\+\_\+machine\+::\+Normal@{state\+\_\+machine\+::\+Normal}}
+\subsubsection[{\texorpdfstring{var}{var}}]{\setlength{\rightskip}{0pt plus 5cm}state\+\_\+machine.\+Normal.\+var\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classstate__machine_1_1Normal_a9696c713d102313a01209dce8e05aea3}{}\label{classstate__machine_1_1Normal_a9696c713d102313a01209dce8e05aea3}
+\index{state\+\_\+machine\+::\+Normal@{state\+\_\+machine\+::\+Normal}!vel@{vel}}
+\index{vel@{vel}!state\+\_\+machine\+::\+Normal@{state\+\_\+machine\+::\+Normal}}
+\subsubsection[{\texorpdfstring{vel}{vel}}]{\setlength{\rightskip}{0pt plus 5cm}state\+\_\+machine.\+Normal.\+vel = {\bf Twist}()\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classstate__machine_1_1Normal_aa1d4a50c677406423e29048758a79596}{}\label{classstate__machine_1_1Normal_aa1d4a50c677406423e29048758a79596}
+\index{state\+\_\+machine\+::\+Normal@{state\+\_\+machine\+::\+Normal}!x@{x}}
+\index{x@{x}!state\+\_\+machine\+::\+Normal@{state\+\_\+machine\+::\+Normal}}
+\subsubsection[{\texorpdfstring{x}{x}}]{\setlength{\rightskip}{0pt plus 5cm}state\+\_\+machine.\+Normal.\+x\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classstate__machine_1_1Normal_a474c7681d4377c15bf89a5062887bd49}{}\label{classstate__machine_1_1Normal_a474c7681d4377c15bf89a5062887bd49}
+\index{state\+\_\+machine\+::\+Normal@{state\+\_\+machine\+::\+Normal}!z@{z}}
+\index{z@{z}!state\+\_\+machine\+::\+Normal@{state\+\_\+machine\+::\+Normal}}
+\subsubsection[{\texorpdfstring{z}{z}}]{\setlength{\rightskip}{0pt plus 5cm}state\+\_\+machine.\+Normal.\+z\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classstate__machine_1_1Normal_a6261e388441dd73175646b4eb06453f7}{}\label{classstate__machine_1_1Normal_a6261e388441dd73175646b4eb06453f7}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/\+Experimental\+Robotics\+Lab\+Serena/src/final\+\_\+assignment/scripts/\hyperlink{state__machine_8py}{state\+\_\+machine.\+py}\end{DoxyCompactItemize}

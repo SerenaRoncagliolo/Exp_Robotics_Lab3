@@ -1,0 +1,55 @@
+\hypertarget{motion_8py}{}\section{/home/\+Experimental\+Robotics\+Lab\+Serena/src/exp\+\_\+assignment3/src/motion.py File Reference}
+\label{motion_8py}\index{/home/\+Experimental\+Robotics\+Lab\+Serena/src/exp\+\_\+assignment3/src/motion.\+py@{/home/\+Experimental\+Robotics\+Lab\+Serena/src/exp\+\_\+assignment3/src/motion.\+py}}
+\subsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \hyperlink{namespacemotion}{motion}
+\begin{DoxyCompactList}\small\item\em It moves the robot within the Gazebo environment according to the given behavior. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{namespacemotion_af838e21dbf42903e9919b1b9263e306c}{motion.\+get\+\_\+random\+\_\+position} ()
+\begin{DoxyCompactList}\small\item\em function random position on map \end{DoxyCompactList}\item 
+def \hyperlink{namespacemotion_aa4861fa33d9ce9a5edf2e9c5d0393ec1}{motion.\+get\+\_\+current\+\_\+room\+\_\+position} ()
+\begin{DoxyCompactList}\small\item\em function get\+\_\+current\+\_\+room\+\_\+position \end{DoxyCompactList}\item 
+def \hyperlink{namespacemotion_a780223b6acd6bda378971227650c92e1}{motion.\+callback\+\_\+get\+\_\+behaviour} (state)
+\begin{DoxyCompactList}\small\item\em function callback\+\_\+get\+\_\+behavior \end{DoxyCompactList}\item 
+def \hyperlink{namespacemotion_ae3d3508540404a8a6e74b2808768e95d}{motion.\+get\+\_\+room\+\_\+command} (human\+\_\+command)
+\begin{DoxyCompactList}\small\item\em function get\+\_\+room\+\_\+command \end{DoxyCompactList}\item 
+def \hyperlink{namespacemotion_a4d516c2d2b3bec18bb4c6faf73e38fc8}{motion.\+feedback\+\_\+cb} (check)
+\begin{DoxyCompactList}\small\item\em function feedback\+\_\+cb \end{DoxyCompactList}\item 
+def \hyperlink{namespacemotion_ad19c84db008ed0163c8122d570d026e2}{motion.\+move\+\_\+random\+\_\+normal} ()
+\begin{DoxyCompactList}\small\item\em function move\+\_\+normal \end{DoxyCompactList}\item 
+def \hyperlink{namespacemotion_a7e28371ac015cdd23c39095626abce98}{motion.\+move\+\_\+sleep\+\_\+position} ()
+\begin{DoxyCompactList}\small\item\em function move\+\_\+sleep\+\_\+position \end{DoxyCompactList}\item 
+def \hyperlink{namespacemotion_a8291fff74d22580af44a2c7cb56eaeeb}{motion.\+play\+\_\+motion} ()
+\begin{DoxyCompactList}\small\item\em function play\+\_\+motion \end{DoxyCompactList}\item 
+def \hyperlink{namespacemotion_ad6289fca8572f5af95fd28f4c2dbc68d}{motion.\+main} ()
+\begin{DoxyCompactList}\small\item\em function main \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{namespacemotion_a9f9cd0f38a0aad33b5304b4edef120cd}{motion.\+V\+E\+R\+B\+O\+SE} = False
+\item 
+\hyperlink{namespacemotion_a15d63b2a70ac940f179085ce72871c86}{motion.\+behaviour} = None
+\begin{DoxyCompactList}\small\item\em global variables initialize behavior \end{DoxyCompactList}\item 
+\hyperlink{namespacemotion_ac7315ec450891f4f81a17315dccc7903}{motion.\+current\+Room} = None
+\item 
+\hyperlink{namespacemotion_a635c1fd35291e93dc73ab2f6c6f7c8c4}{motion.\+current\+Room\+Pos} = None
+\item 
+list \hyperlink{namespacemotion_aa995e8257b20bb286a59bf6bb3c5f375}{motion.\+home\+\_\+position} = \mbox{[}rospy.\+get\+\_\+param(\textquotesingle{}home\+\_\+x\textquotesingle{}), rospy.\+get\+\_\+param(\textquotesingle{}home\+\_\+y\textquotesingle{})\mbox{]}
+\item 
+\hyperlink{namespacemotion_aba6af569cf57bbdc8a1d01598d29d99b}{motion.\+act\+\_\+c} = None
+\item 
+\hyperlink{namespacemotion_aa7760f4160a77a04d3cc60233ad138ab}{motion.\+publisher\+At\+Home} = rospy.\+Publisher(\char`\"{}/at\+\_\+home\char`\"{}, Bool, queue\+\_\+size=1)
+\item 
+\hyperlink{namespacemotion_a11a206a594fcaf6dff8429664bcce376}{motion.\+publisher\+At\+Human} = rospy.\+Publisher(\char`\"{}/at\+\_\+human\char`\"{}, Bool, queue\+\_\+size=1)
+\item 
+\hyperlink{namespacemotion_ac08467b50a1ebb7e985d8b93bcf5653d}{motion.\+publisher\+Unknown\+Room} = rospy.\+Publisher(\char`\"{}/unknown\+\_\+room\char`\"{}, Bool, queue\+\_\+size=1)
+\item 
+bool \hyperlink{namespacemotion_a30e58643e988d1faddb84cdfd54965f8}{motion.\+at\+\_\+home} = False
+\item 
+bool \hyperlink{namespacemotion_a8a70e4c3b029440acf94460c95f42841}{motion.\+at\+\_\+human} = False
+\item 
+\hyperlink{namespacemotion_a86619454560e5d6f8dfe5dd042391ca1}{motion.\+rate} = None
+\end{DoxyCompactItemize}

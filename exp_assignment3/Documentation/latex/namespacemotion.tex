@@ -1,0 +1,203 @@
+\hypertarget{namespacemotion}{}\section{motion Namespace Reference}
+\label{namespacemotion}\index{motion@{motion}}
+
+
+It moves the robot within the Gazebo environment according to the given behavior.  
+
+
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{namespacemotion_af838e21dbf42903e9919b1b9263e306c}{get\+\_\+random\+\_\+position} ()
+\begin{DoxyCompactList}\small\item\em function random position on map \end{DoxyCompactList}\item 
+def \hyperlink{namespacemotion_aa4861fa33d9ce9a5edf2e9c5d0393ec1}{get\+\_\+current\+\_\+room\+\_\+position} ()
+\begin{DoxyCompactList}\small\item\em function get\+\_\+current\+\_\+room\+\_\+position \end{DoxyCompactList}\item 
+def \hyperlink{namespacemotion_a780223b6acd6bda378971227650c92e1}{callback\+\_\+get\+\_\+behaviour} (state)
+\begin{DoxyCompactList}\small\item\em function callback\+\_\+get\+\_\+behavior \end{DoxyCompactList}\item 
+def \hyperlink{namespacemotion_ae3d3508540404a8a6e74b2808768e95d}{get\+\_\+room\+\_\+command} (human\+\_\+command)
+\begin{DoxyCompactList}\small\item\em function get\+\_\+room\+\_\+command \end{DoxyCompactList}\item 
+def \hyperlink{namespacemotion_a4d516c2d2b3bec18bb4c6faf73e38fc8}{feedback\+\_\+cb} (check)
+\begin{DoxyCompactList}\small\item\em function feedback\+\_\+cb \end{DoxyCompactList}\item 
+def \hyperlink{namespacemotion_ad19c84db008ed0163c8122d570d026e2}{move\+\_\+random\+\_\+normal} ()
+\begin{DoxyCompactList}\small\item\em function move\+\_\+normal \end{DoxyCompactList}\item 
+def \hyperlink{namespacemotion_a7e28371ac015cdd23c39095626abce98}{move\+\_\+sleep\+\_\+position} ()
+\begin{DoxyCompactList}\small\item\em function move\+\_\+sleep\+\_\+position \end{DoxyCompactList}\item 
+def \hyperlink{namespacemotion_a8291fff74d22580af44a2c7cb56eaeeb}{play\+\_\+motion} ()
+\begin{DoxyCompactList}\small\item\em function play\+\_\+motion \end{DoxyCompactList}\item 
+def \hyperlink{namespacemotion_ad6289fca8572f5af95fd28f4c2dbc68d}{main} ()
+\begin{DoxyCompactList}\small\item\em function main \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{namespacemotion_a9f9cd0f38a0aad33b5304b4edef120cd}{V\+E\+R\+B\+O\+SE} = False
+\item 
+\hyperlink{namespacemotion_a15d63b2a70ac940f179085ce72871c86}{behaviour} = None
+\begin{DoxyCompactList}\small\item\em global variables initialize behavior \end{DoxyCompactList}\item 
+\hyperlink{namespacemotion_ac7315ec450891f4f81a17315dccc7903}{current\+Room} = None
+\item 
+\hyperlink{namespacemotion_a635c1fd35291e93dc73ab2f6c6f7c8c4}{current\+Room\+Pos} = None
+\item 
+list \hyperlink{namespacemotion_aa995e8257b20bb286a59bf6bb3c5f375}{home\+\_\+position} = \mbox{[}rospy.\+get\+\_\+param(\textquotesingle{}home\+\_\+x\textquotesingle{}), rospy.\+get\+\_\+param(\textquotesingle{}home\+\_\+y\textquotesingle{})\mbox{]}
+\item 
+\hyperlink{namespacemotion_aba6af569cf57bbdc8a1d01598d29d99b}{act\+\_\+c} = None
+\item 
+\hyperlink{namespacemotion_aa7760f4160a77a04d3cc60233ad138ab}{publisher\+At\+Home} = rospy.\+Publisher(\char`\"{}/at\+\_\+home\char`\"{}, Bool, queue\+\_\+size=1)
+\item 
+\hyperlink{namespacemotion_a11a206a594fcaf6dff8429664bcce376}{publisher\+At\+Human} = rospy.\+Publisher(\char`\"{}/at\+\_\+human\char`\"{}, Bool, queue\+\_\+size=1)
+\item 
+\hyperlink{namespacemotion_ac08467b50a1ebb7e985d8b93bcf5653d}{publisher\+Unknown\+Room} = rospy.\+Publisher(\char`\"{}/unknown\+\_\+room\char`\"{}, Bool, queue\+\_\+size=1)
+\item 
+bool \hyperlink{namespacemotion_a30e58643e988d1faddb84cdfd54965f8}{at\+\_\+home} = False
+\item 
+bool \hyperlink{namespacemotion_a8a70e4c3b029440acf94460c95f42841}{at\+\_\+human} = False
+\item 
+\hyperlink{namespacemotion_a86619454560e5d6f8dfe5dd042391ca1}{rate} = None
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+It moves the robot within the Gazebo environment according to the given behavior. 
+
+\subsection{Function Documentation}
+\index{motion@{motion}!callback\+\_\+get\+\_\+behaviour@{callback\+\_\+get\+\_\+behaviour}}
+\index{callback\+\_\+get\+\_\+behaviour@{callback\+\_\+get\+\_\+behaviour}!motion@{motion}}
+\subsubsection[{\texorpdfstring{callback\+\_\+get\+\_\+behaviour(state)}{callback_get_behaviour(state)}}]{\setlength{\rightskip}{0pt plus 5cm}def motion.\+callback\+\_\+get\+\_\+behaviour (
+\begin{DoxyParamCaption}
+\item[{}]{state}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemotion_a780223b6acd6bda378971227650c92e1}{}\label{namespacemotion_a780223b6acd6bda378971227650c92e1}
+
+
+function callback\+\_\+get\+\_\+behavior 
+
+subscriber callback to the behaviour topic \index{motion@{motion}!feedback\+\_\+cb@{feedback\+\_\+cb}}
+\index{feedback\+\_\+cb@{feedback\+\_\+cb}!motion@{motion}}
+\subsubsection[{\texorpdfstring{feedback\+\_\+cb(check)}{feedback_cb(check)}}]{\setlength{\rightskip}{0pt plus 5cm}def motion.\+feedback\+\_\+cb (
+\begin{DoxyParamCaption}
+\item[{}]{check}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemotion_a4d516c2d2b3bec18bb4c6faf73e38fc8}{}\label{namespacemotion_a4d516c2d2b3bec18bb4c6faf73e38fc8}
+
+
+function feedback\+\_\+cb 
+
+callback to send goal \index{motion@{motion}!get\+\_\+current\+\_\+room\+\_\+position@{get\+\_\+current\+\_\+room\+\_\+position}}
+\index{get\+\_\+current\+\_\+room\+\_\+position@{get\+\_\+current\+\_\+room\+\_\+position}!motion@{motion}}
+\subsubsection[{\texorpdfstring{get\+\_\+current\+\_\+room\+\_\+position()}{get_current_room_position()}}]{\setlength{\rightskip}{0pt plus 5cm}def motion.\+get\+\_\+current\+\_\+room\+\_\+position (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemotion_aa4861fa33d9ce9a5edf2e9c5d0393ec1}{}\label{namespacemotion_aa4861fa33d9ce9a5edf2e9c5d0393ec1}
+
+
+function get\+\_\+current\+\_\+room\+\_\+position 
+
+function to check if the room position is known \index{motion@{motion}!get\+\_\+random\+\_\+position@{get\+\_\+random\+\_\+position}}
+\index{get\+\_\+random\+\_\+position@{get\+\_\+random\+\_\+position}!motion@{motion}}
+\subsubsection[{\texorpdfstring{get\+\_\+random\+\_\+position()}{get_random_position()}}]{\setlength{\rightskip}{0pt plus 5cm}def motion.\+get\+\_\+random\+\_\+position (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemotion_af838e21dbf42903e9919b1b9263e306c}{}\label{namespacemotion_af838e21dbf42903e9919b1b9263e306c}
+
+
+function random position on map 
+
+get a random position given x and y coordinates \index{motion@{motion}!get\+\_\+room\+\_\+command@{get\+\_\+room\+\_\+command}}
+\index{get\+\_\+room\+\_\+command@{get\+\_\+room\+\_\+command}!motion@{motion}}
+\subsubsection[{\texorpdfstring{get\+\_\+room\+\_\+command(human\+\_\+command)}{get_room_command(human_command)}}]{\setlength{\rightskip}{0pt plus 5cm}def motion.\+get\+\_\+room\+\_\+command (
+\begin{DoxyParamCaption}
+\item[{}]{human\+\_\+command}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemotion_ae3d3508540404a8a6e74b2808768e95d}{}\label{namespacemotion_ae3d3508540404a8a6e74b2808768e95d}
+
+
+function get\+\_\+room\+\_\+command 
+
+read the command from human \index{motion@{motion}!main@{main}}
+\index{main@{main}!motion@{motion}}
+\subsubsection[{\texorpdfstring{main()}{main()}}]{\setlength{\rightskip}{0pt plus 5cm}def motion.\+main (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemotion_ad6289fca8572f5af95fd28f4c2dbc68d}{}\label{namespacemotion_ad6289fca8572f5af95fd28f4c2dbc68d}
+
+
+function main 
+
+\index{motion@{motion}!move\+\_\+random\+\_\+normal@{move\+\_\+random\+\_\+normal}}
+\index{move\+\_\+random\+\_\+normal@{move\+\_\+random\+\_\+normal}!motion@{motion}}
+\subsubsection[{\texorpdfstring{move\+\_\+random\+\_\+normal()}{move_random_normal()}}]{\setlength{\rightskip}{0pt plus 5cm}def motion.\+move\+\_\+random\+\_\+normal (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemotion_ad19c84db008ed0163c8122d570d026e2}{}\label{namespacemotion_ad19c84db008ed0163c8122d570d026e2}
+
+
+function move\+\_\+normal 
+
+the robot moves randomly when in the N\+O\+R\+M\+AL state \index{motion@{motion}!move\+\_\+sleep\+\_\+position@{move\+\_\+sleep\+\_\+position}}
+\index{move\+\_\+sleep\+\_\+position@{move\+\_\+sleep\+\_\+position}!motion@{motion}}
+\subsubsection[{\texorpdfstring{move\+\_\+sleep\+\_\+position()}{move_sleep_position()}}]{\setlength{\rightskip}{0pt plus 5cm}def motion.\+move\+\_\+sleep\+\_\+position (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemotion_a7e28371ac015cdd23c39095626abce98}{}\label{namespacemotion_a7e28371ac015cdd23c39095626abce98}
+
+
+function move\+\_\+sleep\+\_\+position 
+
+movement in the S\+L\+E\+EP state \index{motion@{motion}!play\+\_\+motion@{play\+\_\+motion}}
+\index{play\+\_\+motion@{play\+\_\+motion}!motion@{motion}}
+\subsubsection[{\texorpdfstring{play\+\_\+motion()}{play_motion()}}]{\setlength{\rightskip}{0pt plus 5cm}def motion.\+play\+\_\+motion (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemotion_a8291fff74d22580af44a2c7cb56eaeeb}{}\label{namespacemotion_a8291fff74d22580af44a2c7cb56eaeeb}
+
+
+function play\+\_\+motion 
+
+it control the movements of the robot in play behaviour 
+
+\subsection{Variable Documentation}
+\index{motion@{motion}!act\+\_\+c@{act\+\_\+c}}
+\index{act\+\_\+c@{act\+\_\+c}!motion@{motion}}
+\subsubsection[{\texorpdfstring{act\+\_\+c}{act_c}}]{\setlength{\rightskip}{0pt plus 5cm}motion.\+act\+\_\+c = None}\hypertarget{namespacemotion_aba6af569cf57bbdc8a1d01598d29d99b}{}\label{namespacemotion_aba6af569cf57bbdc8a1d01598d29d99b}
+\index{motion@{motion}!at\+\_\+home@{at\+\_\+home}}
+\index{at\+\_\+home@{at\+\_\+home}!motion@{motion}}
+\subsubsection[{\texorpdfstring{at\+\_\+home}{at_home}}]{\setlength{\rightskip}{0pt plus 5cm}bool motion.\+at\+\_\+home = False}\hypertarget{namespacemotion_a30e58643e988d1faddb84cdfd54965f8}{}\label{namespacemotion_a30e58643e988d1faddb84cdfd54965f8}
+\index{motion@{motion}!at\+\_\+human@{at\+\_\+human}}
+\index{at\+\_\+human@{at\+\_\+human}!motion@{motion}}
+\subsubsection[{\texorpdfstring{at\+\_\+human}{at_human}}]{\setlength{\rightskip}{0pt plus 5cm}bool motion.\+at\+\_\+human = False}\hypertarget{namespacemotion_a8a70e4c3b029440acf94460c95f42841}{}\label{namespacemotion_a8a70e4c3b029440acf94460c95f42841}
+\index{motion@{motion}!behaviour@{behaviour}}
+\index{behaviour@{behaviour}!motion@{motion}}
+\subsubsection[{\texorpdfstring{behaviour}{behaviour}}]{\setlength{\rightskip}{0pt plus 5cm}motion.\+behaviour = None}\hypertarget{namespacemotion_a15d63b2a70ac940f179085ce72871c86}{}\label{namespacemotion_a15d63b2a70ac940f179085ce72871c86}
+
+
+global variables initialize behavior 
+
+\index{motion@{motion}!current\+Room@{current\+Room}}
+\index{current\+Room@{current\+Room}!motion@{motion}}
+\subsubsection[{\texorpdfstring{current\+Room}{currentRoom}}]{\setlength{\rightskip}{0pt plus 5cm}motion.\+current\+Room = None}\hypertarget{namespacemotion_ac7315ec450891f4f81a17315dccc7903}{}\label{namespacemotion_ac7315ec450891f4f81a17315dccc7903}
+\index{motion@{motion}!current\+Room\+Pos@{current\+Room\+Pos}}
+\index{current\+Room\+Pos@{current\+Room\+Pos}!motion@{motion}}
+\subsubsection[{\texorpdfstring{current\+Room\+Pos}{currentRoomPos}}]{\setlength{\rightskip}{0pt plus 5cm}motion.\+current\+Room\+Pos = None}\hypertarget{namespacemotion_a635c1fd35291e93dc73ab2f6c6f7c8c4}{}\label{namespacemotion_a635c1fd35291e93dc73ab2f6c6f7c8c4}
+\index{motion@{motion}!home\+\_\+position@{home\+\_\+position}}
+\index{home\+\_\+position@{home\+\_\+position}!motion@{motion}}
+\subsubsection[{\texorpdfstring{home\+\_\+position}{home_position}}]{\setlength{\rightskip}{0pt plus 5cm}list motion.\+home\+\_\+position = \mbox{[}rospy.\+get\+\_\+param(\textquotesingle{}home\+\_\+x\textquotesingle{}), rospy.\+get\+\_\+param(\textquotesingle{}home\+\_\+y\textquotesingle{})\mbox{]}}\hypertarget{namespacemotion_aa995e8257b20bb286a59bf6bb3c5f375}{}\label{namespacemotion_aa995e8257b20bb286a59bf6bb3c5f375}
+\index{motion@{motion}!publisher\+At\+Home@{publisher\+At\+Home}}
+\index{publisher\+At\+Home@{publisher\+At\+Home}!motion@{motion}}
+\subsubsection[{\texorpdfstring{publisher\+At\+Home}{publisherAtHome}}]{\setlength{\rightskip}{0pt plus 5cm}motion.\+publisher\+At\+Home = rospy.\+Publisher(\char`\"{}/at\+\_\+home\char`\"{}, Bool, queue\+\_\+size=1)}\hypertarget{namespacemotion_aa7760f4160a77a04d3cc60233ad138ab}{}\label{namespacemotion_aa7760f4160a77a04d3cc60233ad138ab}
+\index{motion@{motion}!publisher\+At\+Human@{publisher\+At\+Human}}
+\index{publisher\+At\+Human@{publisher\+At\+Human}!motion@{motion}}
+\subsubsection[{\texorpdfstring{publisher\+At\+Human}{publisherAtHuman}}]{\setlength{\rightskip}{0pt plus 5cm}motion.\+publisher\+At\+Human = rospy.\+Publisher(\char`\"{}/at\+\_\+human\char`\"{}, Bool, queue\+\_\+size=1)}\hypertarget{namespacemotion_a11a206a594fcaf6dff8429664bcce376}{}\label{namespacemotion_a11a206a594fcaf6dff8429664bcce376}
+\index{motion@{motion}!publisher\+Unknown\+Room@{publisher\+Unknown\+Room}}
+\index{publisher\+Unknown\+Room@{publisher\+Unknown\+Room}!motion@{motion}}
+\subsubsection[{\texorpdfstring{publisher\+Unknown\+Room}{publisherUnknownRoom}}]{\setlength{\rightskip}{0pt plus 5cm}motion.\+publisher\+Unknown\+Room = rospy.\+Publisher(\char`\"{}/unknown\+\_\+room\char`\"{}, Bool, queue\+\_\+size=1)}\hypertarget{namespacemotion_ac08467b50a1ebb7e985d8b93bcf5653d}{}\label{namespacemotion_ac08467b50a1ebb7e985d8b93bcf5653d}
+\index{motion@{motion}!rate@{rate}}
+\index{rate@{rate}!motion@{motion}}
+\subsubsection[{\texorpdfstring{rate}{rate}}]{\setlength{\rightskip}{0pt plus 5cm}motion.\+rate = None}\hypertarget{namespacemotion_a86619454560e5d6f8dfe5dd042391ca1}{}\label{namespacemotion_a86619454560e5d6f8dfe5dd042391ca1}
+\index{motion@{motion}!V\+E\+R\+B\+O\+SE@{V\+E\+R\+B\+O\+SE}}
+\index{V\+E\+R\+B\+O\+SE@{V\+E\+R\+B\+O\+SE}!motion@{motion}}
+\subsubsection[{\texorpdfstring{V\+E\+R\+B\+O\+SE}{VERBOSE}}]{\setlength{\rightskip}{0pt plus 5cm}bool motion.\+V\+E\+R\+B\+O\+SE = False}\hypertarget{namespacemotion_a9f9cd0f38a0aad33b5304b4edef120cd}{}\label{namespacemotion_a9f9cd0f38a0aad33b5304b4edef120cd}

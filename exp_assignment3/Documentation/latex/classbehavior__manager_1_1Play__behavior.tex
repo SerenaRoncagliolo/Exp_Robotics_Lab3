@@ -1,0 +1,109 @@
+\hypertarget{classbehavior__manager_1_1Play__behavior}{}\section{behavior\+\_\+manager.\+Play\+\_\+behavior Class Reference}
+\label{classbehavior__manager_1_1Play__behavior}\index{behavior\+\_\+manager.\+Play\+\_\+behavior@{behavior\+\_\+manager.\+Play\+\_\+behavior}}
+
+
+class \hyperlink{classbehavior__manager_1_1Play__behavior}{Play\+\_\+behavior}  
+
+
+
+
+Inheritance diagram for behavior\+\_\+manager.\+Play\+\_\+behavior\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=209pt]{classbehavior__manager_1_1Play__behavior__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for behavior\+\_\+manager.\+Play\+\_\+behavior\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=209pt]{classbehavior__manager_1_1Play__behavior__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{classbehavior__manager_1_1Play__behavior_aaa6ce2b1855d0a235e324df41d8519a1}{\+\_\+\+\_\+init\+\_\+\+\_\+} (self)
+\begin{DoxyCompactList}\small\item\em method init \end{DoxyCompactList}\item 
+def \hyperlink{classbehavior__manager_1_1Play__behavior_a6c5231ed8f406c82e06c741e89b0f666}{execute} (self, userdata)
+\begin{DoxyCompactList}\small\item\em method execute \end{DoxyCompactList}\item 
+def \hyperlink{classbehavior__manager_1_1Play__behavior_a575ae46822b1544bd4d0670c2d99782e}{read\+\_\+current\+\_\+location} (self, current\+Room)
+\begin{DoxyCompactList}\small\item\em method read\+\_\+current\+\_\+location \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classbehavior__manager_1_1Play__behavior_af636412228a2da30ad114266cbd121e3}{rate}
+\item 
+\hyperlink{classbehavior__manager_1_1Play__behavior_a8e31d349144e193480484d2a03dd3a7a}{room\+\_\+unknown}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+class \hyperlink{classbehavior__manager_1_1Play__behavior}{Play\+\_\+behavior} 
+
+This class implement the P\+L\+AY behavior of the robot pet It moves the robot to the predefined (X, Y) location within the map and moves it back to the user. The Robot should\+:
+\begin{DoxyItemize}
+\item start following the ball
+\item when the ball stops (it means when the robot stops) it moves the head on the left of 45 degrees, and keep it there for some seconds
+\item then it moves the head to the right, stays there for some seconds
+\item once moved the head keeps tracking the ball 
+\end{DoxyItemize}
+
+\subsection{Constructor \& Destructor Documentation}
+\index{behavior\+\_\+manager\+::\+Play\+\_\+behavior@{behavior\+\_\+manager\+::\+Play\+\_\+behavior}!\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}}
+\index{\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}!behavior\+\_\+manager\+::\+Play\+\_\+behavior@{behavior\+\_\+manager\+::\+Play\+\_\+behavior}}
+\subsubsection[{\texorpdfstring{\+\_\+\+\_\+init\+\_\+\+\_\+(self)}{__init__(self)}}]{\setlength{\rightskip}{0pt plus 5cm}def behavior\+\_\+manager.\+Play\+\_\+behavior.\+\_\+\+\_\+init\+\_\+\+\_\+ (
+\begin{DoxyParamCaption}
+\item[{}]{self}
+\end{DoxyParamCaption}
+)}\hypertarget{classbehavior__manager_1_1Play__behavior_aaa6ce2b1855d0a235e324df41d8519a1}{}\label{classbehavior__manager_1_1Play__behavior_aaa6ce2b1855d0a235e324df41d8519a1}
+
+
+method init 
+
+it initializes the state class 
+
+\subsection{Member Function Documentation}
+\index{behavior\+\_\+manager\+::\+Play\+\_\+behavior@{behavior\+\_\+manager\+::\+Play\+\_\+behavior}!execute@{execute}}
+\index{execute@{execute}!behavior\+\_\+manager\+::\+Play\+\_\+behavior@{behavior\+\_\+manager\+::\+Play\+\_\+behavior}}
+\subsubsection[{\texorpdfstring{execute(self, userdata)}{execute(self, userdata)}}]{\setlength{\rightskip}{0pt plus 5cm}def behavior\+\_\+manager.\+Play\+\_\+behavior.\+execute (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{userdata}
+\end{DoxyParamCaption}
+)}\hypertarget{classbehavior__manager_1_1Play__behavior_a6c5231ed8f406c82e06c741e89b0f666}{}\label{classbehavior__manager_1_1Play__behavior_a6c5231ed8f406c82e06c741e89b0f666}
+
+
+method execute 
+
+what the robot should do \index{behavior\+\_\+manager\+::\+Play\+\_\+behavior@{behavior\+\_\+manager\+::\+Play\+\_\+behavior}!read\+\_\+current\+\_\+location@{read\+\_\+current\+\_\+location}}
+\index{read\+\_\+current\+\_\+location@{read\+\_\+current\+\_\+location}!behavior\+\_\+manager\+::\+Play\+\_\+behavior@{behavior\+\_\+manager\+::\+Play\+\_\+behavior}}
+\subsubsection[{\texorpdfstring{read\+\_\+current\+\_\+location(self, current\+Room)}{read_current_location(self, currentRoom)}}]{\setlength{\rightskip}{0pt plus 5cm}def behavior\+\_\+manager.\+Play\+\_\+behavior.\+read\+\_\+current\+\_\+location (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{current\+Room}
+\end{DoxyParamCaption}
+)}\hypertarget{classbehavior__manager_1_1Play__behavior_a575ae46822b1544bd4d0670c2d99782e}{}\label{classbehavior__manager_1_1Play__behavior_a575ae46822b1544bd4d0670c2d99782e}
+
+
+method read\+\_\+current\+\_\+location 
+
+subscriber callback to find the ball 
+
+\subsection{Member Data Documentation}
+\index{behavior\+\_\+manager\+::\+Play\+\_\+behavior@{behavior\+\_\+manager\+::\+Play\+\_\+behavior}!rate@{rate}}
+\index{rate@{rate}!behavior\+\_\+manager\+::\+Play\+\_\+behavior@{behavior\+\_\+manager\+::\+Play\+\_\+behavior}}
+\subsubsection[{\texorpdfstring{rate}{rate}}]{\setlength{\rightskip}{0pt plus 5cm}behavior\+\_\+manager.\+Play\+\_\+behavior.\+rate}\hypertarget{classbehavior__manager_1_1Play__behavior_af636412228a2da30ad114266cbd121e3}{}\label{classbehavior__manager_1_1Play__behavior_af636412228a2da30ad114266cbd121e3}
+\index{behavior\+\_\+manager\+::\+Play\+\_\+behavior@{behavior\+\_\+manager\+::\+Play\+\_\+behavior}!room\+\_\+unknown@{room\+\_\+unknown}}
+\index{room\+\_\+unknown@{room\+\_\+unknown}!behavior\+\_\+manager\+::\+Play\+\_\+behavior@{behavior\+\_\+manager\+::\+Play\+\_\+behavior}}
+\subsubsection[{\texorpdfstring{room\+\_\+unknown}{room_unknown}}]{\setlength{\rightskip}{0pt plus 5cm}behavior\+\_\+manager.\+Play\+\_\+behavior.\+room\+\_\+unknown}\hypertarget{classbehavior__manager_1_1Play__behavior_a8e31d349144e193480484d2a03dd3a7a}{}\label{classbehavior__manager_1_1Play__behavior_a8e31d349144e193480484d2a03dd3a7a}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/\+Experimental\+Robotics\+Lab\+Serena/src/exp\+\_\+assignment3/src/\hyperlink{behavior__manager_8py}{behavior\+\_\+manager.\+py}\end{DoxyCompactItemize}
