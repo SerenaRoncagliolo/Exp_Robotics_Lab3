@@ -2,7 +2,7 @@
 
 ## @package motion
 #
-# It moves the robot within the Gazebo environment according to the given behavior
+# It moves the robot within the Gazebo environment according to its behavior
 
 import rospy
 #import time
