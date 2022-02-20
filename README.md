@@ -76,6 +76,8 @@ The project was build with:
 
 ## Software Architecture
 
+We implemented two versions of the project. The first one is contained in the package _exp_assignment3_ and due to its complexity is still a work in progress and it contains bugs which need to be fixed. Its limitations are explained in the sections below. The second version is a simplified and functioning version of the project
+
 ### Simulation 
 Our project is simulated in a 3D [**Gazebo**](http://gazebosim.org/) environment. Gazebo is a 3D dynamic simulator that efficiently simulate robots in complex indoor and outdoor environments. It provides physics simulation having a rich library of robot models and environments, a wide variety of sensors, and a user-friendly graphical interface.
 
@@ -125,7 +127,7 @@ The wheeled dog has four behaviors:
   * it can use already known positions or explore independently. 
   * when an object is detected, as done in Normal state, it enters the Find Track sub-state to move closer to the object and save the position.
 
-### Components Architecture
+### Components Architecture - exp_assignment3 package 
 
 <p align="center"; style='text-align: center'>
 <a>
@@ -170,7 +172,7 @@ The wheeled dog has four behaviors:
   * in Normal behaviour: the robot get a random goal position within the map. This goal position is sent to the _move_base_ action server which moves the robot accordingly and waits until the position is reached. 
   * in Sleep behaviour: in this state, the component moves the robot to a predefined _home position_, which is sent again as goal position to the server _move_base_. When the robot has reached it, the Motion component publishes a  message on the topic /at_home. This topic is subscribed by the Behaviour controller to have an update regarding the robot location.
   * in Play behaviour: if not there already, the robot should first move in from of the human, so that he can receive the next command. Once in front of him, the component publishes on the topic /at_human, which is subscribed by the component Human Simulator. The robot can then receive a command, which tells it which room it should move to. If the location is already known and contained in the known map of the apartment, then the robot can reach it. If not it should notify the Behaviour component by publishing on the topic /room_unkown. Once done so, the robot switches to Find behaviour.
-* **OpenCv Ball Tracking:** as in the previous lab, we implemented a component that makes use of the OpenCV library to detect the ball. [_OpenCV_](https://opencv.org/) is a library used for real-time computer vision. ROS can be interfaced to OpenCV by using [CvBridge](http://wiki.ros.org/cv_bridge) and [convert ROS images](cv_bridge/Tutorials/ConvertingBetweenROSImagesAndOpenCVImagesPython - ROS Wiki) into OpenCV images, or vice versa. This library is used to determine if the ball is contained within the robot camera range. This component subscribes to the robot camera topic given by _/robot/camera1/image_raw/compressed_. If the ball is detected while the robot is in Normal or Find state, it will switch respectively to the sub-state Normal Track or Find Track. Once in these substates, the OpenCV Tracking component publishes a velocity on the /cmd_vel topic. This is done because we want the robot to get as close as possible to the detected ball. Once it gets close, it alerts the Behaviour manager component by publishing on the topic /at_ball. If the robot was in the Normal Track substate it goes back to the Normal state. If instead, it was in the Find Track substate, it should check if the room in which it is currently located corresponds to the one given in the last user command. If so, it means that it has finally reached the desired goal room, it publishes a boolean message on the /at_room topic and it turns back to Play Behaviour. Otherwise it goes back to Find state. As opposed to the implementation in the previous version of the project, the robot should now be capable to distinguish the colour of the ball, which will be used to identify the room. Also
+* **OpenCv Ball Tracking:** as in the previous lab, we implemented a component that makes use of the OpenCV library to detect the ball. [_OpenCV_](https://opencv.org/) is a library used for real-time computer vision. ROS can be interfaced to OpenCV by using [CvBridge](http://wiki.ros.org/cv_bridge) and [convert ROS images](cv_bridge/Tutorials/ConvertingBetweenROSImagesAndOpenCVImagesPython - ROS Wiki) into OpenCV images, or vice versa. This library is used to determine if the ball is contained within the robot camera range. This component subscribes to the robot camera topic given by _/robot/camera1/image_raw/compressed_. If the ball is detected while the robot is in Normal or Find state, it will switch respectively to the sub-state Normal Track or Find Track. Once in these substates, the OpenCV Tracking component publishes a velocity on the /cmd_vel topic. This is done because we want the robot to get as close as possible to the detected ball. Once it gets close, it alerts the Behaviour manager component by publishing on the topic /at_ball. If the robot was in the Normal Track substate it goes back to the Normal state. If instead, it was in the Find Track substate, it should check if the room in which it is currently located corresponds to the one given in the last user command. If so, it means that it has finally reached the desired goal room, it publishes a boolean message on the /at_room topic and it turns back to Play Behaviour. Otherwise it goes back to Find state. As opposed to the implementation in the previous version of the project, the robot should now be capable to distinguish the colour of the ball, which will be used to identify the room. 
 * **Human Interface Simulator:** this component is used to simulate a human interacting with the robot. It can publish a message on the topic /start_play, which is subscribed by the Behaviour manager. This command is given at random time instantm and it gives the name of the room where the robot is supposed to move.
 
 
@@ -218,23 +220,48 @@ The wheeled dog has four behaviors:
   * Once the robot is close to the ball, OPENCV TRACKING publishes "True" on the topic _/at_ball_ 
   * The robot goes back to Normal or Find state
 
-### Differences with previous lab
-<p align="center">
+### Components Architecture - final_assignment package 
+
+<p align="center"; style='text-align: center'>
 <a>
-    <img src="/images/exp12.png" width="800" height="">
+    <figure> 
+      <img src="/images/Final_architecture_simple.png" width="600" height="">
+    </figure>
 </a>
 </p>
-
+ 
+ The architecture is made up of three ROS packages and four custom nodes. The external packages are used to move the robot within the apartment (_move_base package_), to create a map using the scan laser (_gmapping_) and explore the unkown part of the environment (_explore_lite_). Their function is explained in the previous paragraphs.
+ 
+**Components**  
+In this project we implemented the Action Client _simple_navigation_goals_ and the component _Behavior Manager_. 
+* **simple_navigation_goal**: the action client _simple_navigation_goals_ is responsible for sending goals position to the Action Servers, which control the simulation in Gazebo. Each goal sent to the server is expresses with respect to the frame of the map, and not the robot's frame. 
+* **behavior manager**: it simulates the Finite State Machine (FSM) and controls the switching between the four robot behaviours (Normal, Sleep, Play and Find) described in detail in the section _State Machine_. It communicates with the action client publishing target positions on the topic /goalPos using a list of integers. In this components we have implemented the four states as classes
+  * _Normal class_: the robot is supposed to move randomly within the environment until it detects a coloured object. This class makes the robot move randomly by computing positions whose coordinates are randomly chosen within a given interval, such as the map dimensions. Whenever a new image is available from the camera, the class execute a method which implement a opencv-based algorithm. The class subscribes to the robot camera topic given by _/robot/camera1/image_raw/compressed_. If the ball is detected while the robot is in Normal state, it will switch to the sub-state Track. Once in these substates, it publishes a velocity on the /cmd_vel topic to move the robot as close as possible to the detected ball. It then goes back to the Normal state. As opposed to the implementation in the previous version of the project, the robot is now capable to distinguish the colour of the ball, which is used to identify the room. At random time intervals, the robot switch to Sleep or Play state.
+  * _Sleep class_: when it switch to sleep state, the robot first moves to a predefined _home position_ and then stops there for a while, only to go back to Normal state
+  * _Play class_: the robot goes to a predefined position in front of the human. Once there it waits for him to give a command of which room it should move to. To give this command, we randomly extrach a room from a list containing all six of them. First the class implement a method to check if the given room was already visited by the robot or not. If so, the robot moves to the given location. This class publishes the room position on the topic /goalPos which is subscribed by the move_base action client. Once it reaches the room. it goes back to the human and wait for another command. If the given room is not known, the robot enters Find state. 
+  * _Find class_: when entering Find State, the class launch the package explore_lite. The robot moves within the environment controlled by this package. As done for the normal state, the class instantiates a method which is executed everytime a new image is available in the camera. It subscribes to the robot camera topic given by _/robot/camera1/image_raw/compressed_. If the ball is detected, it will switch to the sub-state Track. Once in this substate, it publishes a velocity on the /cmd_vel topic to move the robot as close as possible to the detected ball. Once close to it, the robot position is stored. As opposed to the implementation in the previous version of the project, the robot is now capable to distinguish the colour of the ball, which is used to identify the room. At random time intervals, the robot switch to Sleep or Play state.
 
 
 ### ROS Parameters
+
+**exp_assignment3 package**
+
 * home_x: x coordinate of the robot home position
 * home_y: y coordinate of the robot home position
 * frequency_sleep: frequency of the Sleep behaviour
 * frequency_play: frequency of the Play command sent by the human
 
+**final_assignment package**
+
+* humanPose: (x,y) coordinates of the position the robot should reach first in play state
+* homePose: (x,y) coordinates of the home position the robot should reach first in sleep state
+
 ### ROS Topics
+
+**exp_assignment3 package**
+
 As shown in the UML graph or the system architecture, the system make use of the following topics:
+
 * /behavior: this topic is subscribed by the _OpenCV Tracking_ and _Motion_ components to read the current behavior of the robot. It is used by the _Behavior Manager_ component to publish the state of the robot as a String
 * /at_home: this topic is subscribed by the _Behavior Manager_ to check if the robot has reached or not home position, so that it can switch to sleep behavior. It is used by _Motion_ to publish this condition as a boolean
 * /at_human: this topic is subscribed by the _Human Simulator_ to check if the robot is in front of the human or not, so that it can wait there for a command. It is used by _Motion_ to publish this condition as a boolean
@@ -251,7 +278,22 @@ As shown in the UML graph or the system architecture, the system make use of the
 * /goal: goal for the _move_base_ action server
 * /result: result of the _move_base_ action server
 
+**final_assignment package**
+
+As shown in the UML graph or the system architecture, the system make use of the following topics:
+
+* /camera1/image_raw/compressed: topic subscribed by the OpenCV tracking component to get the ROS image and convert it in OpenCv image. 
+* /cmd_vel: topic published by the _OpenCV tracking_ component and by _move_base_ to set the robot velocity in Gazebo.  
+* /odom: topic used to get by the robot odometry from Gazebo simulator
+* /scan: topic for the LaserScan output, used by _OpenCV tracking_ and _move_base_ to avoid obstacles 
+* /map: topic on which _gmapping_ publishes the created map
+* /goalPos: topic on which the computed position is sent to the _move_base_ action client
+* /goal: goal for the _move_base_ action server
+* /result: result of the _move_base_ action server
+
 ### Rqt_graphs 
+
+<!-- **exp_assignment3 package**
 
 <p align="center">
 <a>
@@ -259,23 +301,38 @@ As shown in the UML graph or the system architecture, the system make use of the
 </a>
 </p>
 
+**final_assignment package** -->
+
 ## Repository Organization
 The repository contains the following folders:
 
-* **Config**: configuriation file to initialize RViz correctly
-* **Documentation**: it contains the html and latex documentation produced with Doxygen
+* **explore**: explore-lite package
 * **images**: contains .png images used in the README:md file
-* **launch**: contains two launch files:
-  *  gazebo_world.launch: it launch the gazebo world contained the simulation model of the robot, human and ball
-  *  pet_behavior.launch: it starts the behaviour architecure of the project
-*  **param**: it contains the configuration parameters for the _move_base_ package
-*  * **src**: contains the relative script of the main components of the architecture:
-  *  behavior_manager.py
-  *  human_simulator.py
-  *  motion.py
-  *  opencv_tracking.py
-* **urdf**: it contains the files to simulate a robot and a human in Gazebo;
-* **worlds**: it contains the world used for implementing the simulation;
+* **exp_assignemt3**
+  * **config**: configuration file to initialize RViz correctly
+  * **Documentation**: it contains the html and latex documentation produced with Doxygen
+  * **launch**: contains two launch files:
+    *  simulation.launch: it launch the gazebo world contained the simulation model of the robot, human and ball
+    *  scripts.launch: it starts the behaviour architecure of the project
+  *  **param**: it contains the configuration parameters for the _move_base_ package
+  *  **src**: contains the relative script of the main components of the architecture:
+     * behavior_manager.py
+     * human_simulator.py
+     * motion.py
+     * opencv_tracking.py
+  * **urdf**: it contains the files to simulate a robot and a human in Gazebo;
+  * **worlds**: it contains the world used for implementing the simulation;
+* **final_assignemt**
+  * **config**: configuration file to initialize RViz correctly
+  * **Documentation**: it contains the html and latex documentation produced with Doxygen
+  * **launch**: contains two launch files:
+    *  simulation.launch: it launch the gazebo world contained the simulation model of the robot, human and ball
+    *  scripts.launch: it starts the behaviour architecure of the project
+  *  **param**: it contains the configuration parameters for the _move_base_ package
+  *  **src**: contains the relative script of the main components of the architecture:
+     * state_machine.py
+  * **urdf**: it contains the files to simulate a robot and a human in Gazebo;
+  * **worlds**: it contains the world used for implementing the simulation; 
  
 ## Prerequisites
 
@@ -330,17 +387,29 @@ This instructions assumes that you have installed **catkin**, if not it is neces
     $ catkin_make
     $ source devel/setup.bash
    ```
-   4. Enter the following to start the program:
+  4. Enter the following to start first version of the project:
    ```sh
     $ roslaunch exp_assignment3 simulation.launch
-    $ roslaunch exp_assignment2 scripts.launch
+    $ roslaunch exp_assignment3 scripts.launch
+   ``` 
+  5. Enter the following to start second version of the project:
+   ```sh
+    $ roslaunch final_assignment simulation.launch
+    $ roslaunch final_assignment scripts.launch
    ``` 
 
 ## Working hypothesis and environment
 
-### Systems features
+### Systems features and limitations
 
-### Systems limitations
+In the version _exp_assignment3_ the robot switches are controlled using random interval time. The user requests is also sent at random time interval. Also we are trying to implement a complex architecture made up of several compoments. For now it is difficult to make them communicate properly since the information are sent in casual time order. Moreover, the action server client is implemented directly within functions of the components, and there were found problems in the goal publishing over the _move_base_ topics. As mentioned before, this package is still a work in progress
+In the version _final_assignment_ the architecture is simplified. In this version, instead of using random time intervals, we introduced counter variables to execute transitions to Play and Sleep State. This could be changed by making the system receive the command from a stand alone node, as done in the version _exp_assignment3_
+Here it is possible to find some videos showing the system execution:
+* **Case 1**: in this [video](https://web.microsoftstream.com/video/9b46d437-ee07-41df-bc20-34cc808003dd) the robot is is Normal state, it is moving randomly within the map, and once it detects a coloured ball, it moves closer to it and saves the position
+* **Case 2**: in this [video](https://web.microsoftstream.com/video/bd3f9c88-34ae-4493-8c80-43f958c3a133) the robot enters Play state, it moves back to the human but it received the command for an unkown room. Therefore it enters Find state and start exploring the map. once it detects a balll, it enters track state and moves close to the ball to save the position
+* **Case 3**: in this [video](https://web.microsoftstream.com/video/d97884fe-5b7f-4b43-ac1e-3d9f26840436) the robot enters Play state, it moves back to the human and it received the command for a known room.
+* **Case 4**: in this [video](https://web.microsoftstream.com/video/079731ad-611c-4119-b7e4-171c207746a2) the robot enters Sleep state, it moves to home position and it stops there 
+
 
 ### Future work
 
