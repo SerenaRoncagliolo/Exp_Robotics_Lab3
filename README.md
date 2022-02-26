@@ -58,7 +58,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-This system is built to simulate an apartment made up of six-room where a human and a per robot can interact. The project made use of a Gazebo simulation which is also visualized in RViz. The robot can follow four different behaviours: _Normal_, _Sleep_, _Play_ and _Find_. The robot is a wheeled dog equipped with a camera and a laser sensor. Its main objective is to build a map of the whole environment. The human simulated can interact with the robot and command it to start playing, giving it a command of which room to reach as well. 
+This system is built to simulate an apartment made up of six-room where a human and a dog-shaped robot can interact. The project uses a Gazebo simulation which is also visualized in RViz. The robot can follow four different behaviours: _Normal_, _Sleep_, _Play_ and _Find_. The robot is a wheeled dog equipped with a camera and a laser sensor. Its main objective is to build a map of the whole environment. The human can interact with the robot and command it to start playing, telling it which room it should reach as well. 
 The Sleep and Normal behaviour are the same implemented in the previous version of this project, which can be found at this [link](https://github.com/SerenaRoncagliolo/Exp_Robotics_Lab_2). However, in the current version of the project, they are developed considering the obstacle within the apartment, so that the robot can autonomously avoid them without colliding with them. 
 When the robot assumes Play behaviour, it moves to the human location and waits for a command which indicates which room it should move to.
 While in Find behaviour instead, the robot starts exploring the environment and start mapping. Each room can be easily recogni.sed, because each of them contains a different coloured ball, which is detected by the robot camera and used to build a precise map.
@@ -165,7 +165,6 @@ The wheeled dog has four behaviors:
 </a>
 </p>
 
-
 **Components**  
 * **Behavior Command Manager:** this component simulates the Finite State Machine (FSM) and controls the switching between the four robot behaviours (Normal, Sleep, Play and Find) described in detail in the section _State Machine_. Its connection to the other components is given in the description of their implementation.
 * **Motion:** this component moves the robot is in Normal, Sleep or Play state. To get information regarding the current behaviour of the robot, it subscribes to the /behaviour topic and moves the robot accordingly.
@@ -174,7 +173,6 @@ The wheeled dog has four behaviors:
   * in Play behaviour: if not there already, the robot should first move in from of the human, so that he can receive the next command. Once in front of him, the component publishes on the topic /at_human, which is subscribed by the component Human Simulator. The robot can then receive a command, which tells it which room it should move to. If the location is already known and contained in the known map of the apartment, then the robot can reach it. If not it should notify the Behaviour component by publishing on the topic /room_unkown. Once done so, the robot switches to Find behaviour.
 * **OpenCv Ball Tracking:** as in the previous lab, we implemented a component that makes use of the OpenCV library to detect the ball. [_OpenCV_](https://opencv.org/) is a library used for real-time computer vision. ROS can be interfaced to OpenCV by using [CvBridge](http://wiki.ros.org/cv_bridge) and [convert ROS images](cv_bridge/Tutorials/ConvertingBetweenROSImagesAndOpenCVImagesPython - ROS Wiki) into OpenCV images, or vice versa. This library is used to determine if the ball is contained within the robot camera range. This component subscribes to the robot camera topic given by _/robot/camera1/image_raw/compressed_. If the ball is detected while the robot is in Normal or Find state, it will switch respectively to the sub-state Normal Track or Find Track. Once in these substates, the OpenCV Tracking component publishes a velocity on the /cmd_vel topic. This is done because we want the robot to get as close as possible to the detected ball. Once it gets close, it alerts the Behaviour manager component by publishing on the topic /at_ball. If the robot was in the Normal Track substate it goes back to the Normal state. If instead, it was in the Find Track substate, it should check if the room in which it is currently located corresponds to the one given in the last user command. If so, it means that it has finally reached the desired goal room, it publishes a boolean message on the /at_room topic and it turns back to Play Behaviour. Otherwise it goes back to Find state. As opposed to the implementation in the previous version of the project, the robot should now be capable to distinguish the colour of the ball, which will be used to identify the room. 
 * **Human Interface Simulator:** this component is used to simulate a human interacting with the robot. It can publish a message on the topic /start_play, which is subscribed by the Behaviour manager. This command is given at random time instantm and it gives the name of the room where the robot is supposed to move.
-
 
 ### Overall Functioning
 
@@ -230,15 +228,15 @@ The wheeled dog has four behaviors:
 </a>
 </p>
  
- The architecture is made up of three ROS packages and four custom nodes. The external packages are used to move the robot within the apartment (_move_base package_), to create a map using the scan laser (_gmapping_) and explore the unkown part of the environment (_explore_lite_). Their function is explained in the previous paragraphs.
+ The architecture is made up of three ROS packages and one custom node. We use _move_base_package_ to move the robot within the apartment, _gmapping_ to create a map using the scan laser of the robot and _explore_lite_ to explore the unkown part of the environment. Their function is explained in the previous paragraphs.
  
 **Components**  
 In this project we implemented the Action Client _simple_navigation_goals_ and the component _Behavior Manager_. 
 * **simple_navigation_goal**: the action client _simple_navigation_goals_ is responsible for sending goals position to the Action Servers, which control the simulation in Gazebo. Each goal sent to the server is expresses with respect to the frame of the map, and not the robot's frame. 
-* **behavior manager**: it simulates the Finite State Machine (FSM) and controls the switching between the four robot behaviours (Normal, Sleep, Play and Find) described in detail in the section _State Machine_. It communicates with the action client publishing target positions on the topic /goalPos using a list of integers. In this components we have implemented the four states as classes
+* **behavior manager**: it simulates the Finite State Machine (FSM) and controls the switching between the four robot behaviours (Normal, Sleep, Play and Find) described in detail in the section _State Machine_. It communicates with the action client publishing target positions on the topic /goalPos using a list of integers. The robot states as implemented as classes:
   * _Normal class_: the robot is supposed to move randomly within the environment until it detects a coloured object. This class makes the robot move randomly by computing positions whose coordinates are randomly chosen within a given interval, such as the map dimensions. Whenever a new image is available from the camera, the class execute a method which implement a opencv-based algorithm. The class subscribes to the robot camera topic given by _/robot/camera1/image_raw/compressed_. If the ball is detected while the robot is in Normal state, it will switch to the sub-state Track. Once in these substates, it publishes a velocity on the /cmd_vel topic to move the robot as close as possible to the detected ball. It then goes back to the Normal state. As opposed to the implementation in the previous version of the project, the robot is now capable to distinguish the colour of the ball, which is used to identify the room. At random time intervals, the robot switch to Sleep or Play state.
-  * _Sleep class_: when it switch to sleep state, the robot first moves to a predefined _home position_ and then stops there for a while, only to go back to Normal state
-  * _Play class_: the robot goes to a predefined position in front of the human. Once there it waits for him to give a command of which room it should move to. To give this command, we randomly extrach a room from a list containing all six of them. First the class implement a method to check if the given room was already visited by the robot or not. If so, the robot moves to the given location. This class publishes the room position on the topic /goalPos which is subscribed by the move_base action client. Once it reaches the room. it goes back to the human and wait for another command. If the given room is not known, the robot enters Find state. 
+  * _Sleep class_: when it switches to sleep state, the robot first moves to a predefined _home position_ and then stops there for a while, only to go back to Normal state
+  * _Play class_: the robot goes to a predefined position in front of the human. Once there it waits for him to give a command of which room it should move to. To give this command, we randomly extract a room from a list containing all six of them as strings. First the class implement a method to check if the given room was already visited by the robot or not. If so, the robot moves to the given location. This class publishes the room position on the topic /goalPos which is subscribed by the move_base action client. Once it reaches the room. It then goes back to the human and wait for another command. If the given room is not known, the robot enters Find state. 
   * _Find class_: when entering Find State, the class launch the package explore_lite. The robot moves within the environment controlled by this package. As done for the normal state, the class instantiates a method which is executed everytime a new image is available in the camera. It subscribes to the robot camera topic given by _/robot/camera1/image_raw/compressed_. If the ball is detected, it will switch to the sub-state Track. Once in this substate, it publishes a velocity on the /cmd_vel topic to move the robot as close as possible to the detected ball. Once close to it, the robot position is stored. As opposed to the implementation in the previous version of the project, the robot is now capable to distinguish the colour of the ball, which is used to identify the room. At random time intervals, the robot switch to Sleep or Play state.
 
 
@@ -293,15 +291,21 @@ As shown in the UML graph or the system architecture, the system make use of the
 
 ### Rqt_graphs 
 
-<!-- **exp_assignment3 package**
+**exp_assignment3 package**
 
 <p align="center">
 <a>
-    <img src="/images/rqt.png" width="600" height="">
+    <img src="/images/rosgraph.png" width="600" height="">
 </a>
 </p>
 
-**final_assignment package** -->
+**final_assignment package**
+
+<p align="center">
+<a>
+    <img src="/images/rosgraph2.png" width="600" height="">
+</a>
+</p>
 
 ## Repository Organization
 The repository contains the following folders:
