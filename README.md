@@ -402,20 +402,15 @@ This instructions assumes that you have installed **catkin**, if not it is neces
     $ roslaunch final_assignment scripts.launch
    ``` 
 
-## Working hypothesis and environment
-
 ### Systems features and limitations
 
-In the version _exp_assignment3_ the robot switches are controlled using random interval time. The user requests is also sent at random time interval. Also we are trying to implement a complex architecture made up of several compoments. For now it is difficult to make them communicate properly since the information are sent in casual time order. Moreover, the action server client is implemented directly within functions of the components, and there were found problems in the goal publishing over the _move_base_ topics. As mentioned before, this package is still a work in progress
-In the version _final_assignment_ the architecture is simplified. In this version, instead of using random time intervals, we introduced counter variables to execute transitions to Play and Sleep State. This could be changed by making the system receive the command from a stand alone node, as done in the version _exp_assignment3_
+In the version _exp_assignment3_ the robot switches are controlled using random interval time. The user requests is also sent at random time interval while the architecture is made up of several compoments. For now it is difficult to make them communicate properly since the information are sent in casual time order. Moreover, the action server client is implemented directly within functions of the components, and there were found problems in the goal publishing over the _move_base_ topics. As mentioned before, this package is still a work in progress
+In the version _final_assignment_ the architecture is simplified. Instead of using random time intervals, we introduced counter variables to execute transitions to Play and Sleep State. This could be changed by making the system receive the command from a stand alone node, as done in the version _exp_assignment3_
 Here it is possible to find some videos showing the system execution:
 * **Case 1**: in this [video](https://web.microsoftstream.com/video/9b46d437-ee07-41df-bc20-34cc808003dd) the robot is is Normal state, it is moving randomly within the map, and once it detects a coloured ball, it moves closer to it and saves the position
-* **Case 2**: in this [video](https://web.microsoftstream.com/video/bd3f9c88-34ae-4493-8c80-43f958c3a133) the robot enters Play state, it moves back to the human but it received the command for an unkown room. Therefore it enters Find state and start exploring the map. once it detects a balll, it enters track state and moves close to the ball to save the position
+* **Case 2**: in this [video](https://web.microsoftstream.com/video/bd3f9c88-34ae-4493-8c80-43f958c3a133) the robot enters Play state, it moves back to the human but it received the command for an unkown room. Therefore it enters Find state and start exploring the map. Once it detects a balll, it enters track state and moves close to the ball to save the position
 * **Case 3**: in this [video](https://web.microsoftstream.com/video/d97884fe-5b7f-4b43-ac1e-3d9f26840436) the robot enters Play state, it moves back to the human and it received the command for a known room.
 * **Case 4**: in this [video](https://web.microsoftstream.com/video/079731ad-611c-4119-b7e4-171c207746a2) the robot enters Sleep state, it moves to home position and it stops there 
-
-
-### Future work
 
 <!-- CONTACT -->
 ## Contact
