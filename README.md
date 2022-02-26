@@ -295,7 +295,7 @@ As shown in the UML graph or the system architecture, the system make use of the
 
 <p align="center">
 <a>
-    <img src="/images/rosgraph.png" width="600" height="">
+    <img src="/images/rosgraph.png" width="900" height="">
 </a>
 </p>
 
@@ -303,7 +303,7 @@ As shown in the UML graph or the system architecture, the system make use of the
 
 <p align="center">
 <a>
-    <img src="/images/rosgraph2.png" width="600" height="">
+    <img src="/images/rosgraph2.png" width="900" height="">
 </a>
 </p>
 
