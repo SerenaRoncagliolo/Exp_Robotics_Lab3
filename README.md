@@ -312,7 +312,7 @@ The repository contains the following folders:
 
 * **explore**: explore-lite package
 * **images**: contains .png images used in the README:md file
-* **exp_assignemt3**
+* **exp_assignmet3**
   * **config**: configuration file to initialize RViz correctly
   * **Documentation**: it contains the html and latex documentation produced with Doxygen
   * **launch**: contains two launch files:
@@ -326,12 +326,11 @@ The repository contains the following folders:
      * opencv_tracking.py
   * **urdf**: it contains the files to simulate a robot and a human in Gazebo;
   * **worlds**: it contains the world used for implementing the simulation;
-* **final_assignemt**
+* **final_assignmet**
   * **config**: configuration file to initialize RViz correctly
   * **Documentation**: it contains the html and latex documentation produced with Doxygen
   * **launch**: contains two launch files:
-    *  simulation.launch: it launch the gazebo world contained the simulation model of the robot, human and ball
-    *  scripts.launch: it starts the behaviour architecure of the project
+    *  pet_behavior.launch: it starts the behaviour architecure of the project
   *  **param**: it contains the configuration parameters for the _move_base_ package
   *  **src**: contains the relative script of the main components of the architecture:
      * state_machine.py
