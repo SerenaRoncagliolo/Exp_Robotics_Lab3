@@ -384,8 +384,7 @@ This instructions assumes that you have installed **catkin**, if not it is neces
    ```sh
    git clone https://github.com/SerenaRoncagliolo/Exp_Robotics_Lab_2.git
    ```
-  2. Rename it the repository exp_assignment3
-  3. Enter the repository at the top level and run
+ 3. Enter the repository at the top level and run
    ```sh
     $ catkin_make
     $ source devel/setup.bash
