@@ -76,7 +76,7 @@ The project was build with:
 
 ## Software Architecture
 
-We implemented two versions of the project. The first one is contained in the package _exp_assignment3_ and due to its complexity is still a work in progress and it contains bugs that need to be fixed. Its limitations are explained in the sections below. The second version is a simplified and functioning version of the project
+We implemented two versions of the project. The first one is contained in the package _exp_assignment3_ and due to its complexity is still a work in progress and it contains bugs that need to be fixed. Its limitations are explained in the sections below. The second package _final_assignment_ is a simplified and functioning version of the project
 
 ### Simulation 
 Our project is simulated in a 3D [**Gazebo**](http://gazebosim.org/) environment. Gazebo is a 3D dynamic simulator that efficiently simulates robots in complex indoor and outdoor environments. It provides physics simulation having a rich library of robot models and environments, a wide variety of sensors, and a user-friendly graphical interface.
